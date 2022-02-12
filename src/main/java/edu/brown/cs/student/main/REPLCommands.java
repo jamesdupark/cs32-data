@@ -9,11 +9,6 @@ import java.util.Map;
  * this interface.
  */
 public interface REPLCommands {
-  /**
-   * List of strings representing the commands that this REPLCommands class
-   * supports
-   */
-  List<String> commands = null;
 
   /**
    * Takes in a tokenized array representing user input and executes the proper
@@ -27,17 +22,12 @@ public interface REPLCommands {
   void executeCmds(String cmd, String[] argv, int argc);
 
   /**
-   * Adds the commands that this class supports to the given hashmap as keys
-   * for the given REPLCommands object.
+   * Adds the string command keywords that this class supports to the given
+   * hashmap as keys for the given REPLCommands object.
    *
    * @param replCommandsMap hashmap between all commands supported by a REPL and
    *                        the specific REPLCommands objects which support
    *                        each command.
    */
-  default void addCmds(Map<String, REPLCommands> replCommandsMap) {
-    assert commands != null;
-    for (String cmd : commands) {
-      replCommandsMap.put(cmd, this);
-    }
-  }
+  void addCmds(Map<String, REPLCommands> replCommandsMap);
 }
