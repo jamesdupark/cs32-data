@@ -99,6 +99,7 @@ public class Repl {
 
       if (commandPack != null) {
         commandPack.executeCmds(cmd, argv, argc);
+        return;
       }
 
       switch (cmd) { // pattern matching for command strings

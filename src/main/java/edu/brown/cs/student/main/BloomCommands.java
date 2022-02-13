@@ -26,9 +26,7 @@ public class BloomCommands implements REPLCommands {
           this.createBfCmd(argv, argc);
           break;
         case "insert_bf":
-          System.out.println("Inserting into bloom filter");
-          currFilter.insert("hello");
-          System.out.println(currFilter);
+          this.insertBfCmd(argv, argc);
           break;
         case "query_bf":
           System.out.println("Querying bloom filter");
@@ -75,6 +73,30 @@ public class BloomCommands implements REPLCommands {
           + "specified parameters");
     }
 
+  }
+
+  /**
+   * Executes the "insert_bf" command by attempting to insert the given element
+   * into the current bloom filter. If successful, prints the current filter's
+   * updated bitset to stdout. Prints informative error message upon failure.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   */
+  private void insertBfCmd(String[] argv, int argc)
+      throws IllegalArgumentException {
+    // check correct number of args
+    if (argc != 2) {
+      throw new IllegalArgumentException();
+    }
+
+    if (currFilter != null) {
+      currFilter.insert(argv[1]);
+      System.out.println(currFilter);
+    } else {
+      System.out.println("ERROR: Must create a bloom filter with the "
+          + "create_bf <r> <n> command before inserting.");
+    }
   }
 
   @Override
