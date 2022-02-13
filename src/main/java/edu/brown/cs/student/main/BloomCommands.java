@@ -29,7 +29,7 @@ public class BloomCommands implements REPLCommands {
           this.insertBfCmd(argv, argc);
           break;
         case "query_bf":
-          System.out.println("Querying bloom filter");
+          this.queryBfCmd(argv, argc);
           break;
         default:
           System.err.println("ERROR: Command not recognized.");
@@ -93,6 +93,25 @@ public class BloomCommands implements REPLCommands {
     if (currFilter != null) {
       currFilter.insert(argv[1]);
       System.out.println(currFilter);
+    } else {
+      System.out.println("ERROR: Must create a bloom filter with the "
+          + "create_bf <r> <n> command before inserting.");
+    }
+  }
+
+  private void queryBfCmd(String[] argv, int argc)
+      throws IllegalArgumentException {
+    // check correct number of args
+    if (argc != 2) {
+      throw new IllegalArgumentException();
+    }
+
+    if (currFilter != null) {
+      if (currFilter.query(argv[1])) {
+        System.out.println("\"" + argv[1] + "\" might be in the set.");
+      } else {
+        System.out.println("\"" + argv[1] + "\" is definitely not in the set.");
+      }
     } else {
       System.out.println("ERROR: Must create a bloom filter with the "
           + "create_bf <r> <n> command before inserting.");

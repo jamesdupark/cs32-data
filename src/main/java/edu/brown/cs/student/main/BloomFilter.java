@@ -102,6 +102,12 @@ public class BloomFilter {
     return new String(hexChars, StandardCharsets.UTF_8);
   }
 
+  /**
+   * Inserts the given object into the bloom filter by converting first to a
+   * String, then to a byte array, and then hashing with the createHashes
+   * function.
+   * @param newElt element to be inserted.
+   */
   public void insert(Object newElt) {
     String hashString = newElt.toString();
     byte[] byteArray = hashString.getBytes(StandardCharsets.UTF_8);
@@ -113,6 +119,31 @@ public class BloomFilter {
       int index = bigIndex.intValue(); // no overflow because size < MAXINT
       filter.set(index);
     }
+  }
+
+  /**
+   * Queries the bloom filter to check for the presence of a given element by
+   * hashing with the createHashes function and then checking whether all hashed
+   * bits are set.
+   * @param newElt object to be queried
+   * @return boolean indicating whether the object may be in the set (true) or
+   * definitely isn't in the set (false).
+   */
+  public boolean query(Object newElt) {
+    String hashString = newElt.toString();
+    byte[] byteArray = hashString.getBytes(StandardCharsets.UTF_8);
+
+    BigInteger[] hashArray = createHashes(byteArray, numHashes);
+
+    for (BigInteger hash : hashArray) {
+      BigInteger bigIndex = hash.mod(BigInteger.valueOf(size));
+      int index = bigIndex.intValue(); // no overflow because size < MAXINT
+      if (!filter.get(index)) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   @Override
