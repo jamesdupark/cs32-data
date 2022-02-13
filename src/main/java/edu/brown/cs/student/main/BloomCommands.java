@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * REPLCommands class that packages commands related to bloom filters.
+ * @author jamesdupark
  */
 public class BloomCommands implements REPLCommands {
   /**
@@ -73,8 +74,7 @@ public class BloomCommands implements REPLCommands {
       System.err.println("ERROR: Incorrect numerical format for either "
           + "<r> or <n>.");
     } catch (IllegalArgumentException ex) {
-      System.err.println("ERROR: Could not create bloom filter with"
-          + "specified parameters");
+      System.err.println(ex.getMessage());
     }
 
   }

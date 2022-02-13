@@ -9,6 +9,7 @@ import java.util.BitSet;
 /**
  * Class representing a single bloom filter with a given false positive rate
  * and number of hashes.
+ * @author jamesdupark
  */
 public class BloomFilter {
   /** number of hashing functions used on new entries to the set. */
@@ -20,7 +21,6 @@ public class BloomFilter {
   /** size of the bloom filter or the number of bits used. */
   private final int size;
 
-
   /**
    * Constructor for a BloomFilter object. Uses the given parameters to
    * calculate the length of the filter's bitset and the number of hashes to use
@@ -31,7 +31,9 @@ public class BloomFilter {
    */
   BloomFilter(double fpRate, int maxElts) throws IllegalArgumentException {
     try {
-      assert fpRate > 0 && fpRate <= 1;
+      assert fpRate > 0 && fpRate <= 1
+          : "false positive rate must be between 0 and 1";
+      assert maxElts >= 0 : "maximum number of elements must be greater than 0";
 
       long numHash = Math.round(Math.ceil(-1 * Math.log(fpRate) / Math.log(2)));
       long numBits = Math.round(Math.ceil((numHash * maxElts) / Math.log(2)));
@@ -40,12 +42,10 @@ public class BloomFilter {
       size = Math.toIntExact(numBits);
       filter = new BitSet(size);
     } catch (ArithmeticException e) {
-      System.err.println("ERROR: calculated filter size or hash number too "
-          + "large. Try a different value of <r> or <n>.");
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("ERROR: calculated filter size or "
+          + "hash number too large. Try a different value of <r> or <n>.");
     } catch (AssertionError e) {
-      System.err.println("ERROR: false positive rate must be between 0 and 1");
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("ERROR: " + e.getMessage());
     }
   }
 
@@ -159,5 +159,21 @@ public class BloomFilter {
     }
 
     return bitString.toString();
+  }
+
+  /**
+   * Method to look up the size of the filter's bitset.
+   * @return size of the bloom filter's bitset
+   */
+  public int size() {
+    return size;
+  }
+
+  /**
+   * Getter method for number of hashes associated with this filter.
+   * @return number of hashes for this bloom filter
+   */
+  public int getNumHashes() {
+    return numHashes;
   }
 }
