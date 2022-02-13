@@ -1,0 +1,17 @@
+INPUT
+create_bf 0.5 5
+insert_bf hello
+insert_bf hi
+query_bf hello
+query_bf hi
+query_bf 3
+query_bf 2
+OUTPUT
+00000000
+00000010
+00010010
+"hello" might be in the set.
+"hi" might be in the set.
+"3" is definitely not in the set.
+"2" might be in the set.
+END
