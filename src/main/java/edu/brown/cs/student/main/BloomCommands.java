@@ -13,6 +13,10 @@ public class BloomCommands implements REPLCommands {
   private final List<String> commands =
       List.of("create_bf", "insert_bf", "query_bf");
 
+  /**
+   * the most recently created BloomFilter, able to be inserted into and
+   * queried.
+   */
   private BloomFilter currFilter;
 
   @Override
@@ -99,6 +103,14 @@ public class BloomCommands implements REPLCommands {
     }
   }
 
+  /**
+   * Executes the "query_bf" command by attempting to query the given element
+   * into the current bloom filter. Prints the results of a successful query to
+   * stdout. Prints informative error message upon failure.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of args is incorrect
+   */
   private void queryBfCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     // check correct number of args
