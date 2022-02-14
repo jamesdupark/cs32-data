@@ -31,9 +31,9 @@ public class BloomFilter {
    */
   BloomFilter(double fpRate, int maxElts) throws IllegalArgumentException {
     try {
-      assert fpRate > 0 && fpRate <= 1
+      assert fpRate > 0 && fpRate < 1
           : "false positive rate must be between 0 and 1";
-      assert maxElts >= 0 : "maximum number of elements must be greater than 0";
+      assert maxElts > 0 : "maximum number of elements must be greater than 0";
 
       long numHash = Math.round(Math.ceil(-1 * Math.log(fpRate) / Math.log(2)));
       long numBits = Math.round(Math.ceil((numHash * maxElts) / Math.log(2)));

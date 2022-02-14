@@ -30,12 +30,13 @@ public class BloomFilterTest {
     assertThrows(IllegalArgumentException.class, () -> new BloomFilter(0, 5));
     assertThrows(IllegalArgumentException.class, () -> new BloomFilter(-1, 5));
     assertThrows(IllegalArgumentException.class, () -> new BloomFilter(3, 5));
-//    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(1, 5));
+    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(1, 5));
 
     // maxElts out of bounds
-    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(0.001, 2147483647));
+    assertThrows(IllegalArgumentException.class,
+        () -> new BloomFilter(0.001, 2147483647));
     assertThrows(IllegalArgumentException.class, () -> new BloomFilter(0.1, -3));
-//    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(0.1, 0));
+    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(0.1, 0));
   }
 
   @Test
