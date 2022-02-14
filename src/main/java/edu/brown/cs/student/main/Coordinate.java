@@ -3,7 +3,7 @@ package edu.brown.cs.student.main;
 /**
  * Class that represents coordinates of stars within 3-dimensional space.
  */
-public class Coordinate {
+public class Coordinate implements KDTree {
   /** double representing a star's x-coord. */
   private final double x;
 
@@ -83,5 +83,24 @@ public class Coordinate {
   @Override
   public int hashCode() {
     return Double.hashCode(x + y + z);
+  }
+
+  public String toString() {
+    return "(" + x + ", " + y + ", " + z + ")";
+  }
+
+
+  public double getFirstAxis() {
+    return this.x;
+  }
+
+  @Override
+  public double getSecondAxis() {
+    return this.y;
+  }
+
+  @Override
+  public double getThirdAxis() {
+    return this.z;
   }
 }
