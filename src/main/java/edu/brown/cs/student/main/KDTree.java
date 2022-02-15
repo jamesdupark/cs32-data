@@ -57,7 +57,7 @@ public class KDTree<T> {
   public void insert(KDTree<KDNode> treeNode, KDNode val) {
     KDTree<KDNode> node = new KDTree<>(val);
 
-    System.out.println("Node to be inserted: " + node.val);
+//    System.out.println("Node to be inserted: " + node.val);
     // empty tree -> node becomes root
     if (treeNode == null) {
       this.numNodes++;
@@ -65,11 +65,11 @@ public class KDTree<T> {
       treeNode.root = treeNode;
       treeNode.depth = 1;
       this.root = treeNode;
-      System.out.println("Root node val: " + this.root.val);
+//      System.out.println("Root node val: " + this.root.val);
     } else {
       node.root = treeNode.root;
-      System.out.println("treeNode root val: " + treeNode.root.val);
-      System.out.println("Node's root val: " + node.root.val);
+//      System.out.println("treeNode root val: " + treeNode.root.val);
+//      System.out.println("Node's root val: " + node.root.val);
       int axis = (treeNode.depth - 1) % val.getNumDimensions();
 
       if (node.val.getAxisVal(axis) < treeNode.val.getAxisVal(axis)) {
@@ -86,16 +86,16 @@ public class KDTree<T> {
         }
       } else {
         // insert right
-        System.out.println("Inserting right!");
+//        System.out.println("Inserting right!");
         if (treeNode.right == null) {
           // node does not exist so insert here
           this.numNodes++;
-          System.out.println("Inserting here!");
+//          System.out.println("Inserting here!");
           treeNode.right = node;
           node.parent = treeNode;
           node.depth = treeNode.depth + 1;
-          System.out.println(node.depth);
-          System.out.println("here: " + node.root.val);
+//          System.out.println(node.depth);
+//          System.out.println("here: " + node.root.val);
 //          System.out.println("here: " + node.root.right.val);
         } else {
           // node exists so recursive call

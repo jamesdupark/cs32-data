@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class NightSkyTest {
+  /*
   NightSky tenStar, emptySky, knnSky;
   boolean readState;
   Coordinate origin;
@@ -142,7 +143,7 @@ public class NightSkyTest {
     double distFive = this.getBinDistance(distFiveBin, origin);
 
     assertEquals(5, distFive, Double.MIN_VALUE);
-  }
+  }*/
 
   /**
    * Iterates through a "bin" and checks whether the distances to a given coord
@@ -153,6 +154,7 @@ public class NightSkyTest {
    * @param coord Coordinate to check distance of stars against
    * @return distance of the bin to coord
    */
+  /*
   private double getBinDistance(List<Integer> idBin, Coordinate coord) {
     int firstID = idBin.get(0);
     Star firstStar = knnSky.idToStar(firstID);
@@ -166,5 +168,5 @@ public class NightSkyTest {
     }
 
     return distance;
-  }
+  }*/
 }
