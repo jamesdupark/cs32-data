@@ -140,6 +140,7 @@ public final class Main {
 //    myRepl.run();
 
     Repl myRepl = new Repl(new ArrayList<>());
+
     myRepl.run();
 
   }
