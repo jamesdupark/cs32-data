@@ -1,5 +1,7 @@
 package edu.brown.cs.student.main;
 
+import java.util.List;
+
 public class KDTree<T> {
   // the value of the current node
   KDNode val;
@@ -39,6 +41,12 @@ public class KDTree<T> {
     this.left = null;
     this.right = null;
     this.parent = null;
+  }
+
+  public void insertStudents(List<Student> studentsList) {
+    for (Student s : studentsList) {
+      this.insert(this.root, s);
+    }
   }
 
   /**

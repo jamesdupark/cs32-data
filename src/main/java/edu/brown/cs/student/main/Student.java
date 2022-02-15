@@ -90,4 +90,8 @@ public class Student implements KDNode {
   public int getNumDimensions() {
     return 3;
   }
+
+  public String toString() {
+    return "(" + this.yearsExp + ", " + this.weeklyAvail + ", " + this.sweConfidence + ")";
+  }
 }
