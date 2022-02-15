@@ -68,8 +68,6 @@ public class Repl {
       reader.close();
     } catch (IOException ex) { // catch IOexceptions
       System.err.println("ERROR: IOEXception encountered.");
-    } catch (DuplicateCommandException ex) {
-      System.err.println(ex.getMessage());
     }
   }
 }
