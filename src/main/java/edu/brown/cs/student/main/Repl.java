@@ -1,9 +1,9 @@
 package edu.brown.cs.student.main;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -18,20 +18,23 @@ public class Repl {
    */
   private final BufferedReader reader;
 
-  /**
-   * NightSky object containing the most recently read in database of stars.
-   */
-  private NightSky mySky;
+  private final HashMap<String, REPLCommands> cmdMap;
 
   private final BloomCommands blooms = new BloomCommands();
 
   private final HashMap<String, REPLCommands> commandsMap = new HashMap<>();
 
+  private NightSky mySky;
+
   /**
    * Creates a new Repl object that reads from standard input.
    */
-  Repl() {
+  Repl(ArrayList<REPLCommands> cmdList) {
+    this.cmdMap = new HashMap<String, REPLCommands>();
     this.reader = new BufferedReader(new InputStreamReader(System.in));
+    for (REPLCommands cmdPackage : cmdList) {
+      cmdPackage.addCmds(this.cmdMap);
+    }
   }
 
   /**
@@ -45,10 +48,14 @@ public class Repl {
     try {
       String line = reader.readLine();
       while (line != null) { // start REPL
-        this.parse(line);
+        String[] cmds = line.split(" ");
+        if (cmdMap.containsKey(cmds[0])) {
+          cmdMap.get(cmds[0]).executeCmds(cmds[0], cmds, cmds.length);
+        } else {
+          System.out.println("Unknown command");
+        }
         line = reader.readLine();
       }
-
       reader.close();
     } catch (IOException ex) { // catch IOexceptions
       System.err.println("ERROR: IOEXception encountered.");

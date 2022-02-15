@@ -45,6 +45,7 @@ public final class Main {
       runSparkServer((int) options.valueOf("port"));
     }
 
+
     System.out.println("HI");
     ArrayList<Coordinate> testList = new ArrayList<>();
 
@@ -137,6 +138,10 @@ public final class Main {
 
 //    Repl myRepl = new Repl();
 //    myRepl.run();
+
+    Repl myRepl = new Repl(new ArrayList<>());
+    myRepl.run();
+
   }
 
   private void runSparkServer(int port) {
