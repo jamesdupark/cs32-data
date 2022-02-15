@@ -56,7 +56,7 @@ public class Repl {
         if (cmdMap.containsKey(cmds[0])) {
           cmdMap.get(cmds[0]).executeCmds(cmds[0], cmds, cmds.length);
         } else {
-          System.out.println("Unknown command");
+          System.out.println("ERROR: Unknown command");
         }
         line = reader.readLine();
       }
