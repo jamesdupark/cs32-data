@@ -53,6 +53,7 @@ public class KDCommands implements REPLCommands {
       parser.parse(argv[1]);
       List<Student> studentList = parser.getData();
       this.KDTree.insertStudents(studentList);
+      System.out.println("Read " + this.KDTree.numNodes + "students from " + argv[1]);
     } catch (IllegalArgumentException ex) {
       System.err.println(ex.getMessage());
     }
@@ -127,8 +128,8 @@ public class KDCommands implements REPLCommands {
    * Executes the "query_bf" command by attempting to query the given element
    * into the current bloom filter. Prints the results of a successful query to
    * stdout. Prints informative error message upon failure.
-   * @param argv array of strings representing tokenized user input
-   * @param argc length of argv
+//   * @param argv array of strings representing tokenized user input
+//   * @param argc length of argv
    * @throws IllegalArgumentException if number of args is incorrect
    */
   /*private void queryBfCmd(String[] argv, int argc)

@@ -38,8 +38,8 @@ public class Student implements KDNode {
   private final String interests;
 
   public Student(int id, String name, String email, String gender, String classYear,
-                 String nationality, String race, int yearsExp, String commStyle,
-                 int weeklyAvail, String meetingStyle, String meetingTime, int sweConfidence,
+                 String nationality, String race, double yearsExp, String commStyle,
+                 double weeklyAvail, String meetingStyle, String meetingTime, double sweConfidence,
                  String strengths, String weaknesses, String skills, String interests) {
     this.id = id;
     this.name = name;
