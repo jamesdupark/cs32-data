@@ -1,0 +1,11 @@
+INPUT
+insert_bf hello
+create_bf 0.5 5
+insert_bf hello
+query_bf hello
+OUTPUT
+ERROR:
+00000000
+00000010
+"hello" might be in the set.
+END

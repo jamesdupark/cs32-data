@@ -1,12 +1,12 @@
 package edu.brown.cs.student.main;
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * Interface for a package of related REPL Commands that rely on a common data
  * structure or information, which will also be stored in classes implementing
  * this interface.
+ * @author jamesdupark
  */
 public interface REPLCommands {
 
