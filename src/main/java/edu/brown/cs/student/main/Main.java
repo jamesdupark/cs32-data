@@ -64,7 +64,7 @@ public final class Main {
     testList.add(c6);
     System.out.println(testList);
 
-    KDNode<Coordinate> kdTree = new KDNode<>();
+    KDTree<Coordinate> kdTree = new KDTree<>();
     System.out.println("Just initialized KD Tree");
     System.out.println(kdTree);
     System.out.println();
