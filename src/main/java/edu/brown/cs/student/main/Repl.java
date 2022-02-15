@@ -33,6 +33,12 @@ public class Repl {
   Repl() {
     this.reader = new BufferedReader(new InputStreamReader(System.in));
   }
+//    Repl(List<REPLCommands> cmdList) {
+//      for (REPLCommands cmdPack : cmdList) {
+//        cmdPack.addCmds(commandsMap);
+//      }
+//    }
+
 
   /**
    * Runs a REPL that reads from standard input and attempts to parse commands.
@@ -40,9 +46,10 @@ public class Repl {
   public void run() {
     // initialize all commands
 
-    blooms.addCmds(commandsMap);
+
 
     try {
+      blooms.addCmds(commandsMap);
       String line = reader.readLine();
       while (line != null) { // start REPL
         this.parse(line);
@@ -52,6 +59,8 @@ public class Repl {
       reader.close();
     } catch (IOException ex) { // catch IOexceptions
       System.err.println("ERROR: IOEXception encountered.");
+    } catch (DuplicateCommandException ex) {
+      System.err.println(ex.getMessage());
     }
   }
 
