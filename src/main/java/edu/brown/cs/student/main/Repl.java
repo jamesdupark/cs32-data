@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,6 +23,10 @@ public class Repl {
    */
   private NightSky mySky;
 
+  private final BloomCommands blooms = new BloomCommands();
+
+  private final HashMap<String, REPLCommands> commandsMap = new HashMap<>();
+
   /**
    * Creates a new Repl object that reads from standard input.
    */
@@ -33,6 +38,9 @@ public class Repl {
    * Runs a REPL that reads from standard input and attempts to parse commands.
    */
   public void run() {
+    // initialize all commands
+
+    blooms.addCmds(commandsMap);
 
     try {
       String line = reader.readLine();
@@ -85,6 +93,14 @@ public class Repl {
       // attempt to execute commands based on our argv
       int argc = argv.length;
       String cmd = argv[0];
+
+      REPLCommands commandPack = commandsMap.get(cmd);
+
+      if (commandPack != null) {
+        commandPack.executeCmds(cmd, argv, argc);
+        return;
+      }
+
       switch (cmd) { // pattern matching for command strings
         case ("stars"): // stars: read in CSV
           this.starsCmd(argv, argc);
