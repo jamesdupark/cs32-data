@@ -38,9 +38,9 @@ public class CSVParser {
           // adding new Star to data field LinkedList
           Student newStudent = new Student(Integer.parseInt(matchList.get(0)), matchList.get(1),
               matchList.get(2), matchList.get(3), matchList.get(4), matchList.get(6),
-              matchList.get(7), Integer.parseInt(matchList.get(8)), matchList.get(9),
-              Integer.parseInt(matchList.get(10)), matchList.get(11), matchList.get(12),
-              Integer.parseInt(matchList.get(13)), matchList.get(14), matchList.get(15),
+              matchList.get(7), Double.parseDouble(matchList.get(8)), matchList.get(9),
+              Double.parseDouble(matchList.get(10)), matchList.get(11), matchList.get(12),
+              Double.parseDouble(matchList.get(13)), matchList.get(14), matchList.get(15),
               matchList.get(16), matchList.get(17));
           this.data.add(newStudent);
           count++;
