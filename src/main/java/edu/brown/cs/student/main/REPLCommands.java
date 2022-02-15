@@ -23,11 +23,16 @@ public interface REPLCommands {
 
   /**
    * Adds the string command keywords that this class supports to the given
-   * hashmap as keys for the given REPLCommands object.
+   * hashmap as keys for the given REPLCommands object. If a duplicate command
+   * is found to already be in the hashmap, none of the commands for the given
+   * REPLCommands class will be added and an exception will be thrown.
    *
    * @param replCommandsMap hashmap between all commands supported by a REPL and
    *                        the specific REPLCommands objects which support
    *                        each command.
+   * @throws DuplicateCommandException if one of the commands that belongs to
+   * the class is already a key for a different commands package.
    */
-  void addCmds(Map<String, REPLCommands> replCommandsMap);
+  void addCmds(Map<String, REPLCommands> replCommandsMap)
+      throws DuplicateCommandException;
 }

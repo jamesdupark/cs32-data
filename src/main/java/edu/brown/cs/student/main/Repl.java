@@ -36,6 +36,12 @@ public class Repl {
       cmdPackage.addCmds(this.cmdMap);
     }
   }
+//    Repl(List<REPLCommands> cmdList) {
+//      for (REPLCommands cmdPack : cmdList) {
+//        cmdPack.addCmds(commandsMap);
+//      }
+//    }
+
 
   /**
    * Runs a REPL that reads from standard input and attempts to parse commands.
@@ -43,9 +49,10 @@ public class Repl {
   public void run() {
     // initialize all commands
 
-    blooms.addCmds(commandsMap);
+
 
     try {
+      blooms.addCmds(commandsMap);
       String line = reader.readLine();
       while (line != null) { // start REPL
         String[] cmds = line.split(" ");
@@ -59,6 +66,8 @@ public class Repl {
       reader.close();
     } catch (IOException ex) { // catch IOexceptions
       System.err.println("ERROR: IOEXception encountered.");
+    } catch (DuplicateCommandException ex) {
+      System.err.println(ex.getMessage());
     }
   }
 

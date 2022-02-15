@@ -134,9 +134,22 @@ public class BloomCommands implements REPLCommands {
   }
 
   @Override
-  public void addCmds(Map<String, REPLCommands> replCommandsMap) {
-    for (String cmd : commands) {
-      replCommandsMap.put(cmd, this);
+  public void addCmds(Map<String, REPLCommands> replCommandsMap)
+      throws DuplicateCommandException {
+    for (int i = 0; i < commands.size(); i++) {
+      // adding commands to commandsMap
+      String cmd = commands.get(i);
+      REPLCommands dupPack = replCommandsMap.put(cmd, this);
+      if (dupPack != null) {
+        // if a duplicate value is found
+        for (int j = 0; j < i; j++) { // remove all previously added keys
+          String cmdToRemove = commands.get(j);
+          replCommandsMap.remove(cmdToRemove);
+        }
+
+        throw new DuplicateCommandException("ERROR: command " + cmd
+            + " already in this REPL's commandsMap");
+      }
     }
   }
 }
