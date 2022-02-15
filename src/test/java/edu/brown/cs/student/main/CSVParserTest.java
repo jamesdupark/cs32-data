@@ -18,12 +18,12 @@ public class CSVParserTest {
     assertEquals(parser.getData().get(0).getClassYear(), "junior");
     assertEquals(parser.getData().get(0).getNationality(), "Russia");
     assertEquals(parser.getData().get(0).getRace(), "American Indian or Alaska Native");
-    assertEquals(parser.getData().get(0).getYearsExp(), 18);
+    assertEquals(parser.getData().get(0).getYearsExp(), 18, 0.1);
     assertEquals(parser.getData().get(0).getCommStyle(), "email");
-    assertEquals(parser.getData().get(0).getWeeklyAvail(), 2);
+    assertEquals(parser.getData().get(0).getWeeklyAvail(), 2, 0.1);
     assertEquals(parser.getData().get(0).getMeetingStyle(), "in person");
     assertEquals(parser.getData().get(0).getMeetingTime(), "morning");
-    assertEquals(parser.getData().get(0).getSweConfidence(), 2);
+    assertEquals(parser.getData().get(0).getSweConfidence(), 2, 0.1);
     assertEquals(parser.getData().get(0).getStrengths(),
         "\"quick learner, prepared, team player, early starter, friendly\"");
     assertEquals(parser.getData().get(0).getWeaknesses(), "\"cutthroat, unfriendly, late\"");
