@@ -41,7 +41,7 @@ public class BloomCommands implements REPLCommands {
           break;
       }
     } catch (IllegalArgumentException ex) {
-      System.err.println("ERROR: Incorrect number of arguments");
+      System.err.println(ex.getMessage());
     }
   }
 
@@ -58,7 +58,8 @@ public class BloomCommands implements REPLCommands {
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 3) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
+          + "Expected 3 arguments but got" + argc);
     }
 
     try {
@@ -91,7 +92,8 @@ public class BloomCommands implements REPLCommands {
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 2) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
+          + "Expected 2 arguments but got" + argc);
     }
 
     if (currFilter != null) {
@@ -115,7 +117,8 @@ public class BloomCommands implements REPLCommands {
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 2) {
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
+          + "Expected 2 arguments but got" + argc);
     }
 
     if (currFilter != null) {
