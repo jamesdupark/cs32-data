@@ -36,8 +36,7 @@ public class Repl {
       while (line != null) { // start REPL
         String[] cmds = line.split(" ");
         if (map.containsKey(cmds[0])) {
-          map.get(cmds[0]).executeCmds(cmds[0],
-              Arrays.copyOfRange(cmds, 1,  cmds.length - 1), cmds.length - 1);
+          map.get(cmds[0]).executeCmds(cmds[0], cmds, cmds.length);
         } else {
           System.out.println("Unknown command");
         }
@@ -50,5 +49,14 @@ public class Repl {
     }
   }
 
+  /**
+   * Attempts to add input commandClass to map with input command as key.
+   * @param command - String that is the key to be added to map
+   * @param commandClass - Class that implements REPLCommands that is the value to be added to map
+   * @return - boolean of whether inputs were successfully added to map.
+   */
+  public boolean addCommand(String command, REPLCommands commandClass) {
+    return this.map.put(command, commandClass) != null;
+  }
 
 }
