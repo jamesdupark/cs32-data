@@ -4,6 +4,8 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;
 
+import java.util.ArrayList;
+
 /**
  * The Main class of our project. This is where execution begins.
  */
@@ -43,7 +45,7 @@ public final class Main {
       runSparkServer((int) options.valueOf("port"));
     }
 
-    Repl myRepl = new Repl();
+    Repl myRepl = new Repl(new ArrayList<>());
     myRepl.run();
   }
 
