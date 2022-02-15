@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.List;
 
 /**
  * REPL class for reading in, parsing, and executing commands from standard
@@ -25,11 +26,15 @@ public class Repl {
   /**
    * Creates a new Repl object that reads from standard input.
    */
-  Repl(ArrayList<REPLCommands> cmdList) {
+  Repl(List<REPLCommands> cmdList) {
     this.cmdMap = new HashMap<String, REPLCommands>();
     this.reader = new BufferedReader(new InputStreamReader(System.in));
     for (REPLCommands cmdPackage : cmdList) {
-      cmdPackage.addCmds(this.cmdMap);
+      try {
+        cmdPackage.addCmds(this.cmdMap);
+      } catch (DuplicateCommandException ex) {
+        System.err.println(ex.getMessage());
+      }
     }
   }
 
@@ -38,6 +43,7 @@ public class Repl {
    */
   public void run() {
     // initialize all commands
+
 
     try {
       String line = reader.readLine();
@@ -55,13 +61,15 @@ public class Repl {
           REPLCommands cmdPack = cmdMap.get(cmd);
           cmdPack.executeCmds(cmd, argv, argc);
         } else {
-          System.out.println("Unknown command");
+          System.out.println("ERROR: Unknown command");
         }
         line = reader.readLine();
       }
       reader.close();
     } catch (IOException ex) { // catch IOexceptions
       System.err.println("ERROR: IOEXception encountered.");
+    } catch (DuplicateCommandException ex) {
+      System.err.println(ex.getMessage());
     }
   }
 }
