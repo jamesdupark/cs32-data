@@ -5,6 +5,7 @@ import joptsimple.OptionSet;
 import spark.Spark;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Main class of our project. This is where execution begins.
@@ -139,7 +140,12 @@ public final class Main {
 //    Repl myRepl = new Repl();
 //    myRepl.run();
 
-    Repl myRepl = new Repl(new ArrayList<>());
+    // adding REPLCommands packages
+    BloomCommands blooms = new BloomCommands();
+
+    // creating list
+    List<REPLCommands> commandsList = List.of(blooms);
+    Repl myRepl = new Repl(commandsList);
     myRepl.run();
 
   }

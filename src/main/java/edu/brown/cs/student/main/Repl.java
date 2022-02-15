@@ -29,19 +29,17 @@ public class Repl {
   /**
    * Creates a new Repl object that reads from standard input.
    */
-  Repl(ArrayList<REPLCommands> cmdList) {
+  Repl(List<REPLCommands> cmdList) {
     this.cmdMap = new HashMap<String, REPLCommands>();
     this.reader = new BufferedReader(new InputStreamReader(System.in));
     for (REPLCommands cmdPackage : cmdList) {
-      cmdPackage.addCmds(this.cmdMap);
+      try {
+        cmdPackage.addCmds(this.cmdMap);
+      } catch (DuplicateCommandException ex) {
+        System.err.println(ex.getMessage());
+      }
     }
   }
-//    Repl(List<REPLCommands> cmdList) {
-//      for (REPLCommands cmdPack : cmdList) {
-//        cmdPack.addCmds(commandsMap);
-//      }
-//    }
-
 
   /**
    * Runs a REPL that reads from standard input and attempts to parse commands.
