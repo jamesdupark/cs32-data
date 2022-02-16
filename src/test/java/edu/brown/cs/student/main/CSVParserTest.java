@@ -2,12 +2,14 @@ package edu.brown.cs.student.main;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 
 public class CSVParserTest {
 
   @Test
-  public void parseDataTest() {
+  public void parseDataTest() throws IOException {
     CSVParser parser = new CSVParser();
     parser.parse("data/project1/proj1_small.csv");
     assertEquals(parser.getData().size(), 20, 0);

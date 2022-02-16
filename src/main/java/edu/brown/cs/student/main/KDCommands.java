@@ -1,8 +1,14 @@
 package edu.brown.cs.student.main;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * REPLCommands class that packages commands related to k-d tree.
+ * @author andrew7li
+ */
 public class KDCommands implements REPLCommands {
   /**
    * List of strings representing the command keywords supported by this class.
@@ -11,16 +17,23 @@ public class KDCommands implements REPLCommands {
       List.of("load_kd", "similar_kd");
 
   /**
-   * the most recently created BloomFilter, able to be inserted into and
-   * queried.
+   * the most recently created KDTree, able to be inserted into and queried.
    */
-  private KDTree<KDNode> KDTree;
+  private KDTree<KDNode> kdTree;
 
+  /**
+   * Takes in a tokenized array representing user input and executes the proper
+   * command based on the input, if a corresponding command exists. Also handles
+   * printing results of commands and error messages.
+   *
+   * @param cmd argv[0], the keyword indicating which command should be run
+   * @param argv array of strings tokenized from user input
+   * @param argc length of argv
+   */
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
     // verifying that command is a supported one; should never fail
     assert cmd.equals(argv[0]) && commands.contains(cmd);
-
     try {
       switch (cmd) {
         case "load_kd":
@@ -38,6 +51,17 @@ public class KDCommands implements REPLCommands {
     }
   }
 
+  /**
+   * Executes the "load_kd" command by creating a new KD Tree and then inserting
+   * elements into the Tree.
+   * attempting to create a new bloom filter
+   * with the given parameters. If successful, updates the currFilter field and
+   * prints the filter's bitset to stdout. Prints informative error message upon
+   * failure.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   */
   private void loadKDCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     // check correct number of args
@@ -48,14 +72,18 @@ public class KDCommands implements REPLCommands {
 
     try {
       // create new bloom filter and update currFilter field
-      this.KDTree = new KDTree<>();
+      this.kdTree = new KDTree<>();
       CSVParser parser = new CSVParser();
       parser.parse(argv[1]);
       List<Student> studentList = parser.getData();
-      this.KDTree.insertStudents(studentList);
-      System.out.println("Read " + this.KDTree.numNodes + "students from " + argv[1]);
+      this.kdTree.insertStudents(studentList);
+      // print statement for inserting nodes
+      System.out.println("Read " + this.kdTree.numNodes + " students from " + argv[1]);
+      this.kdTree.printTree(this.kdTree.root, "");
     } catch (IllegalArgumentException ex) {
       System.err.println(ex.getMessage());
+    } catch (IOException e) {
+      System.out.println("ERROR:" + e);
     }
   }
 
