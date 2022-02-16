@@ -2,6 +2,16 @@ package edu.brown.cs.student.main;
 
 import java.util.List;
 
+/**
+ * Class representing a single KDTree of type KDNode. The KDTree will be
+ * balanced according to the type's contract. This Class will primarily serve
+ * two functionality: building a tree and finding close neighbors on the tree
+ * governed by a extensible distance metric.
+ * @param <T> the type of Nodes for the KDTree. The type implements KDNode
+ *           interface and has the methods for finding the axis value
+ *           and how many dimensions it has.
+ * @author andrew7li
+ */
 public class KDTree<T> {
   // the value of the current node
   private final KDNode val;
