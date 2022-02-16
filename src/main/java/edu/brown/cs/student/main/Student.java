@@ -1,42 +1,61 @@
 package edu.brown.cs.student.main;
 
 public class Student implements KDNode {
+  // id of a student
   private final int id;
-
-  /** unique identifier for each star. May be null. */
+  // name of a student
   private final String name;
-
-  /** position of star in 3-dimensional space. May not be null. */
+  // email of a student
   private final String email;
-
+  // gender of a student
   private final String gender;
-
+  // class year of a student
   private final String classYear;
-
+  // nationality of a student
   private final String nationality;
-
+  // race of a student
   private final String race;
-
+  // how many years of experience a student has with computer science
   private final double yearsExp;
-
+  // the preferred communication style of the student
   private final String commStyle;
-
+  // how many hours a student is available per week
   private final double weeklyAvail;
-
+  // the meeting style that the student prefers
   private final String meetingStyle;
-
+  // the time that a student prefers to meet
   private final String meetingTime;
-
+  // the student's confidence of themselves in software engineering
   private final double sweConfidence;
-
+  // the strengths of a student
   private final String strengths;
-
+  // the weaknesses of a student
   private final String weaknesses;
-
+  // the skills of a student
   private final String skills;
-
+  // the interests of a student
   private final String interests;
 
+  /**
+   * Constructor for a Student.
+   * @param id the ID of a student
+   * @param name name of a student
+   * @param email email of a student
+   * @param gender gender of a student
+   * @param classYear class year of a student
+   * @param nationality nationality of a student
+   * @param race race of a student
+   * @param yearsExp numbers of years of experience a student has
+   * @param commStyle preferred communication style of a student
+   * @param weeklyAvail weekly available hours a student has
+   * @param meetingStyle preferred meeting style a student has
+   * @param meetingTime preferred meeting time a student has
+   * @param sweConfidence confidence that a student has in their software engineering skills
+   * @param strengths strengths of a student
+   * @param weaknesses weaknesses of a student
+   * @param skills skills of a student
+   * @param interests interests of a student
+   */
   public Student(int id, String name, String email, String gender, String classYear,
                  String nationality, String race, double yearsExp, String commStyle,
                  double weeklyAvail, String meetingStyle, String meetingTime, double sweConfidence,
@@ -93,6 +112,9 @@ public class Student implements KDNode {
     return "(" + this.yearsExp + ", " + this.weeklyAvail + ", " + this.sweConfidence + ")";
   }
 
+  /**
+   * @return id of student
+   */
   public int getId() {
     return this.id;
   }

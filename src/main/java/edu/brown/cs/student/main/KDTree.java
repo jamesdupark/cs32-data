@@ -4,19 +4,19 @@ import java.util.List;
 
 public class KDTree<T> {
   // the value of the current node
-  public KDNode val;
+  private final KDNode val;
   // the root of the tree
-  public KDTree<KDNode> root;
+  private KDTree<KDNode> root;
   // the parent of the node
-  public KDTree<KDNode> parent;
+  private KDTree<KDNode> parent;
   // the left node at the current node
-  public KDTree<KDNode> left;
+  private KDTree<KDNode> left;
   // the right node at the current node
-  public KDTree<KDNode> right;
+  private KDTree<KDNode> right;
   // the number of nodes in the tree
-  public int numNodes;
+  private int numNodes;
   // the depth of the tree the node is at
-  public int depth;
+  private int depth;
 
   /**
    * Default constructor for a KDTree — instantiates tree as empty.
@@ -119,6 +119,62 @@ public class KDTree<T> {
     System.out.println(nodeString);
 
     // print right subtree below current node
-    printTree(node.right , prefix + " ");
+    printTree(node.right, prefix + " ");
+  }
+
+  /**
+   * Accessor method for getting the value at a Node.
+   * @return value at a Node for the KDTree.
+   */
+  public KDNode getVal() {
+    return val;
+  }
+
+  /**
+   * Accessor method for getting the root of the KDTree.
+   * @return the root of the KDTree
+   */
+  public KDTree<KDNode> getRoot() {
+    return root;
+  }
+
+  /**
+   * Accessor method for getting the parent of a Node on the KDTree.
+   * @return the parent of the current Node on the KDTree
+   */
+  public KDTree<KDNode> getParent() {
+    return parent;
+  }
+
+  /**
+   * Accessor method for getting the left subtree for a Node on the KDTree.
+   * @return the left subtree for a Node on the KDTree
+   */
+  public KDTree<KDNode> getLeft() {
+    return left;
+  }
+
+  /**
+   * Accessor method for getting the right subtree for a Node on the KDTree.
+   * @return the right subtree for a Node on the KDTree
+   */
+  public KDTree<KDNode> getRight() {
+    return right;
+  }
+
+  /**
+   * Accessor method for getting the number of nodes on the KDTree.
+   * @return the number of nodes on the KDTree
+   */
+  public int getNumNodes() {
+    return numNodes;
+  }
+
+  /**
+   * Accessor method for getting the depth of the current Node on the KDTree.
+   * @return the depth of the current Node on the KDTree
+   */
+  public int getDepth() {
+    return depth;
   }
 }

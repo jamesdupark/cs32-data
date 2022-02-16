@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -78,8 +77,8 @@ public class KDCommands implements REPLCommands {
       List<Student> studentList = parser.getData();
       this.kdTree.insertStudents(studentList);
       // print statement for inserting nodes
-      System.out.println("Read " + this.kdTree.numNodes + " students from " + argv[1]);
-      this.kdTree.printTree(this.kdTree.root, "");
+      System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
+      this.kdTree.printTree(this.kdTree.getRoot(), "");
     } catch (IllegalArgumentException ex) {
       System.err.println(ex.getMessage());
     } catch (IOException e) {

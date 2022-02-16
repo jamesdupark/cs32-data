@@ -1,5 +1,9 @@
 package edu.brown.cs.student.main;
 
+/**
+ * Interface for a KDTree. Defines functionality that classes
+ * of a KDTree must have.
+ */
 public interface KDNode {
   /**
    * Method to find the axis value for the value at a Node.
