@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 public class KDTreeTest {
   KDTree<KDNode> emptyTree;
@@ -28,7 +27,7 @@ public class KDTreeTest {
 
     // initialize standard coordinate tree
     stdCoordinate = new KDTree<>();
-    ArrayList<Coordinate> cordList = new ArrayList<>();
+    ArrayList<KDNode> cordList = new ArrayList<>();
     Coordinate c1 = new Coordinate(3, 2, 4);
     Coordinate c2 = new Coordinate(5, 10, 0);
     Coordinate c3 = new Coordinate(1, 5, -3);
@@ -41,26 +40,28 @@ public class KDTreeTest {
     cordList.add(c4);
     cordList.add(c5);
     cordList.add(c6);
-    stdCoordinate.insertList();
-
+    stdCoordinate.insertList(cordList);
   }
 
   @Test
-  public void testConstructor() {
-    assertEquals(0, emptyTree.getNumNodes());
-    assertEquals(20, smallStudent.getNumNodes());
-//    assertEquals("0".repeat(29), stdBloom.toString());
+  public void testConstructor() throws IOException {
+    setup();
+    // test number of nodes
+    assertEquals(emptyTree.getNumNodes(), 1);
+    assertEquals(smallStudent.getNumNodes(), 20);
+    assertEquals(stdCoordinate.getNumNodes(), 6);
 
-    // fprate out of bounds
-//    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(0, 5));
-//    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(-1, 5));
-//    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(3, 5));
-//    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(1, 5));
-//
-//    // maxElts out of bounds
-//    assertThrows(IllegalArgumentException.class,
-//        () -> new BloomFilter(0.001, 2147483647));
-//    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(0.1, -3));
-//    assertThrows(IllegalArgumentException.class, () -> new BloomFilter(0.1, 0));
+    // test if root is inserted correctly
+    assertEquals(emptyTree.getRoot(), null);
+    assertEquals(smallStudent.getRoot().getVal().getAxisVal(0), 18, 0);
+    assertEquals(smallStudent.getRoot().getVal().getAxisVal(1), 2, 0);
+    assertEquals(smallStudent.getRoot().getVal().getAxisVal(2), 2, 0);
+    assertEquals(stdCoordinate.getRoot().getVal().getAxisVal(0), 3, 0);
+    assertEquals(stdCoordinate.getRoot().getVal().getAxisVal(1), 2, 0);
+    assertEquals(stdCoordinate.getRoot().getVal().getAxisVal(2), 4, 0);
+
+    // test num dimensions
+    assertEquals(smallStudent.getVal().getNumDimensions(), 3);
+    assertEquals(stdCoordinate.getVal().getNumDimensions(), 3);
   }
 }
