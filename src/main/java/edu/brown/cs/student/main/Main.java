@@ -137,19 +137,15 @@ public final class Main {
 //    kdTree.printTree(kdTree.root, "");
 
 
-//    Repl myRepl = new Repl();
-//    myRepl.run();
-
     // adding REPLCommands packages
     BloomCommands blooms = new BloomCommands();
-    KDCommands kdCommands = new KDCommands();
+    NightSkyCommands stars = new NightSkyCommands();
+    KDCommands kdtree = new KDCommands();
 
     // creating list
-//    List<REPLCommands> commandsList = List.of(blooms, kdCommands);
-//    Repl myRepl = new Repl(commandsList);
-
-//    myRepl.run();
-
+    List<REPLCommands> commandsList = List.of(blooms, stars, kdtree);
+    Repl myRepl = new Repl(commandsList);
+    myRepl.run();
   }
 
   private void runSparkServer(int port) {

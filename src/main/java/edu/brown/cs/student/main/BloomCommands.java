@@ -59,7 +59,7 @@ public class BloomCommands implements REPLCommands {
     // check correct number of args
     if (argc != 3) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 3 arguments but got" + argc);
+          + "Expected 3 arguments but got " + argc);
     }
 
     try {
@@ -93,7 +93,7 @@ public class BloomCommands implements REPLCommands {
     // check correct number of args
     if (argc != 2) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 2 arguments but got" + argc);
+          + "Expected 2 arguments but got " + argc);
     }
 
     if (currFilter != null) {
@@ -118,7 +118,7 @@ public class BloomCommands implements REPLCommands {
     // check correct number of args
     if (argc != 2) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 2 arguments but got" + argc);
+          + "Expected 2 arguments but got " + argc);
     }
 
     if (currFilter != null) {
@@ -137,9 +137,9 @@ public class BloomCommands implements REPLCommands {
   public void addCmds(Map<String, REPLCommands> replCommandsMap)
       throws DuplicateCommandException {
     for (int i = 0; i < commands.size(); i++) {
-      // adding commands to commandsMap
+      // check for duplicate commands
       String cmd = commands.get(i);
-      REPLCommands dupPack = replCommandsMap.put(cmd, this);
+      REPLCommands dupPack = replCommandsMap.get(cmd);
       if (dupPack != null) {
         // if a duplicate value is found
         for (int j = 0; j < i; j++) { // remove all previously added keys
@@ -149,6 +149,8 @@ public class BloomCommands implements REPLCommands {
 
         throw new DuplicateCommandException("ERROR: command " + cmd
             + " already in this REPL's commandsMap");
+      } else { // no duplicates found, can put command in safely
+        replCommandsMap.put(cmd, this);
       }
     }
   }
