@@ -52,7 +52,7 @@ public class NightSkyCommands implements REPLCommands {
         System.err.println("ERROR: file not found.");
       }
     } else { // signal incorrect number of args
-      throw new IllegalArgumentException();
+      System.err.println("ERROR: incorrect number of args");
     }
   }
 

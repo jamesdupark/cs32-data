@@ -49,10 +49,14 @@ public class Repl {
       String line = reader.readLine();
       while (line != null) { // start REPL
         ArrayList<String> matchList = new ArrayList<String>();
-        Pattern regex = Pattern.compile("[^ \"]+|\"([^\"]*)\"");
+        Pattern regex = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"");
         Matcher regexMatcher = regex.matcher(line);
         while (regexMatcher.find()) {
-          matchList.add(regexMatcher.group());
+          if (regexMatcher.group(1) != null) {
+            matchList.add(regexMatcher.group(1));
+          } else {
+            matchList.add(regexMatcher.group());
+          }
         }
         String[] argv = matchList.toArray(new String[0]);
         String cmd = argv[0];
@@ -66,7 +70,7 @@ public class Repl {
         line = reader.readLine();
       }
       reader.close();
-    } catch (IOException ex) { // catch IOexceptions
+    } catch (IOException ex) {
       System.err.println("ERROR: IOEXception encountered.");
     }
   }
