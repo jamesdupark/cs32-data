@@ -55,15 +55,19 @@ public class Repl {
           matchList.add(regexMatcher.group());
         }
         String[] argv = matchList.toArray(new String[0]);
-        String cmd = argv[0];
         int argc = argv.length;
+        if (argc == 0) { // no input
+          line = reader.readLine(); // read next line
+          continue;
+        }
+        String cmd = argv[0];
         if (cmdMap.containsKey(cmd)) {
           REPLCommands cmdPack = cmdMap.get(cmd);
           cmdPack.executeCmds(cmd, argv, argc);
         } else {
           System.out.println("ERROR: Unknown command");
         }
-        line = reader.readLine();
+        line = reader.readLine(); // read next line
       }
       reader.close();
     } catch (IOException ex) { // catch IOexceptions
