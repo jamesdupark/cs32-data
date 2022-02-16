@@ -74,8 +74,8 @@ public class KDCommands implements REPLCommands {
       this.kdTree = new KDTree<>();
       CSVParser parser = new CSVParser();
       parser.parse(argv[1]);
-      List<Student> studentList = parser.getData();
-      this.kdTree.insertStudents(studentList);
+      List<KDNode> studentList = parser.getData();
+      this.kdTree.insertList(studentList);
       // print statement for inserting nodes
       System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
       this.kdTree.printTree(this.kdTree.getRoot(), "");

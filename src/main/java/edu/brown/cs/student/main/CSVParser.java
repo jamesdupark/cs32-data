@@ -8,11 +8,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CSVParser {
-  private ArrayList<Student> data;
+  private ArrayList<KDNode> data;
   CSVParser() {
-    this.data = new ArrayList<Student>();
+    this.data = new ArrayList<>();
   }
-  public ArrayList<Student> getData() {
+  public ArrayList<KDNode> getData() {
     return this.data;
   }
 

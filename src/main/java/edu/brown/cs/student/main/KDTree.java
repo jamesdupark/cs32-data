@@ -54,12 +54,12 @@ public class KDTree<T> {
   }
 
   /**
-   * Method to insert an input list of students into a KDTree.
-   * @param studentsList list of students to be inserted into the tree
+   * Method to insert an input list of type KDNode into a KDTree.
+   * @param inputList list of elements of type KDNode to be inserted into the tree
    */
-  public void insertStudents(List<Student> studentsList) {
-    for (Student s : studentsList) {
-      this.insert(this.root, s);
+  public void insertList(List<KDNode> inputList) {
+    for (KDNode ele : inputList) {
+      this.insert(this.root, ele);
     }
   }
 
