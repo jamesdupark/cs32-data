@@ -152,7 +152,7 @@ public class KDTree<T> {
   }
 
   public double findEuclideanDistance(KDNode origin, KDNode target) {
-    System.out.println("inside euclidean distance" + origin);
+//    System.out.println("inside euclidean distance" + origin);
 //    System.out.println(this.getVal());
     double sum = 0;
     for (int i = 0; i < target.getNumDimensions(); i++) {
@@ -166,14 +166,17 @@ public class KDTree<T> {
   }
 
   public ArrayList<Integer> findKNN(int k, int targetID, KDTree<KDNode> cursor) {
-    System.out.println("inside fnn");
-    System.out.println(distanceQueue);
-    System.out.println(distToUserID);
-    if (distanceQueue.size() > 0) {
-      double firstEle = distanceQueue.poll();
-      System.out.println("FIRST ELEM" + firstEle);
-      distanceQueue.add(firstEle);
-    }
+//    if (targetID == cursor.val.getID()) {
+//      continue;
+//    }
+//    System.out.println("inside fnn");
+//    System.out.println(distanceQueue);
+//    System.out.println(distToUserID);
+//    if (distanceQueue.size() > 0) {
+//      double firstEle = distanceQueue.poll();
+//      System.out.println("FIRST ELEM" + firstEle);
+//      distanceQueue.add(firstEle);
+//    }
     if (userIDToNode.containsKey(targetID)) {
       // key exists
 //      System.out.println("key exists");
@@ -195,7 +198,8 @@ public class KDTree<T> {
       // check if we add this node to our queue
       if (distanceQueue.size() < k) {
         // our queue is not full yet
-        distanceQueue.add(euclideanDist);
+        if (targetID != cursor.val.getID())
+          distanceQueue.add(euclideanDist);
         // TODO : traverse both children
         if (cursor.left != null) {
           findKNN(k, targetID, cursor.left);
@@ -205,7 +209,7 @@ public class KDTree<T> {
         }
       } else {
         // check if current node's euclidean distance is closer than farthest distance
-        if (euclideanDist <= distanceQueue.peek()) {
+        if (euclideanDist <= distanceQueue.peek() && targetID != cursor.val.getID()) {
           distanceQueue.poll();
           distanceQueue.add(euclideanDist);
         }
