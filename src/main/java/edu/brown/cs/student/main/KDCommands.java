@@ -78,7 +78,11 @@ public class KDCommands implements REPLCommands {
       this.kdTree.insertList(studentList);
       // print statement for inserting nodes
       System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
-//      this.kdTree.printTree(this.kdTree.getRoot(), "");
+      this.kdTree.printTree(this.kdTree.getRoot(), "");
+      System.out.println(this.kdTree.userIDToNode + "\n\n");
+
+      System.out.println("FINDING NEIGHBORS INSIDE KDCOMMANDS");
+      System.out.println(this.kdTree.findKNN(5, 3, this.kdTree.getRoot()));
     } catch (IllegalArgumentException ex) {
       System.err.println(ex.getMessage());
     } catch (IOException e) {

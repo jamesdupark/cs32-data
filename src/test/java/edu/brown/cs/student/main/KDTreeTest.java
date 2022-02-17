@@ -47,7 +47,7 @@ public class KDTreeTest {
   public void testConstructor() throws IOException {
     setup();
     // test number of nodes
-    assertEquals(emptyTree.getNumNodes(), 1);
+    assertEquals(emptyTree.getNumNodes(), 0);
     assertEquals(smallStudent.getNumNodes(), 20);
     assertEquals(stdCoordinate.getNumNodes(), 6);
 
@@ -61,7 +61,20 @@ public class KDTreeTest {
     assertEquals(stdCoordinate.getRoot().getVal().getAxisVal(2), 4, 0);
 
     // test num dimensions
-    assertEquals(smallStudent.getVal().getNumDimensions(), 3);
-    assertEquals(stdCoordinate.getVal().getNumDimensions(), 3);
+    assertEquals(smallStudent.getRoot().getVal().getNumDimensions(), 3);
+    assertEquals(stdCoordinate.getRoot().getVal().getNumDimensions(), 3);
+  }
+
+  @Test
+  public void testInsert() {
+    // insert into left subtree of root node
+    Coordinate c = new Coordinate(-5, 0, 4);
+    assertEquals(stdCoordinate.getNumNodes(), 6);
+    stdCoordinate.insert(stdCoordinate.getRoot(), c);
+    assertEquals(stdCoordinate.getNumNodes(), 7);
+//    stdCoordinate.printTree(stdCoordinate.getRoot(), "");
+//    assertEquals(stdCoordinate.getRoot().getLeft().getVal().getAxisVal(0), -5, 0);
+//    assertEquals(stdCoordinate.getRoot().getLeft().getVal().getAxisVal(1), 0, 0);
+//    assertEquals(stdCoordinate.getRoot().getLeft().getVal().getAxisVal(2), 4, 0);
   }
 }

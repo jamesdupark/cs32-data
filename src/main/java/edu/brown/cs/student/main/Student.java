@@ -81,6 +81,17 @@ public class Student implements KDNode {
 
 
   /**
+   * Method to return the ID of the KDNode that is used when
+   * querying the nearest neighbors.
+   *
+   * @return the ID of the KDNode
+   */
+  @Override
+  public int getID() {
+    return this.id;
+  }
+
+  /**
    * Method to find the axis value for the value at a Node.
    * @param axis the axis to retrieve for the value
    * @return the axis value for the value at a Node
