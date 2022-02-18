@@ -157,7 +157,11 @@ public class KDTree<T> {
     return Math.sqrt(sum);
   }
 
-  public ArrayList<Integer> findKNN(int k, int targetID, KDTree<KDNode> cursor) {
+  public ArrayList<Integer> findKNN(int k, int targetID, KDTree<KDNode> cursor)
+      throws KIsNegativeException, KeyNotFoundException {
+    if (k < 0) {
+      throw new KIsNegativeException("ERROR: K is negative!");
+    }
     if (userIDToNode.containsKey(targetID)) {
       // key exists
       KDNode targetNode = userIDToNode.get(targetID);
@@ -237,7 +241,7 @@ public class KDTree<T> {
         }
       }
     } else {
-      throw new RuntimeException("Key does not exist!");
+      throw new KeyNotFoundException("ERROR: Key does not exist!");
     }
 
     ArrayList<Integer> IDList;

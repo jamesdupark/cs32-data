@@ -65,12 +65,12 @@ public class KDCommands implements REPLCommands {
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 2) {
-      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 2 arguments but got" + argc);
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
+          + "Expected 2 arguments but got " + argc);
     }
 
     try {
-      // create new bloom filter and update currFilter field
+      // create new kd tree and insert elements into tree
       this.kdTree = new KDTree<>();
       CSVParser parser = new CSVParser();
       parser.parse(argv[1]);
@@ -78,11 +78,6 @@ public class KDCommands implements REPLCommands {
       this.kdTree.insertList(studentList);
       // print statement for inserting nodes
       System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
-//      this.kdTree.printTree(this.kdTree.getRoot(), "");
-//      System.out.println(this.kdTree.userIDToNode + "\n\n");
-//
-//      System.out.println("FINDING NEIGHBORS INSIDE KDCOMMANDS");
-//      System.out.println(this.kdTree.findKNN(5, 3, this.kdTree.getRoot()));
     } catch (IllegalArgumentException ex) {
       System.err.println(ex.getMessage());
     } catch (IOException e) {
@@ -94,12 +89,17 @@ public class KDCommands implements REPLCommands {
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 3) {
-      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 3 arguments but got" + argc);
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
+          + "Expected 3 arguments but got " + argc);
     }
-    System.out.println(this.kdTree.findKNN(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), this.kdTree.getRoot()));
-    catch (IllegalArgumentException ex) {
-      System.err.println(ex.getMessage());
+    try {
+      System.out.println(this.kdTree.findKNN(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), this.kdTree.getRoot()));
+    } catch (IllegalArgumentException e) {
+      System.err.println(e.getMessage());
+    } catch (KIsNegativeException e) {
+      System.err.println(e.getMessage());
+    } catch (KeyNotFoundException e) {
+      System.err.println(e.getMessage());
     }
   }
 
