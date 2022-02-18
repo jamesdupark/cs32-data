@@ -93,11 +93,14 @@ public class KDCommands implements REPLCommands {
   private void similarKDCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     // check correct number of args
-//    System.out.println("Similar KD Cmd");
-//    System.out.println(this.kdTree.userIDToNode + "\n\n");
-//
-//    System.out.println("FINDING NEIGHBORS INSIDE KDCOMMANDS");
+    if (argc != 3) {
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
+          + "Expected 3 arguments but got" + argc);
+    }
     System.out.println(this.kdTree.findKNN(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), this.kdTree.getRoot()));
+    catch (IllegalArgumentException ex) {
+      System.err.println(ex.getMessage());
+    }
   }
 
   /**

@@ -20,26 +20,24 @@ import java.util.Random;
  * @author andrew7li
  */
 public class KDTree<T> {
-  // the value of the current node
+  /** the value of the current node */
   private final KDNode val;
-  // the root of the tree
+  /** the root of the tree */
   private KDTree<KDNode> root;
-  // the parent of the node
+  /** the parent of the node */
   private KDTree<KDNode> parent;
-  // the left node at the current node
+  /** the left node at the current node */
   private KDTree<KDNode> left;
-  // the right node at the current node
+  /** the right node at the current node */
   private KDTree<KDNode> right;
-  // the number of nodes in the tree
+  /** the number of nodes in the tree */
   private int numNodes;
-  // the depth of the tree the node is at
+  /** the depth of the tree the node is at */
   private int depth;
 
   public Map<Integer, KDNode> userIDToNode;
   public Map<Double, ArrayList<Integer>> distToUserID;
   public PriorityQueue<Double> distanceQueue;
-
-
 
   /**
    * Default constructor for a KDTree — instantiates tree as empty.
@@ -86,7 +84,6 @@ public class KDTree<T> {
    */
   public void insert(KDTree<KDNode> cursor, KDNode val) {
     KDTree<KDNode> node = new KDTree<>(val);
-//    System.out.println(node.val);
     userIDToNode.put(val.getID(), node.getVal());
 
     // empty tree -> node becomes root
@@ -152,38 +149,19 @@ public class KDTree<T> {
   }
 
   public double findEuclideanDistance(KDNode origin, KDNode target) {
-//    System.out.println("inside euclidean distance" + origin);
-//    System.out.println(this.getVal());
     double sum = 0;
     for (int i = 0; i < target.getNumDimensions(); i++) {
-//      System.out.println("Target val " + target.getAxisVal(i));
-//      System.out.println("Origin val " + origin.getAxisVal(i));
       double deltaAxis = (target.getAxisVal(i) - origin.getAxisVal(i));
-//      System.out.println("DELTA ASIS" + deltaAxis);
       sum += Math.pow(deltaAxis, 2);
     }
     return Math.sqrt(sum);
   }
 
   public ArrayList<Integer> findKNN(int k, int targetID, KDTree<KDNode> cursor) {
-//    if (targetID == cursor.val.getID()) {
-//      continue;
-//    }
-//    System.out.println("inside fnn");
-//    System.out.println(distanceQueue);
-//    System.out.println(distToUserID);
-//    if (distanceQueue.size() > 0) {
-//      double firstEle = distanceQueue.poll();
-//      System.out.println("FIRST ELEM" + firstEle);
-//      distanceQueue.add(firstEle);
-//    }
     if (userIDToNode.containsKey(targetID)) {
       // key exists
-//      System.out.println("key exists");
       KDNode targetNode = userIDToNode.get(targetID);
-//      System.out.println("key exists 2" + targetNode);
       double euclideanDist = findEuclideanDistance(cursor.val, targetNode);
-//      System.out.println("key exists 3" + euclideanDist);
 
       // add user ID to the distance hashmap
       if (distToUserID.containsKey(euclideanDist)) {
@@ -194,13 +172,12 @@ public class KDTree<T> {
         distToUserID.put(euclideanDist, temp);
       }
 
-
       // check if we add this node to our queue
       if (distanceQueue.size() < k) {
         // our queue is not full yet
         if (targetID != cursor.val.getID())
           distanceQueue.add(euclideanDist);
-        // TODO : traverse both children
+        // traverse both children
         if (cursor.left != null) {
           findKNN(k, targetID, cursor.left);
         }
@@ -221,14 +198,12 @@ public class KDTree<T> {
         if (axisDistance  > distanceQueue.peek()) {
           // throw away a branch
           if (cursor.val.getAxisVal(axisDim) < targetNode.getAxisVal(axisDim)) {
-            // throw away left
-            // TODO : traverse right only
+            // throw away left and traverse right only
             if (cursor.right != null) {
               findKNN(k, targetID, cursor.right);
             }
           } else {
-            // throw away right
-            // TODO : traverse left only
+            // throw away right and traverse left only
             if (cursor.left != null) {
               findKNN(k, targetID, cursor.left);
             }
@@ -238,13 +213,12 @@ public class KDTree<T> {
         } else if (axisDistance == distanceQueue.peek()) {
           // check if branch should be thrown away
           if (cursor.val.getAxisVal(axisDim) < targetNode.getAxisVal(axisDim)) {
-            // throw away left
-            // TODO : traverse right only
+            // throw away left and traverse right only
             if (cursor.right != null) {
               findKNN(k, targetID, cursor.right);
             }
           } else {
-            // TODO : both children
+            // traverse both children
             if (cursor.left != null) {
               findKNN(k, targetID, cursor.left);
             }
@@ -253,8 +227,7 @@ public class KDTree<T> {
             }
           }
         } else {
-          // i traverse both branches
-          // TODO : travese both children
+          // travese both children
           if (cursor.left != null) {
             findKNN(k, targetID, cursor.left);
           }
@@ -277,7 +250,6 @@ public class KDTree<T> {
         // already found k nearest neighbors
         break;
       } else {
-        // add
         // find list of ids associated at key
         IDList = distToUserID.get(ele);
         if (IDList.size() > 1) {
@@ -294,11 +266,6 @@ public class KDTree<T> {
     }
     return retList;
   }
-
-
-
-
-
 
   /**
    * Accessor method for getting the value at a Node.
