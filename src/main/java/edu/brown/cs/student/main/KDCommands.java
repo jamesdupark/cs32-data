@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +46,10 @@ public class KDCommands implements REPLCommands {
           System.err.println("ERROR: Command not recognized.");
           break;
       }
-    } catch (IllegalArgumentException ex) {
-      System.err.println(ex.getMessage());
+    } catch (IllegalArgumentException e) {
+      System.err.println(e.getMessage());
+    } catch (RuntimeException e) {
+      System.err.println(e.getMessage());
     }
   }
 
@@ -86,14 +89,21 @@ public class KDCommands implements REPLCommands {
   }
 
   private void similarKDCmd(String[] argv, int argc)
-      throws IllegalArgumentException {
+      throws IllegalArgumentException, RuntimeException {
     // check correct number of args
     if (argc != 3) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
           + "Expected 3 arguments but got " + argc);
     }
+    if (this.kdTree == null) {
+      throw new RuntimeException("ERROR: Can't query! There is no data in the KDTree");
+    }
     try {
-      System.out.println(this.kdTree.findKNN(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), this.kdTree.getRoot()));
+//      System.out.println(this.kdTree.findKNN(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), this.kdTree.getRoot()));
+      ArrayList<Integer> retList = this.kdTree.findKNN(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), this.kdTree.getRoot());
+      for (Integer id : retList) {
+        System.out.println(id);
+      }
     } catch (IllegalArgumentException e) {
       System.err.println(e.getMessage());
     } catch (KIsNegativeException e) {

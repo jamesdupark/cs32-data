@@ -71,7 +71,7 @@ public class Repl {
       }
       reader.close();
     } catch (IOException ex) { // catch IOexceptions
-      System.err.println("ERROR: IOEXception encountered.");
+      System.err.println("ERROR: IOException encountered.");
     }
   }
 }

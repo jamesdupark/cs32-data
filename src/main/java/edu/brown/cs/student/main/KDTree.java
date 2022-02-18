@@ -162,6 +162,9 @@ public class KDTree<T> {
     if (k < 0) {
       throw new KIsNegativeException("ERROR: K is negative!");
     }
+    if (k == 0) {
+      return new ArrayList<>();
+    }
     if (userIDToNode.containsKey(targetID)) {
       // key exists
       KDNode targetNode = userIDToNode.get(targetID);
