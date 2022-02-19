@@ -78,8 +78,10 @@ public class KDCommands implements REPLCommands {
       CSVParser parser = new CSVParser();
       parser.parse(argv[1]);
       List<KDNode> studentList = parser.getData();
-      this.kdTree.insertList(studentList);
-      // print statement for inserting nodes
+//      this.kdTree.insert(studentList, 0);
+      this.kdTree.insertList(studentList, 0);
+//       print statement for inserting nodes
+//      this.kdTree.printTree(this.kdTree.getRoot(), "");
       System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
     } catch (IllegalArgumentException ex) {
       System.err.println(ex.getMessage());

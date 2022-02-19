@@ -3,6 +3,7 @@ package edu.brown.cs.student.main;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,18 +71,36 @@ public class KDTree<T> {
   /**
    * Method to insert an input list of type KDNode into a KDTree.
    * @param inputList list of elements of type KDNode to be inserted into the tree
+   * @param dim the axis dimension to be sorted and compared on
    */
-  public void insertList(List<KDNode> inputList) {
-    for (KDNode ele : inputList) {
-      this.insert(this.root, ele);
+  public void insertList(List<KDNode> inputList, int dim) {
+    if (inputList.size() == 0) {
+      return;
     }
+    inputList.sort(Comparator.comparingDouble(ele -> ele.getAxisVal(dim)));
+    int start = 0;
+    int end = inputList.size() - 1;
+    int mid = (end - start) / 2;
+    while (mid > start) {
+      if (inputList.get(mid) != inputList.get(mid - 1)) {
+        // found unique
+        break;
+      } else {
+        mid--;
+      }
+    }
+    this.insert(this.root, inputList.get(mid));
+    List<KDNode> leftSublist = inputList.subList(start, mid);
+    List<KDNode> rightSublist = inputList.subList(mid + 1, end + 1);
+    insertList(leftSublist, (dim + 1) % 3);
+    insertList(rightSublist, (dim + 1) % 3);
   }
 
   /**
-   * Method to make a Node for a value and insert into the KDTree.
-   * @param cursor Node on the KDTree for the input val Node to be inserted under
-   * @param val value to be made into a Node and to be inserted
-   */
+  * Method to make a Node for a value and insert into the KDTree.
+  * @param cursor Node on the KDTree for the input val Node to be inserted under
+  * @param val value to be made into a Node and to be inserted
+  */
   public void insert(KDTree<KDNode> cursor, KDNode val) {
     KDTree<KDNode> node = new KDTree<>(val);
     userIDToNode.put(val.getID(), node.getVal());
