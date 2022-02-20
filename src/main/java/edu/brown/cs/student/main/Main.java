@@ -1,10 +1,13 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.Commands.BloomCommands;
+import edu.brown.cs.student.main.Commands.KDCommands;
+import edu.brown.cs.student.main.Commands.NightSkyCommands;
+import edu.brown.cs.student.main.Commands.REPLCommands;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -137,9 +140,6 @@ public final class Main {
 //    kdTree.printTree(kdTree.root, "");
 
 
-//    Repl myRepl = new Repl();
-//    myRepl.run();
-
     // adding REPLCommands packages
     BloomCommands blooms = new BloomCommands();
     NightSkyCommands stars = new NightSkyCommands();
@@ -148,9 +148,7 @@ public final class Main {
     // creating list
     List<REPLCommands> commandsList = List.of(blooms, stars, kdtree);
     Repl myRepl = new Repl(commandsList);
-
     myRepl.run();
-
   }
 
   private void runSparkServer(int port) {

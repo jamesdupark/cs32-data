@@ -25,3 +25,6 @@ You'll also want to move the system tests that you wrote for Onboarding into the
 ### 3.6: External Interface Requirements
 
 ### 3.7 Non-functional Requirements
+
+## Sources: 
+https://stackoverflow.com/questions/4965335/how-to-print-binary-tree-diagram-in-java 

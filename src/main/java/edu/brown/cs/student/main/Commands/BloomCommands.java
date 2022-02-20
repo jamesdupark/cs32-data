@@ -1,4 +1,7 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.Commands;
+
+import edu.brown.cs.student.main.BloomFilter;
+import edu.brown.cs.student.main.DuplicateCommandException;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,15 @@ public class BloomCommands implements REPLCommands {
    */
   private BloomFilter currFilter;
 
+  /**
+   * Takes in a tokenized array representing user input and executes the proper
+   * command based on the input, if a corresponding command exists. Also handles
+   * printing results of commands and error messages.
+   *
+   * @param cmd argv[0], the keyword indicating which command should be run
+   * @param argv array of strings tokenized from user input
+   * @param argc length of argv
+   */
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
     // verifying that command is a supported one; should never fail

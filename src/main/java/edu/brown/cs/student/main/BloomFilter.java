@@ -29,7 +29,7 @@ public class BloomFilter {
    * @throws IllegalArgumentException if an error is encountered that prevents
    * proper creation of the filter.
    */
-  BloomFilter(double fpRate, int maxElts) throws IllegalArgumentException {
+  public BloomFilter(double fpRate, int maxElts) throws IllegalArgumentException {
     try {
       assert fpRate > 0 && fpRate < 1
           : "false positive rate must be between 0 and 1";

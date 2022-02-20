@@ -1,6 +1,17 @@
 package edu.brown.cs.student.main;
 
+/**
+ * Interface for a KDTree. Defines functionality that classes
+ * of a KDTree must have.
+ */
 public interface KDNode {
+  /**
+   * Method to return the ID of the KDNode that is used when
+   * querying the nearest neighbors.
+   * @return the ID of the KDNode
+   */
+  int getID();
+
   /**
    * Method to find the axis value for the value at a Node.
    * @param axis the axis to retrieve for the value

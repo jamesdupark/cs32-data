@@ -1,22 +1,48 @@
 package edu.brown.cs.student.main;
 
-import java.util.List;
+import edu.brown.cs.student.main.Distances.Distances;
 
-public class KDTree<T> {
-  // the value of the current node
-  KDNode val;
-  // the root of the tree
-  public KDTree<KDNode> root;
-  // the parent of the node
-  public KDTree<KDNode> parent;
-  // the left node at the current node
-  public KDTree<KDNode> left;
-  // the right node at the current node
-  public KDTree<KDNode> right;
-  // the number of nodes in the tree
-  int numNodes;
-  // the depth of the tree the node is at
-  int depth;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Random;
+
+/**
+ * Class representing a single KDTree of type KDNode. The KDTree will be
+ * balanced according to the type's contract. This Class will primarily serve
+ * two functionality: building a tree and finding close neighbors on the tree
+ * governed by a extensible distance metric.
+ * @param <T> the type of Nodes for the KDTree. The type implements KDNode
+ *           interface and has the methods for finding the axis value
+ *           and how many dimensions it has.
+ * @author andrew7li
+ */
+public class KDTree<T extends KDNode> {
+  /** the value of the current node. */
+  private final KDNode val;
+  /** the root of the tree. */
+  private KDTree<KDNode> root;
+  /** the parent of the node. */
+  private KDTree<KDNode> parent;
+  /** the left node at the current node. */
+  private KDTree<KDNode> left;
+  /** the right node at the current node. */
+  private KDTree<KDNode> right;
+  /** the number of nodes in the tree. */
+  private int numNodes;
+  /** the depth of the tree the node is at. */
+  private int depth;
+  /** hashmap mapping from user IDs to the node on the tree. */
+  private Map<Integer, KDNode> userIDToNode;
+  /** hashmap mapping from euclidean distance to a list of user IDs
+   * associated with that distance. */
+  private Map<Double, ArrayList<Integer>> distToUserID;
+  /** priority queue that stores the k nearest euclidean distances. */
+  private PriorityQueue<Double> distanceQueue;
 
   /**
    * Default constructor for a KDTree — instantiates tree as empty.
@@ -29,6 +55,9 @@ public class KDTree<T> {
     this.right = null;
     this.numNodes = 0;
     this.depth = 0;
+    userIDToNode = new HashMap<>();
+    distToUserID = new HashMap<>();
+    distanceQueue = new PriorityQueue<>(Collections.reverseOrder());
   }
 
   /**
@@ -43,128 +72,310 @@ public class KDTree<T> {
     this.parent = null;
   }
 
-  public void insertStudents(List<Student> studentsList) {
-    for (Student s : studentsList) {
-      this.insert(this.root, s);
+  /**
+   * Method to insert an input list of type KDNode into a KDTree. The input
+   * list will first be sorted on the axis corresponding to the depth of the
+   * tree, then the middle element will be inserted into the tree. The left
+   * sublist will then go on the left subtree and the right sublist will go
+   * on the right subtree.
+   * @param inputList list of elements of type KDNode to be inserted into the tree
+   * @param dim the axis dimension to be sorted and compared on
+   */
+  public void insertList(List<KDNode> inputList, int dim) {
+    // base case for recursion
+    if (inputList.size() == 0) {
+      return;
     }
+    inputList.sort(Comparator.comparingDouble(ele -> ele.getAxisVal(dim)));
+    int start = 0;
+    int end = inputList.size() - 1;
+    int mid = (end - start) / 2;
+    // make sure element to be inserted is the first unique element in list with that value
+    while (mid > start) {
+      if (inputList.get(mid) != inputList.get(mid - 1)) {
+        // element is unique
+        break;
+      } else {
+        // find unique element
+        mid--;
+      }
+    }
+    this.insert(this.root, inputList.get(mid));
+    List<KDNode> leftSublist = inputList.subList(start, mid);
+    List<KDNode> rightSublist = inputList.subList(mid + 1, end + 1);
+    insertList(leftSublist, (dim + 1) % 3);
+    insertList(rightSublist, (dim + 1) % 3);
   }
 
   /**
-   * Method to make a Node for a value and insert into the KDTree.
-   * @param treeNode Node on the KDTree for the input val Node to be inserted under
-   * @param val value to be made into a Node and to be inserted
-   */
-  public void insert(KDTree<KDNode> treeNode, KDNode val) {
-    KDTree<KDNode> node = new KDTree<>(val);
-
-//    System.out.println("Node to be inserted: " + node.val);
+  * Method to make a Node for a value and insert into the KDTree.
+  * @param cursor Node on the KDTree for the input inputVal Node to be inserted under
+  * @param inputVal value to be made into a Node and to be inserted
+  */
+  public void insert(KDTree<KDNode> cursor, KDNode inputVal) {
+    KDTree<KDNode> node = new KDTree<>(inputVal);
+    userIDToNode.put(inputVal.getID(), node.getVal());
     // empty tree -> node becomes root
-    if (treeNode == null) {
+    if (cursor == null) {
       this.numNodes++;
-      treeNode = node;
-      treeNode.root = treeNode;
-      treeNode.depth = 1;
-      this.root = treeNode;
-//      System.out.println("Root node val: " + this.root.val);
+      cursor = node;
+      cursor.root = cursor;
+      cursor.depth = 1;
+      this.root = cursor;
     } else {
-      node.root = treeNode.root;
-//      System.out.println("treeNode root val: " + treeNode.root.val);
-//      System.out.println("Node's root val: " + node.root.val);
-      int axis = (treeNode.depth - 1) % val.getNumDimensions();
-
-      if (node.val.getAxisVal(axis) < treeNode.val.getAxisVal(axis)) {
+      node.root = cursor.root;
+      int axis = (cursor.depth - 1) % inputVal.getNumDimensions();
+      if (node.val.getAxisVal(axis) < cursor.val.getAxisVal(axis)) {
         // insert left
-        if (treeNode.left == null) {
+        if (cursor.left == null) {
           // node does not exist so insert here
           this.numNodes++;
-          treeNode.left = node;
-          node.parent = treeNode;
-          node.depth = treeNode.depth + 1;
+          cursor.left = node;
+          node.parent = cursor;
+          node.depth = cursor.depth + 1;
         } else {
           // node exists so recursive call
-          insert(treeNode.left, val);
+          insert(cursor.left, inputVal);
         }
       } else {
         // insert right
-//        System.out.println("Inserting right!");
-        if (treeNode.right == null) {
+        if (cursor.right == null) {
           // node does not exist so insert here
           this.numNodes++;
-//          System.out.println("Inserting here!");
-          treeNode.right = node;
-          node.parent = treeNode;
-          node.depth = treeNode.depth + 1;
-//          System.out.println(node.depth);
-//          System.out.println("here: " + node.root.val);
-//          System.out.println("here: " + node.root.right.val);
+          cursor.right = node;
+          node.parent = cursor;
+          node.depth = cursor.depth + 1;
         } else {
           // node exists so recursive call
-          insert(treeNode.right, val);
+          insert(cursor.right, inputVal);
         }
       }
     }
   }
-//  public void insert(KDNode<KDTree> treeNode, KDTree val) {
-//    KDNode<KDTree> node = new KDNode<>(val);
-//    System.out.println("Inside insert!");
-//    System.out.println((Coordinate)val);
-//    System.out.println("Node to be inserted: " + node.val);
-//    // empty tree -> node becomes root
-//    if (treeNode == null) {
-//      this.numNodes++;
-//      treeNode = node;
-//      treeNode.root = treeNode;
-//      treeNode.depth = 1;
-//      this.root = treeNode;
-//      System.out.println("Root node val: " + this.root.val);
-//    } else {
-//      node.root = treeNode.root;
-//      System.out.println("treeNode root val: " + treeNode.root.val);
-//      System.out.println("Node's root val: " + node.root.val);
-//      int axis = (treeNode.depth - 1) % 3;
-//
-//      KDNode<KDTree> childToTraverse = null;
-//      if (node.val.getAxisVal(axis) < treeNode.val.getAxisVal(axis)) {
-//        // insert left
-//        childToTraverse = treeNode.left;
-//        System.out.println("Child is inserting left!");
-////        System.out.println(childToTraverse.val);
-//      } else {
-//        childToTraverse = treeNode.right;
-//        System.out.println("Child is inserting right!");
-////        System.out.println(childToTraverse.val);
-//      }
-//      if (childToTraverse == null) {
-//        // node does not exist so insert here
-//        this.numNodes++;
-//        node.parent = treeNode;
-//        node.depth = treeNode.depth + 1;
-//      } else {
-//        // node exists so recursive call
-//        insert(childToTraverse, val);
-//      }
-//    }
-//  }
 
   /**
-   * Method to print and visualize the KDTree.
+   * Method to clear the data structures distToUserID and distanceQueue.
+   */
+  public void cleanDataStructures() {
+    distToUserID.clear();
+    distanceQueue.clear();
+  }
+
+  /**
+   * Method to print and visualize the KDTree at any Node on the tree.
    * @param node node at which the Tree is to be printed at
    * @param prefix the spacing corresponding to the Node's depth in the tree to simulate layers
    */
-  void printTree(KDTree<KDNode> node, String prefix) {
-    if(node == null) return;
-
+  public void printTree(KDTree<KDNode> node, String prefix) {
+    if (node == null) {
+      return;
+    }
     // print left subtree above current node
     printTree(node.left, prefix + " ");
-
     // print current node along with its depth and parent
     String nodeString = prefix + " + " + node.val + " depth: " + node.depth;
     if (node.parent != null) {
       nodeString += " Node's parent: " + node.parent.val;
     }
     System.out.println(nodeString);
-
     // print right subtree below current node
-    printTree(node.right , prefix + " ");
+    printTree(node.right, prefix + " ");
+  }
+
+  /**
+   * Method to insert a user ID into the distToUserID Hashmap.
+   * @param key the distance corresponding to the key in the map
+   * @param value the user ID to be added
+   */
+  private void insertIDIntoMap(double key, int value) {
+    if (distToUserID.containsKey(key)) {
+      distToUserID.get(key).add(value);
+    } else {
+      ArrayList<Integer> temp = new ArrayList<>();
+      temp.add(value);
+      distToUserID.put(key, temp);
+    }
+  }
+
+  /**
+   * Method that traverses a tree when finding the nearest neighbors.
+   * @param traverseLeft boolean indicating whether we should traverse left subtree from cursor
+   * @param traverseRight boolean indicating whether we should traverse right subtree from cursor
+   * @param k the number of nearest neighbors to find
+   * @param targetID the ID of the target node
+   * @param cursor pointer pointing to the current node on the tree
+   * @param distMetric the distance metric used to compare values
+   * @throws KIsNegativeException if k is negative
+   * @throws KeyNotFoundException if the user ID is not found
+   */
+  public void traverseTree(boolean traverseLeft, boolean traverseRight, int k,
+                           int targetID, KDTree<KDNode> cursor, Distances distMetric)
+      throws KIsNegativeException, KeyNotFoundException {
+    if (traverseLeft && cursor.left != null) {
+      findKSN(k, targetID, cursor.left, distMetric);
+    }
+    if (traverseRight && cursor.right != null) {
+      findKSN(k, targetID, cursor.right, distMetric);
+    }
+  }
+
+  /**
+   * Method to find the user IDs of the k most similar neighbors from the
+   * distanceQueue and distToUserID fields.
+   * @param k the number of user IDs to return
+   * @return the user IDs of the k most similar neighbors
+   */
+  public ArrayList<Integer> getUserIDOfKSN(int k) {
+    ArrayList<Integer> idList;
+    ArrayList<Integer> retList = new ArrayList<>();
+    List<Double> closestDistanceList = new ArrayList<>(distanceQueue);
+    Collections.sort(closestDistanceList);
+    for (double ele : closestDistanceList) {
+      if (retList.size() >= k) {
+        // already found k nearest neighbors
+        break;
+      } else {
+        // find list of ids associated at key
+        idList = distToUserID.get(ele);
+        if (idList.size() > 1) {
+          // need to randomize
+          Collections.shuffle(idList, new Random());
+          for (int i = 0; i < idList.size() && retList.size() < k; i++) {
+            retList.add(idList.get(i));
+          }
+        } else {
+          // no need to randomize
+          retList.add(idList.get(0));
+        }
+      }
+    }
+    return retList;
+  }
+
+  /**
+   * Method to find the K most similar neighbors to the target node. Similarity between
+   * two nodes is determined by the distMetric input.
+   * @param k the number of nearest neighbors to find
+   * @param targetID the ID of the target node
+   * @param cursor pointer pointing to the current node on the tree
+   * @param distMetric the distance metric used to compare values when determining similarity
+   * @return an array list of the most similar user IDs
+   * @throws KIsNegativeException
+   * @throws KeyNotFoundException
+   */
+  public ArrayList<Integer> findKSN(int k, int targetID, KDTree<KDNode> cursor,
+                                    Distances distMetric)
+      throws KIsNegativeException, KeyNotFoundException {
+    if (k < 0) {
+      throw new KIsNegativeException("ERROR: K is negative!");
+    }
+    if (k == 0) {
+      return new ArrayList<>();
+    }
+    if (userIDToNode.containsKey(targetID)) {
+      // key exists
+      KDNode targetNode = userIDToNode.get(targetID);
+      double distance = distMetric.getDistance(cursor.val, targetNode);
+      insertIDIntoMap(distance, cursor.getVal().getID());
+
+      // check if we add this node to our distance priority queue
+      if (distanceQueue.size() < k && targetID != cursor.val.getID()) {
+        // our queue is not full yet
+        distanceQueue.add(distance);
+        // traverse both children
+        traverseTree(true, true, k, targetID, cursor, distMetric);
+      } else {
+        // check if current node's euclidean distance is closer than farthest distance
+        if (distance <= distanceQueue.peek() && targetID != cursor.val.getID()) {
+          distanceQueue.poll();
+          distanceQueue.add(distance);
+        }
+
+        // traversal logic
+        // compare axis distance to farthest euclidean distance in priority queue
+        int axisDim = (cursor.getDepth() - 1) % cursor.val.getNumDimensions();
+        double axisDistance = Math.abs(targetNode.getAxisVal(axisDim)
+            - cursor.getVal().getAxisVal(axisDim));
+        if (axisDistance  > distanceQueue.peek()) {
+          // throw away one of the two branches
+          if (cursor.val.getAxisVal(axisDim) < targetNode.getAxisVal(axisDim)) {
+            traverseTree(false, true, k, targetID, cursor, distMetric);
+          } else {
+            traverseTree(true, false, k, targetID, cursor, distMetric);
+          }
+        } else if (axisDistance == distanceQueue.peek()) {
+          // may throw away left branch
+          if (cursor.val.getAxisVal(axisDim) < targetNode.getAxisVal(axisDim)) {
+            traverseTree(false, true, k, targetID, cursor, distMetric);
+          } else {
+            traverseTree(true, true, k, targetID, cursor, distMetric);
+          }
+        } else {
+          // traverse both children
+          traverseTree(true, true, k, targetID, cursor, distMetric);
+        }
+      }
+    } else {
+      throw new KeyNotFoundException("ERROR: Key does not exist!");
+    }
+    // find user IDs associated from distanceQueue and distToUserID Map
+    ArrayList<Integer> retList = getUserIDOfKSN(k);
+    return retList;
+  }
+
+  /**
+   * Accessor method for getting the value at a Node.
+   * @return value at a Node for the KDTree.
+   */
+  public KDNode getVal() {
+    return val;
+  }
+
+  /**
+   * Accessor method for getting the root of the KDTree.
+   * @return the root of the KDTree
+   */
+  public KDTree<KDNode> getRoot() {
+    return root;
+  }
+
+  /**
+   * Accessor method for getting the parent of a Node on the KDTree.
+   * @return the parent of the current Node on the KDTree
+   */
+  public KDTree<KDNode> getParent() {
+    return parent;
+  }
+
+  /**
+   * Accessor method for getting the left subtree for a Node on the KDTree.
+   * @return the left subtree for a Node on the KDTree
+   */
+  public KDTree<KDNode> getLeft() {
+    return left;
+  }
+
+  /**
+   * Accessor method for getting the right subtree for a Node on the KDTree.
+   * @return the right subtree for a Node on the KDTree
+   */
+  public KDTree<KDNode> getRight() {
+    return right;
+  }
+
+  /**
+   * Accessor method for getting the number of nodes on the KDTree.
+   * @return the number of nodes on the KDTree
+   */
+  public int getNumNodes() {
+    return numNodes;
+  }
+
+  /**
+   * Accessor method for getting the depth of the current Node on the KDTree.
+   * @return the depth of the current Node on the KDTree
+   */
+  public int getDepth() {
+    return depth;
   }
 }

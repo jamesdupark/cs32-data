@@ -1,4 +1,6 @@
 package edu.brown.cs.student.main;
+import edu.brown.cs.student.main.Commands.REPLCommands;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -74,8 +76,9 @@ public class Repl {
         line = reader.readLine(); // read next line
       }
       reader.close();
-    } catch (IOException ex) {
-      System.err.println("ERROR: IOEXception encountered.");
+
+    } catch (IOException ex) { // catch IOexceptions
+      System.err.println("ERROR: IOException encountered.");
     }
   }
 }

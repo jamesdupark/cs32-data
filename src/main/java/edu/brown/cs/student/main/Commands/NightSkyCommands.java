@@ -1,4 +1,9 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.Commands;
+
+import edu.brown.cs.student.main.Commands.REPLCommands;
+import edu.brown.cs.student.main.Coordinate;
+import edu.brown.cs.student.main.NightSky;
+import edu.brown.cs.student.main.Star;
 
 import java.io.IOException;
 import java.util.List;
