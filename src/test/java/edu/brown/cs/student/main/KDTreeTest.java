@@ -23,7 +23,7 @@
 //    CSVParser parser = new CSVParser();
 //    parser.parse("data/project1/proj1_small.csv");
 //    ArrayList<KDNode> studentsList = parser.getData();
-//    smallStudent.insertList(studentsList);
+//    smallStudent.insertList(studentsList, 0);
 //
 //    // initialize standard coordinate tree
 //    stdCoordinate = new KDTree<>();
@@ -40,7 +40,7 @@
 //    cordList.add(c4);
 //    cordList.add(c5);
 //    cordList.add(c6);
-//    stdCoordinate.insertList(cordList);
+//    stdCoordinate.insertList(cordList, 0);
 //  }
 //
 //  @Test
@@ -53,12 +53,12 @@
 //
 //    // test if root is inserted correctly
 //    assertEquals(emptyTree.getRoot(), null);
-//    assertEquals(smallStudent.getRoot().getVal().getAxisVal(0), 18, 0);
-//    assertEquals(smallStudent.getRoot().getVal().getAxisVal(1), 2, 0);
-//    assertEquals(smallStudent.getRoot().getVal().getAxisVal(2), 2, 0);
-//    assertEquals(stdCoordinate.getRoot().getVal().getAxisVal(0), 3, 0);
-//    assertEquals(stdCoordinate.getRoot().getVal().getAxisVal(1), 2, 0);
-//    assertEquals(stdCoordinate.getRoot().getVal().getAxisVal(2), 4, 0);
+//    assertEquals(smallStudent.getRoot().getVal().getAxisVal(0), 10, 0);
+////    assertEquals(smallStudent.getRoot().getVal().getAxisVal(1), 2, 0);
+////    assertEquals(smallStudent.getRoot().getVal().getAxisVal(2), 2, 0);
+////    assertEquals(stdCoordinate.getRoot().getVal().getAxisVal(0), 3, 0);
+////    assertEquals(stdCoordinate.getRoot().getVal().getAxisVal(1), 2, 0);
+////    assertEquals(stdCoordinate.getRoot().getVal().getAxisVal(2), 4, 0);
 //
 //    // test num dimensions
 //    assertEquals(smallStudent.getRoot().getVal().getNumDimensions(), 3);

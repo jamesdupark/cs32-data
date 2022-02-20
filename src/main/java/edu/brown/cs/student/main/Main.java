@@ -4,7 +4,6 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

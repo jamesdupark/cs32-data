@@ -115,7 +115,6 @@ public class KDTree<T extends KDNode> {
   public void insert(KDTree<KDNode> cursor, KDNode inputVal) {
     KDTree<KDNode> node = new KDTree<>(inputVal);
     userIDToNode.put(inputVal.getID(), node.getVal());
-
     // empty tree -> node becomes root
     if (cursor == null) {
       this.numNodes++;
@@ -171,17 +170,14 @@ public class KDTree<T extends KDNode> {
     if (node == null) {
       return;
     }
-
     // print left subtree above current node
     printTree(node.left, prefix + " ");
-
     // print current node along with its depth and parent
     String nodeString = prefix + " + " + node.val + " depth: " + node.depth;
     if (node.parent != null) {
       nodeString += " Node's parent: " + node.parent.val;
     }
     System.out.println(nodeString);
-
     // print right subtree below current node
     printTree(node.right, prefix + " ");
   }
@@ -232,7 +228,6 @@ public class KDTree<T extends KDNode> {
   public ArrayList<Integer> getUserIDOfKSN(int k) {
     ArrayList<Integer> idList;
     ArrayList<Integer> retList = new ArrayList<>();
-
     List<Double> closestDistanceList = new ArrayList<>(distanceQueue);
     Collections.sort(closestDistanceList);
     for (double ele : closestDistanceList) {
@@ -323,7 +318,7 @@ public class KDTree<T extends KDNode> {
     } else {
       throw new KeyNotFoundException("ERROR: Key does not exist!");
     }
-
+    // find user IDs associated from distanceQueue and distToUserID Map
     ArrayList<Integer> retList = getUserIDOfKSN(k);
     return retList;
   }
