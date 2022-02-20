@@ -1,5 +1,9 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.Commands.BloomCommands;
+import edu.brown.cs.student.main.Commands.KDCommands;
+import edu.brown.cs.student.main.Commands.NightSkyCommands;
+import edu.brown.cs.student.main.Commands.REPLCommands;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;

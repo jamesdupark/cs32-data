@@ -10,7 +10,7 @@ public class DuplicateCommandException extends Exception {
    *
    * @param message exception message
    */
-  DuplicateCommandException(String message) {
+  public DuplicateCommandException(String message) {
     super(message);
   }
 }

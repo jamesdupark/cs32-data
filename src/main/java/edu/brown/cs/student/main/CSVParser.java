@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class CSVParser {
   private ArrayList<KDNode> data;
-  CSVParser() {
+  public CSVParser() {
     this.data = new ArrayList<>();
   }
   public ArrayList<KDNode> getData() {

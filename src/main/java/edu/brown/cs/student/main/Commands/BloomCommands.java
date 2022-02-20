@@ -1,4 +1,7 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.Commands;
+
+import edu.brown.cs.student.main.BloomFilter;
+import edu.brown.cs.student.main.DuplicateCommandException;
 
 import java.util.List;
 import java.util.Map;

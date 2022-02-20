@@ -1,6 +1,11 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.Commands;
 
+import edu.brown.cs.student.main.CSVParser;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
+import edu.brown.cs.student.main.KDNode;
+import edu.brown.cs.student.main.KDTree;
+import edu.brown.cs.student.main.KIsNegativeException;
+import edu.brown.cs.student.main.KeyNotFoundException;
 
 import java.io.IOException;
 import java.util.ArrayList;
