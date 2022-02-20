@@ -1,5 +1,7 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.Distances.EuclideanDistance;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,8 +103,8 @@ public class KDCommands implements REPLCommands {
       throw new RuntimeException("ERROR: Can't query! There is no data in the KDTree");
     }
     try {
-//      System.out.println(this.kdTree.findKNN(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), this.kdTree.getRoot()));
-      ArrayList<Integer> retList = this.kdTree.findKNN(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), this.kdTree.getRoot());
+      kdTree.cleanDataStructures();
+      ArrayList<Integer> retList = this.kdTree.findKNN(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), this.kdTree.getRoot(), new EuclideanDistance());
       for (Integer id : retList) {
         System.out.println(id);
       }
@@ -114,93 +116,6 @@ public class KDCommands implements REPLCommands {
       System.err.println(e.getMessage());
     }
   }
-
-  /**
-   * Executes the "create_bf" command by attempting to create a new bloom filter
-   * with the given parameters. If successful, updates the currFilter field and
-   * prints the filter's bitset to stdout. Prints informative error message upon
-   * failure.
-   * @param argv array of strings representing tokenized user input
-   * @param argc length of argv
-   * @throws IllegalArgumentException if number of arguments is incorrect
-   */
-  /*private void createBfCmd(String[] argv, int argc)
-      throws IllegalArgumentException {
-    // check correct number of args
-    if (argc != 3) {
-      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 3 arguments but got" + argc);
-    }
-
-    try {
-      // parse numerical params
-      double fpRate = Double.parseDouble(argv[1]);
-      int maxElts = Integer.parseInt(argv[2]);
-
-      // create new bloom filter and update currFilter field
-      BloomFilter newFilter = new BloomFilter(fpRate, maxElts);
-      currFilter = newFilter;
-      System.out.println(currFilter);
-    } catch (NumberFormatException ex) {
-      System.err.println("ERROR: Incorrect numerical format for either "
-          + "<r> or <n>.");
-    } catch (IllegalArgumentException ex) {
-      System.err.println(ex.getMessage());
-    }
-  }*/
-
-  /**
-   * Executes the "insert_bf" command by attempting to insert the given element
-   * into the current bloom filter. If successful, prints the current filter's
-   * updated bitset to stdout. Prints informative error message upon failure.
-   * @param argv array of strings representing tokenized user input
-   * @param argc length of argv
-   * @throws IllegalArgumentException if number of arguments is incorrect
-   */
-  /*private void insertBfCmd(String[] argv, int argc)
-      throws IllegalArgumentException {
-    // check correct number of args
-    if (argc != 2) {
-      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 2 arguments but got" + argc);
-    }
-
-    if (currFilter != null) {
-      currFilter.insert(argv[1]);
-      System.out.println(currFilter);
-    } else {
-      System.out.println("ERROR: Must create a bloom filter with the "
-          + "create_bf <r> <n> command before inserting.");
-    }
-  }*/
-
-  /**
-   * Executes the "query_bf" command by attempting to query the given element
-   * into the current bloom filter. Prints the results of a successful query to
-   * stdout. Prints informative error message upon failure.
-//   * @param argv array of strings representing tokenized user input
-//   * @param argc length of argv
-   * @throws IllegalArgumentException if number of args is incorrect
-   */
-  /*private void queryBfCmd(String[] argv, int argc)
-      throws IllegalArgumentException {
-    // check correct number of args
-    if (argc != 2) {
-      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 2 arguments but got" + argc);
-    }
-
-    if (currFilter != null) {
-      if (currFilter.query(argv[1])) {
-        System.out.println("\"" + argv[1] + "\" might be in the set.");
-      } else {
-        System.out.println("\"" + argv[1] + "\" is definitely not in the set.");
-      }
-    } else {
-      System.out.println("ERROR: Must create a bloom filter with the "
-          + "create_bf <r> <n> command before inserting.");
-    }
-  }*/
 
   @Override
   public void addCmds(Map<String, REPLCommands> replCommandsMap) {

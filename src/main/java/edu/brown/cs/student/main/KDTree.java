@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main;
 
-import java.lang.reflect.Array;
+import edu.brown.cs.student.main.Distances.Distances;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,25 +21,28 @@ import java.util.Random;
  *           and how many dimensions it has.
  * @author andrew7li
  */
-public class KDTree<T> {
-  /** the value of the current node */
+public class KDTree<T extends KDNode> {
+  /** the value of the current node. */
   private final KDNode val;
-  /** the root of the tree */
+  /** the root of the tree. */
   private KDTree<KDNode> root;
-  /** the parent of the node */
+  /** the parent of the node. */
   private KDTree<KDNode> parent;
-  /** the left node at the current node */
+  /** the left node at the current node. */
   private KDTree<KDNode> left;
-  /** the right node at the current node */
+  /** the right node at the current node. */
   private KDTree<KDNode> right;
-  /** the number of nodes in the tree */
+  /** the number of nodes in the tree. */
   private int numNodes;
-  /** the depth of the tree the node is at */
+  /** the depth of the tree the node is at. */
   private int depth;
-
-  public Map<Integer, KDNode> userIDToNode;
-  public Map<Double, ArrayList<Integer>> distToUserID;
-  public PriorityQueue<Double> distanceQueue;
+  /** hashmap mapping from user IDs to the node on the tree. */
+  private Map<Integer, KDNode> userIDToNode;
+  /** hashmap mapping from euclidean distance to a list of user IDs
+   * associated with that distance. */
+  private Map<Double, ArrayList<Integer>> distToUserID;
+  /** priority queue that stores the k nearest euclidean distances. */
+  private PriorityQueue<Double> distanceQueue;
 
   /**
    * Default constructor for a KDTree — instantiates tree as empty.
@@ -69,11 +73,16 @@ public class KDTree<T> {
   }
 
   /**
-   * Method to insert an input list of type KDNode into a KDTree.
+   * Method to insert an input list of type KDNode into a KDTree. The input
+   * list will first be sorted on the axis corresponding to the depth of the
+   * tree, then the middle element will be inserted into the tree. The left
+   * sublist will then go on the left subtree and the right sublist will go
+   * on the right subtree.
    * @param inputList list of elements of type KDNode to be inserted into the tree
    * @param dim the axis dimension to be sorted and compared on
    */
   public void insertList(List<KDNode> inputList, int dim) {
+    // base case for recursion
     if (inputList.size() == 0) {
       return;
     }
@@ -81,11 +90,13 @@ public class KDTree<T> {
     int start = 0;
     int end = inputList.size() - 1;
     int mid = (end - start) / 2;
+    // make sure element to be inserted is the first unique element in list with that value
     while (mid > start) {
       if (inputList.get(mid) != inputList.get(mid - 1)) {
-        // found unique
+        // element is unique
         break;
       } else {
+        // find unique element
         mid--;
       }
     }
@@ -143,12 +154,17 @@ public class KDTree<T> {
     }
   }
 
+  public void cleanDataStructures() {
+    distToUserID.clear();
+    distanceQueue.clear();
+  }
+
   /**
-   * Method to print and visualize the KDTree.
+   * Method to print and visualize the KDTree at any Node on the tree.
    * @param node node at which the Tree is to be printed at
    * @param prefix the spacing corresponding to the Node's depth in the tree to simulate layers
    */
-  void printTree(KDTree<KDNode> node, String prefix) {
+  public void printTree(KDTree<KDNode> node, String prefix) {
     if (node == null) {
       return;
     }
@@ -167,16 +183,16 @@ public class KDTree<T> {
     printTree(node.right, prefix + " ");
   }
 
-  public double findEuclideanDistance(KDNode origin, KDNode target) {
-    double sum = 0;
-    for (int i = 0; i < target.getNumDimensions(); i++) {
-      double deltaAxis = (target.getAxisVal(i) - origin.getAxisVal(i));
-      sum += Math.pow(deltaAxis, 2);
-    }
-    return Math.sqrt(sum);
-  }
+//  public double findEuclideanDistance(KDNode origin, KDNode target) {
+//    double sum = 0;
+//    for (int i = 0; i < target.getNumDimensions(); i++) {
+//      double deltaAxis = (target.getAxisVal(i) - origin.getAxisVal(i));
+//      sum += Math.pow(deltaAxis, 2);
+//    }
+//    return Math.sqrt(sum);
+//  }
 
-  public ArrayList<Integer> findKNN(int k, int targetID, KDTree<KDNode> cursor)
+  public ArrayList<Integer> findKNN(int k, int targetID, KDTree<KDNode> cursor, Distances distCalculator)
       throws KIsNegativeException, KeyNotFoundException {
     if (k < 0) {
       throw new KIsNegativeException("ERROR: K is negative!");
@@ -187,7 +203,7 @@ public class KDTree<T> {
     if (userIDToNode.containsKey(targetID)) {
       // key exists
       KDNode targetNode = userIDToNode.get(targetID);
-      double euclideanDist = findEuclideanDistance(cursor.val, targetNode);
+      double euclideanDist = distCalculator.getDistance(cursor.val, targetNode);
 
       // add user ID to the distance hashmap
       if (distToUserID.containsKey(euclideanDist)) {
@@ -205,10 +221,10 @@ public class KDTree<T> {
           distanceQueue.add(euclideanDist);
         // traverse both children
         if (cursor.left != null) {
-          findKNN(k, targetID, cursor.left);
+          findKNN(k, targetID, cursor.left, distCalculator);
         }
         if (cursor.right != null) {
-          findKNN(k, targetID, cursor.right);
+          findKNN(k, targetID, cursor.right, distCalculator);
         }
       } else {
         // check if current node's euclidean distance is closer than farthest distance
@@ -226,12 +242,12 @@ public class KDTree<T> {
           if (cursor.val.getAxisVal(axisDim) < targetNode.getAxisVal(axisDim)) {
             // throw away left and traverse right only
             if (cursor.right != null) {
-              findKNN(k, targetID, cursor.right);
+              findKNN(k, targetID, cursor.right, distCalculator);
             }
           } else {
             // throw away right and traverse left only
             if (cursor.left != null) {
-              findKNN(k, targetID, cursor.left);
+              findKNN(k, targetID, cursor.left, distCalculator);
             }
           }
           // I do not need to account for equals here because axisDistance == 0 which is
@@ -241,24 +257,24 @@ public class KDTree<T> {
           if (cursor.val.getAxisVal(axisDim) < targetNode.getAxisVal(axisDim)) {
             // throw away left and traverse right only
             if (cursor.right != null) {
-              findKNN(k, targetID, cursor.right);
+              findKNN(k, targetID, cursor.right, distCalculator);
             }
           } else {
             // traverse both children
             if (cursor.left != null) {
-              findKNN(k, targetID, cursor.left);
+              findKNN(k, targetID, cursor.left, distCalculator);
             }
             if (cursor.right != null) {
-              findKNN(k, targetID, cursor.right);
+              findKNN(k, targetID, cursor.right, distCalculator);
             }
           }
         } else {
           // travese both children
           if (cursor.left != null) {
-            findKNN(k, targetID, cursor.left);
+            findKNN(k, targetID, cursor.left, distCalculator);
           }
           if (cursor.right != null) {
-            findKNN(k, targetID, cursor.right);
+            findKNN(k, targetID, cursor.right, distCalculator);
           }
         }
       }
