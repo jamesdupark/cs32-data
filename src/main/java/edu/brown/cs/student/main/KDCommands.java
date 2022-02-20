@@ -117,6 +117,8 @@ public class KDCommands implements REPLCommands {
       for (Integer id : retList) {
         System.out.println(id);
       }
+    } catch (NumberFormatException e) {
+      System.err.println("ERROR: Number format exception " + e.getMessage());
     } catch (IllegalArgumentException e) {
       System.err.println(e.getMessage());
     } catch (KIsNegativeException e) {
