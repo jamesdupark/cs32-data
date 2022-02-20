@@ -20,7 +20,7 @@ public class Coordinate implements KDNode {
    * @param y - the y-coord of the new Coordinate object
    * @param z - the z-coord of the new Coordinate object
    */
-  Coordinate(double x, double y, double z) {
+  public Coordinate(double x, double y, double z) {
     this.x = x;
     this.y = y;
     this.z = z;
