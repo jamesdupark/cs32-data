@@ -57,11 +57,9 @@ public class KDCommands implements REPLCommands {
 
   /**
    * Executes the "load_kd" command by creating a new KD Tree and then inserting
-   * elements into the Tree.
-   * attempting to create a new bloom filter
-   * with the given parameters. If successful, updates the currFilter field and
-   * prints the filter's bitset to stdout. Prints informative error message upon
-   * failure.
+   * elements into the Tree that is parsed from a CSV. If successful, updates
+   * the KDTree field and prints how many entries were inserted successfully to stdout.
+   * Prints informative error message upon failure.
    * @param argv array of strings representing tokenized user input
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
@@ -92,6 +90,16 @@ public class KDCommands implements REPLCommands {
     }
   }
 
+  /**
+   * Executes the "similar_kd" command by querying for the k most similar
+   * values on the tree by some defined distance criteria that implements Distances
+   * interface. If successful, prints out the IDs of the k most similar values to stdout.
+   * Prints informative error message upon failure.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   * @throws RuntimeException if the KDTree is empty
+   */
   private void similarKDCmd(String[] argv, int argc)
       throws IllegalArgumentException, RuntimeException {
     // check correct number of args
@@ -104,7 +112,8 @@ public class KDCommands implements REPLCommands {
     }
     try {
       kdTree.cleanDataStructures();
-      ArrayList<Integer> retList = this.kdTree.findKNN(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]), this.kdTree.getRoot(), new EuclideanDistance());
+      ArrayList<Integer> retList = this.kdTree.findKSN(Integer.parseInt(argv[1]),
+          Integer.parseInt(argv[2]), this.kdTree.getRoot(), new EuclideanDistance());
       for (Integer id : retList) {
         System.out.println(id);
       }
@@ -117,6 +126,12 @@ public class KDCommands implements REPLCommands {
     }
   }
 
+  /**
+   * Method to add commands relating to the KDTree to the commands field.
+   * @param replCommandsMap hashmap between all commands supported by a REPL and
+   *                        the specific REPLCommands objects which support
+   *                        each command.
+   */
   @Override
   public void addCmds(Map<String, REPLCommands> replCommandsMap) {
     for (String cmd : commands) {

@@ -109,12 +109,12 @@ public class KDTree<T extends KDNode> {
 
   /**
   * Method to make a Node for a value and insert into the KDTree.
-  * @param cursor Node on the KDTree for the input val Node to be inserted under
-  * @param val value to be made into a Node and to be inserted
+  * @param cursor Node on the KDTree for the input inputVal Node to be inserted under
+  * @param inputVal value to be made into a Node and to be inserted
   */
-  public void insert(KDTree<KDNode> cursor, KDNode val) {
-    KDTree<KDNode> node = new KDTree<>(val);
-    userIDToNode.put(val.getID(), node.getVal());
+  public void insert(KDTree<KDNode> cursor, KDNode inputVal) {
+    KDTree<KDNode> node = new KDTree<>(inputVal);
+    userIDToNode.put(inputVal.getID(), node.getVal());
 
     // empty tree -> node becomes root
     if (cursor == null) {
@@ -125,7 +125,7 @@ public class KDTree<T extends KDNode> {
       this.root = cursor;
     } else {
       node.root = cursor.root;
-      int axis = (cursor.depth - 1) % val.getNumDimensions();
+      int axis = (cursor.depth - 1) % inputVal.getNumDimensions();
       if (node.val.getAxisVal(axis) < cursor.val.getAxisVal(axis)) {
         // insert left
         if (cursor.left == null) {
@@ -136,7 +136,7 @@ public class KDTree<T extends KDNode> {
           node.depth = cursor.depth + 1;
         } else {
           // node exists so recursive call
-          insert(cursor.left, val);
+          insert(cursor.left, inputVal);
         }
       } else {
         // insert right
@@ -148,12 +148,15 @@ public class KDTree<T extends KDNode> {
           node.depth = cursor.depth + 1;
         } else {
           // node exists so recursive call
-          insert(cursor.right, val);
+          insert(cursor.right, inputVal);
         }
       }
     }
   }
 
+  /**
+   * Method to clear the data structures distToUserID and distanceQueue.
+   */
   public void cleanDataStructures() {
     distToUserID.clear();
     distanceQueue.clear();
@@ -183,106 +186,51 @@ public class KDTree<T extends KDNode> {
     printTree(node.right, prefix + " ");
   }
 
-//  public double findEuclideanDistance(KDNode origin, KDNode target) {
-//    double sum = 0;
-//    for (int i = 0; i < target.getNumDimensions(); i++) {
-//      double deltaAxis = (target.getAxisVal(i) - origin.getAxisVal(i));
-//      sum += Math.pow(deltaAxis, 2);
-//    }
-//    return Math.sqrt(sum);
-//  }
-
-  public ArrayList<Integer> findKNN(int k, int targetID, KDTree<KDNode> cursor, Distances distCalculator)
-      throws KIsNegativeException, KeyNotFoundException {
-    if (k < 0) {
-      throw new KIsNegativeException("ERROR: K is negative!");
-    }
-    if (k == 0) {
-      return new ArrayList<>();
-    }
-    if (userIDToNode.containsKey(targetID)) {
-      // key exists
-      KDNode targetNode = userIDToNode.get(targetID);
-      double euclideanDist = distCalculator.getDistance(cursor.val, targetNode);
-
-      // add user ID to the distance hashmap
-      if (distToUserID.containsKey(euclideanDist)) {
-        distToUserID.get(euclideanDist).add(cursor.val.getID());
-      } else {
-        ArrayList<Integer> temp = new ArrayList<>();
-        temp.add(cursor.val.getID());
-        distToUserID.put(euclideanDist, temp);
-      }
-
-      // check if we add this node to our queue
-      if (distanceQueue.size() < k) {
-        // our queue is not full yet
-        if (targetID != cursor.val.getID())
-          distanceQueue.add(euclideanDist);
-        // traverse both children
-        if (cursor.left != null) {
-          findKNN(k, targetID, cursor.left, distCalculator);
-        }
-        if (cursor.right != null) {
-          findKNN(k, targetID, cursor.right, distCalculator);
-        }
-      } else {
-        // check if current node's euclidean distance is closer than farthest distance
-        if (euclideanDist <= distanceQueue.peek() && targetID != cursor.val.getID()) {
-          distanceQueue.poll();
-          distanceQueue.add(euclideanDist);
-        }
-
-        // compare axis distance to farthest euclidean distance in priority queue
-        int axisDim = (cursor.getDepth() - 1) % cursor.val.getNumDimensions();
-        double axisDistance = Math.abs(targetNode.getAxisVal(axisDim) - cursor.getVal().getAxisVal(axisDim));
-
-        if (axisDistance  > distanceQueue.peek()) {
-          // throw away a branch
-          if (cursor.val.getAxisVal(axisDim) < targetNode.getAxisVal(axisDim)) {
-            // throw away left and traverse right only
-            if (cursor.right != null) {
-              findKNN(k, targetID, cursor.right, distCalculator);
-            }
-          } else {
-            // throw away right and traverse left only
-            if (cursor.left != null) {
-              findKNN(k, targetID, cursor.left, distCalculator);
-            }
-          }
-          // I do not need to account for equals here because axisDistance == 0 which is
-          // covered by next if branch
-        } else if (axisDistance == distanceQueue.peek()) {
-          // check if branch should be thrown away
-          if (cursor.val.getAxisVal(axisDim) < targetNode.getAxisVal(axisDim)) {
-            // throw away left and traverse right only
-            if (cursor.right != null) {
-              findKNN(k, targetID, cursor.right, distCalculator);
-            }
-          } else {
-            // traverse both children
-            if (cursor.left != null) {
-              findKNN(k, targetID, cursor.left, distCalculator);
-            }
-            if (cursor.right != null) {
-              findKNN(k, targetID, cursor.right, distCalculator);
-            }
-          }
-        } else {
-          // travese both children
-          if (cursor.left != null) {
-            findKNN(k, targetID, cursor.left, distCalculator);
-          }
-          if (cursor.right != null) {
-            findKNN(k, targetID, cursor.right, distCalculator);
-          }
-        }
-      }
+  /**
+   * Method to insert a user ID into the distToUserID Hashmap.
+   * @param key the distance corresponding to the key in the map
+   * @param value the user ID to be added
+   */
+  private void insertIDIntoMap(double key, int value) {
+    if (distToUserID.containsKey(key)) {
+      distToUserID.get(key).add(value);
     } else {
-      throw new KeyNotFoundException("ERROR: Key does not exist!");
+      ArrayList<Integer> temp = new ArrayList<>();
+      temp.add(value);
+      distToUserID.put(key, temp);
     }
+  }
 
-    ArrayList<Integer> IDList;
+  /**
+   * Method that traverses a tree when finding the nearest neighbors.
+   * @param traverseLeft boolean indicating whether we should traverse left subtree from cursor
+   * @param traverseRight boolean indicating whether we should traverse right subtree from cursor
+   * @param k the number of nearest neighbors to find
+   * @param targetID the ID of the target node
+   * @param cursor pointer pointing to the current node on the tree
+   * @param distMetric the distance metric used to compare values
+   * @throws KIsNegativeException if k is negative
+   * @throws KeyNotFoundException if the user ID is not found
+   */
+  public void traverseTree(boolean traverseLeft, boolean traverseRight, int k,
+                           int targetID, KDTree<KDNode> cursor, Distances distMetric)
+      throws KIsNegativeException, KeyNotFoundException {
+    if (traverseLeft && cursor.left != null) {
+      findKSN(k, targetID, cursor.left, distMetric);
+    }
+    if (traverseRight && cursor.right != null) {
+      findKSN(k, targetID, cursor.right, distMetric);
+    }
+  }
+
+  /**
+   * Method to find the user IDs of the k most similar neighbors from the
+   * distanceQueue and distToUserID fields.
+   * @param k the number of user IDs to return
+   * @return the user IDs of the k most similar neighbors
+   */
+  public ArrayList<Integer> getUserIDOfKSN(int k) {
+    ArrayList<Integer> idList;
     ArrayList<Integer> retList = new ArrayList<>();
 
     List<Double> closestDistanceList = new ArrayList<>(distanceQueue);
@@ -293,19 +241,90 @@ public class KDTree<T extends KDNode> {
         break;
       } else {
         // find list of ids associated at key
-        IDList = distToUserID.get(ele);
-        if (IDList.size() > 1) {
+        idList = distToUserID.get(ele);
+        if (idList.size() > 1) {
           // need to randomize
-          Collections.shuffle(IDList, new Random());
-          for (int i = 0; i < IDList.size() && retList.size() < k; i++) {
-            retList.add(IDList.get(i));
+          Collections.shuffle(idList, new Random());
+          for (int i = 0; i < idList.size() && retList.size() < k; i++) {
+            retList.add(idList.get(i));
           }
         } else {
           // no need to randomize
-          retList.add(IDList.get(0));
+          retList.add(idList.get(0));
         }
       }
     }
+    return retList;
+  }
+
+  /**
+   * Method to find the K most similar neighbors to the target node. Similarity between
+   * two nodes is determined by the distMetric input.
+   * @param k the number of nearest neighbors to find
+   * @param targetID the ID of the target node
+   * @param cursor pointer pointing to the current node on the tree
+   * @param distMetric the distance metric used to compare values when determining similarity
+   * @return an array list of the most similar user IDs
+   * @throws KIsNegativeException
+   * @throws KeyNotFoundException
+   */
+  public ArrayList<Integer> findKSN(int k, int targetID, KDTree<KDNode> cursor,
+                                    Distances distMetric)
+      throws KIsNegativeException, KeyNotFoundException {
+    if (k < 0) {
+      throw new KIsNegativeException("ERROR: K is negative!");
+    }
+    if (k == 0) {
+      return new ArrayList<>();
+    }
+    if (userIDToNode.containsKey(targetID)) {
+      // key exists
+      KDNode targetNode = userIDToNode.get(targetID);
+      double distance = distMetric.getDistance(cursor.val, targetNode);
+      insertIDIntoMap(distance, cursor.getVal().getID());
+
+      // check if we add this node to our distance priority queue
+      if (distanceQueue.size() < k && targetID != cursor.val.getID()) {
+        // our queue is not full yet
+        distanceQueue.add(distance);
+        // traverse both children
+        traverseTree(true, true, k, targetID, cursor, distMetric);
+      } else {
+        // check if current node's euclidean distance is closer than farthest distance
+        if (distance <= distanceQueue.peek() && targetID != cursor.val.getID()) {
+          distanceQueue.poll();
+          distanceQueue.add(distance);
+        }
+
+        // traversal logic
+        // compare axis distance to farthest euclidean distance in priority queue
+        int axisDim = (cursor.getDepth() - 1) % cursor.val.getNumDimensions();
+        double axisDistance = Math.abs(targetNode.getAxisVal(axisDim)
+            - cursor.getVal().getAxisVal(axisDim));
+        if (axisDistance  > distanceQueue.peek()) {
+          // throw away one of the two branches
+          if (cursor.val.getAxisVal(axisDim) < targetNode.getAxisVal(axisDim)) {
+            traverseTree(false, true, k, targetID, cursor, distMetric);
+          } else {
+            traverseTree(true, false, k, targetID, cursor, distMetric);
+          }
+        } else if (axisDistance == distanceQueue.peek()) {
+          // may throw away left branch
+          if (cursor.val.getAxisVal(axisDim) < targetNode.getAxisVal(axisDim)) {
+            traverseTree(false, true, k, targetID, cursor, distMetric);
+          } else {
+            traverseTree(true, true, k, targetID, cursor, distMetric);
+          }
+        } else {
+          // traverse both children
+          traverseTree(true, true, k, targetID, cursor, distMetric);
+        }
+      }
+    } else {
+      throw new KeyNotFoundException("ERROR: Key does not exist!");
+    }
+
+    ArrayList<Integer> retList = getUserIDOfKSN(k);
     return retList;
   }
 
