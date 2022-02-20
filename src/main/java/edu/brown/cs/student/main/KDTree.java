@@ -260,8 +260,8 @@ public class KDTree<T extends KDNode> {
    * @param cursor pointer pointing to the current node on the tree
    * @param distMetric the distance metric used to compare values when determining similarity
    * @return an array list of the most similar user IDs
-   * @throws KIsNegativeException
-   * @throws KeyNotFoundException
+   * @throws KIsNegativeException if k is negative
+   * @throws KeyNotFoundException if the target ID is not found
    */
   public ArrayList<Integer> findKSN(int k, int targetID, KDTree<KDNode> cursor,
                                     Distances distMetric)
@@ -275,7 +275,7 @@ public class KDTree<T extends KDNode> {
     if (userIDToNode.containsKey(targetID)) {
       // key exists
       KDNode targetNode = userIDToNode.get(targetID);
-      double distance = distMetric.getDistance(cursor.val, targetNode);
+      double distance = distMetric.calcDistance(cursor.val, targetNode);
       insertIDIntoMap(distance, cursor.getVal().getID());
 
       // check if we add this node to our distance priority queue
