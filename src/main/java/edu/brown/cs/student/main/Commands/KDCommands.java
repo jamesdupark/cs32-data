@@ -8,7 +8,6 @@ import edu.brown.cs.student.main.KIsNegativeException;
 import edu.brown.cs.student.main.KeyNotFoundException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -117,7 +116,7 @@ public class KDCommands implements REPLCommands {
     }
     try {
       kdTree.cleanDataStructures();
-      ArrayList<Integer> retList = this.kdTree.findKSN(Integer.parseInt(argv[1]),
+      List<Integer> retList = this.kdTree.findKSN(Integer.parseInt(argv[1]),
           Integer.parseInt(argv[2]), this.kdTree.getRoot(), new EuclideanDistance());
       for (Integer id : retList) {
         System.out.println(id);

@@ -28,7 +28,7 @@ public class EuclideanDistanceTest {
     c2 = new Coordinate(5, 3, 1);
     // negative values
     Coordinate c3 = new Coordinate(-3, 41, 23.34);
-    // large value and small values
+    // large and small values
     Coordinate c4 = new Coordinate(42, 100000, 0.002);
     // decimals
     Coordinate c5 = new Coordinate(3420, 1.23, 91.2);

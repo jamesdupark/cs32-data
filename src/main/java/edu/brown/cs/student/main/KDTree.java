@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
 
 /**
@@ -40,9 +41,9 @@ public class KDTree<T extends KDNode> {
   private Map<Integer, KDNode> userIDToNode;
   /** hashmap mapping from euclidean distance to a list of user IDs
    * associated with that distance. */
-  private Map<Double, ArrayList<Integer>> distToUserID;
+  private Map<Double, List<Integer>> distToUserID;
   /** priority queue that stores the k nearest euclidean distances. */
-  private PriorityQueue<Double> distanceQueue;
+  private Queue<Double> distanceQueue;
 
   /**
    * Default constructor for a KDTree — instantiates tree as empty.
@@ -225,9 +226,9 @@ public class KDTree<T extends KDNode> {
    * @param k the number of user IDs to return
    * @return the user IDs of the k most similar neighbors
    */
-  public ArrayList<Integer> getUserIDOfKSN(int k) {
-    ArrayList<Integer> idList;
-    ArrayList<Integer> retList = new ArrayList<>();
+  public List<Integer> getUserIDOfKSN(int k) {
+    List<Integer> idList;
+    List<Integer> retList = new ArrayList<>();
     List<Double> closestDistanceList = new ArrayList<>(distanceQueue);
     Collections.sort(closestDistanceList);
     for (double ele : closestDistanceList) {
@@ -263,7 +264,7 @@ public class KDTree<T extends KDNode> {
    * @throws KIsNegativeException if k is negative
    * @throws KeyNotFoundException if the target ID is not found
    */
-  public ArrayList<Integer> findKSN(int k, int targetID, KDTree<KDNode> cursor,
+  public List<Integer> findKSN(int k, int targetID, KDTree<KDNode> cursor,
                                     Distances distMetric)
       throws KIsNegativeException, KeyNotFoundException {
     if (k < 0) {
@@ -319,7 +320,7 @@ public class KDTree<T extends KDNode> {
       throw new KeyNotFoundException("ERROR: Key does not exist!");
     }
     // find user IDs associated from distanceQueue and distToUserID Map
-    ArrayList<Integer> retList = getUserIDOfKSN(k);
+    List<Integer> retList = getUserIDOfKSN(k);
     return retList;
   }
 
