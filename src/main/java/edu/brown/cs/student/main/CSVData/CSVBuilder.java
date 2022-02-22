@@ -1,7 +1,5 @@
 package edu.brown.cs.student.main.CSVData;
 
-import edu.brown.cs.student.main.CSVData.CSVDatum;
-
 import java.util.List;
 
 public interface CSVBuilder<T extends CSVDatum> {

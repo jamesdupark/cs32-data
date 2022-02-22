@@ -45,8 +45,6 @@ public class Repl {
    */
   public void run() {
     // initialize all commands
-
-
     try {
       String line = reader.readLine();
       while (line != null) { // start REPL
