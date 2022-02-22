@@ -95,13 +95,16 @@ public class KDTree<T extends KDNode> {
       copyList.add(ele);
     }
 
+//    System.out.println(copyList);
     copyList.sort(Comparator.comparingDouble(ele -> ele.getAxisVal(axis)));
+//    System.out.println(copyList);
+//    System.out.println();
     int start = 0;
     int end = copyList.size() - 1;
     int mid = (end - start) / 2;
     // make sure element to be inserted is the first unique element in list with that value
     while (mid > start) {
-      if (copyList.get(mid) != copyList.get(mid - 1)) {
+      if (copyList.get(mid).getAxisVal(axis) > copyList.get(mid - 1).getAxisVal(axis)) {
         // element is unique
         break;
       } else {

@@ -22,7 +22,7 @@ public class CSVReader<T extends CSVDatum> {
    */
   public CSVReader() {
     this.dataList = new ArrayList<T>();
-    this.classMaker = (CSVBuilder<T>) new StarBuilder();
+    this.classMaker = (CSVBuilder<T>) new StudentBuilder();
   }
   public List<T> getDataList() {
     return this.dataList;

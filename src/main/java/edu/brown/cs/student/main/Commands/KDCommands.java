@@ -93,7 +93,7 @@ public class KDCommands implements REPLCommands {
       CSVReader<CSVDatum> reader = new CSVReader();
       reader.load(argv[1]);
       List<CSVDatum> studentCSVList = reader.getDataList();
-      System.out.println(studentCSVList);
+//      System.out.println(studentCSVList);
 //      System.out.println(studentCSVList);
 
       // ====================
@@ -103,6 +103,7 @@ public class KDCommands implements REPLCommands {
       for (CSVDatum stud : studentCSVList) {
         nodesList.add(stud.toKDNode());
       }
+//      System.out.println(nodesList);
       this.kdTree.insertList(nodesList, 0);
       System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
       this.kdTree.printTree(this.kdTree.getRoot(), "");
