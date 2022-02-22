@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.Distances.Distances;
+import edu.brown.cs.student.main.KDNodes.KDNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
 
 /**
@@ -40,9 +42,9 @@ public class KDTree<T extends KDNode> {
   private Map<Integer, KDNode> userIDToNode;
   /** hashmap mapping from euclidean distance to a list of user IDs
    * associated with that distance. */
-  private Map<Double, ArrayList<Integer>> distToUserID;
+  private Map<Double, List<Integer>> distToUserID;
   /** priority queue that stores the k nearest euclidean distances. */
-  private PriorityQueue<Double> distanceQueue;
+  private Queue<Double> distanceQueue;
 
   /**
    * Default constructor for a KDTree — instantiates tree as empty.
@@ -225,9 +227,9 @@ public class KDTree<T extends KDNode> {
    * @param k the number of user IDs to return
    * @return the user IDs of the k most similar neighbors
    */
-  public ArrayList<Integer> getUserIDOfKSN(int k) {
-    ArrayList<Integer> idList;
-    ArrayList<Integer> retList = new ArrayList<>();
+  public List<Integer> getUserIDOfKSN(int k) {
+    List<Integer> idList;
+    List<Integer> retList = new ArrayList<>();
     List<Double> closestDistanceList = new ArrayList<>(distanceQueue);
     Collections.sort(closestDistanceList);
     for (double ele : closestDistanceList) {
@@ -260,10 +262,10 @@ public class KDTree<T extends KDNode> {
    * @param cursor pointer pointing to the current node on the tree
    * @param distMetric the distance metric used to compare values when determining similarity
    * @return an array list of the most similar user IDs
-   * @throws KIsNegativeException
-   * @throws KeyNotFoundException
+   * @throws KIsNegativeException if k is negative
+   * @throws KeyNotFoundException if the target ID is not found
    */
-  public ArrayList<Integer> findKSN(int k, int targetID, KDTree<KDNode> cursor,
+  public List<Integer> findKSN(int k, int targetID, KDTree<KDNode> cursor,
                                     Distances distMetric)
       throws KIsNegativeException, KeyNotFoundException {
     if (k < 0) {
@@ -275,7 +277,7 @@ public class KDTree<T extends KDNode> {
     if (userIDToNode.containsKey(targetID)) {
       // key exists
       KDNode targetNode = userIDToNode.get(targetID);
-      double distance = distMetric.getDistance(cursor.val, targetNode);
+      double distance = distMetric.calcDistance(cursor.val, targetNode);
       insertIDIntoMap(distance, cursor.getVal().getID());
 
       // check if we add this node to our distance priority queue
@@ -319,7 +321,7 @@ public class KDTree<T extends KDNode> {
       throw new KeyNotFoundException("ERROR: Key does not exist!");
     }
     // find user IDs associated from distanceQueue and distToUserID Map
-    ArrayList<Integer> retList = getUserIDOfKSN(k);
+    List<Integer> retList = getUserIDOfKSN(k);
     return retList;
   }
 

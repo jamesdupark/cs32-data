@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.KDNodes;
 
 /**
  * Interface for a KDTree. Defines functionality that classes
