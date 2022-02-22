@@ -3,6 +3,7 @@ package edu.brown.cs.student.main;
 import edu.brown.cs.student.main.CSVData.CSVBuilder;
 import edu.brown.cs.student.main.CSVData.CSVDatum;
 import edu.brown.cs.student.main.CSVData.CSVReader;
+import edu.brown.cs.student.main.CSVData.Star;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,7 +93,7 @@ public class NightSky {
     for (Map.Entry<Integer, Star> entry : idMap.entrySet()) {
       int id = entry.getKey();
       Star star = entry.getValue();
-      double distance = queryCoord.distance(star.getCoord());
+      double distance = queryCoord.distance(star.getCord());
       if (star.equals(mask)) {
         assert distance == 0;
         continue;

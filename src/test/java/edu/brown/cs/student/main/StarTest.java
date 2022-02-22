@@ -3,6 +3,7 @@ package edu.brown.cs.student.main;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import edu.brown.cs.student.main.CSVData.Star;
 import org.junit.Test;
 
 public class StarTest {
@@ -58,6 +59,6 @@ public class StarTest {
     Star starZero = new Star(0, "zero", 0, 0, 0);
     Coordinate origin = new Coordinate(0, 0, 0);
 
-    assertEquals(origin, starZero.getCoord());
+    assertEquals(origin, starZero.getCord());
   }
 }

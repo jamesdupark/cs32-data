@@ -2,6 +2,7 @@ package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.Distances.Distances;
 import edu.brown.cs.student.main.KDNodes.KDNode;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,20 +82,26 @@ public class KDTree<T extends KDNode> {
    * sublist will then go on the left subtree and the right sublist will go
    * on the right subtree.
    * @param inputList list of elements of type KDNode to be inserted into the tree
-   * @param dim the axis dimension to be sorted and compared on
+   * @param axis the axis dimension to be sorted and compared on
    */
-  public void insertList(List<KDNode> inputList, int dim) {
+  public void insertList(List<KDNode> inputList, int axis) {
     // base case for recursion
     if (inputList.size() == 0) {
       return;
     }
-    inputList.sort(Comparator.comparingDouble(ele -> ele.getAxisVal(dim)));
+    // deep copy the inputList
+    List<KDNode> copyList = new ArrayList<>();
+    for (KDNode ele : inputList) {
+      copyList.add(ele);
+    }
+
+    copyList.sort(Comparator.comparingDouble(ele -> ele.getAxisVal(axis)));
     int start = 0;
-    int end = inputList.size() - 1;
+    int end = copyList.size() - 1;
     int mid = (end - start) / 2;
     // make sure element to be inserted is the first unique element in list with that value
     while (mid > start) {
-      if (inputList.get(mid) != inputList.get(mid - 1)) {
+      if (copyList.get(mid) != copyList.get(mid - 1)) {
         // element is unique
         break;
       } else {
@@ -102,11 +109,11 @@ public class KDTree<T extends KDNode> {
         mid--;
       }
     }
-    this.insert(this.root, inputList.get(mid));
-    List<KDNode> leftSublist = inputList.subList(start, mid);
-    List<KDNode> rightSublist = inputList.subList(mid + 1, end + 1);
-    insertList(leftSublist, (dim + 1) % 3);
-    insertList(rightSublist, (dim + 1) % 3);
+    this.insert(this.root, copyList.get(mid));
+    List<KDNode> leftSublist = copyList.subList(start, mid);
+    List<KDNode> rightSublist = copyList.subList(mid + 1, end + 1);
+    insertList(leftSublist, (axis + 1) % copyList.get(mid).getNumDimensions());
+    insertList(rightSublist, (axis + 1) % copyList.get(mid).getNumDimensions());
   }
 
   /**

@@ -1,7 +1,5 @@
 package edu.brown.cs.student.main.CSVData;
 
-import edu.brown.cs.student.main.CSVData.CSVDatum;
-
 import java.util.List;
 
 public interface CSVBuilder<T extends CSVDatum> {
@@ -17,5 +15,4 @@ public interface CSVBuilder<T extends CSVDatum> {
    * @return - String of the expected column titles of CSV file.
    */
   String getColumnTitles();
-
 }

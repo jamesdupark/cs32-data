@@ -39,7 +39,7 @@ public class CSVReader<T extends CSVDatum> {
       if (!this.builderMap.containsKey(line)) {
         System.out.println("ERROR: CSV column names does not match expected");
       } else {
-        CSVBuilder<T> builder = this.builderMap.get(line);
+        CSVBuilder<CSVDatum> builder = this.builderMap.get(line);
         line = reader.readLine();
         int count = 0;
         // looping through each line in the csv file after the column names
@@ -58,5 +58,15 @@ public class CSVReader<T extends CSVDatum> {
     } catch (IOException e) {
       System.out.println("ERROR:" + e);
     }
+  }
+
+
+  /**
+   * Gets the string representing the name of the objects being represented by
+   * this datum.
+   * @return string name of the CSVDatum class.
+   */
+  public String getDatumName() {
+    return null;
   }
 }
