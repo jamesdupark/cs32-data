@@ -3,12 +3,13 @@ package edu.brown.cs.student.main.Commands;
 import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 import edu.brown.cs.student.main.BloomFilter.XNORSimilarity;
 import edu.brown.cs.student.main.BloomKNNCalculator;
+import edu.brown.cs.student.main.CSVData.CSVDatum;
+import edu.brown.cs.student.main.CSVParser;
 import edu.brown.cs.student.main.DuplicateCommandException;
-import edu.brown.cs.student.main.KNNCalculator;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 
 /**
  * REPLCommands class that packages commands related to bloom filters.
@@ -28,9 +29,14 @@ public class BloomCommands implements REPLCommands {
   private BloomFilter currFilter;
 
   /**
-   * Map of all student bloom filters from their ID to their respective filter.
+   * Map of all bloom filters from their ID to their respective filter.
    */
-  private Map<Integer, BloomFilter> studentFilters;
+  private Map<Integer, BloomFilter> allFilters;
+
+  /**
+   * Maximum number of strings in the fields used by our current dataset.
+   */
+  private int maxInsert = 0;
 
   /**
    * Takes in a tokenized array representing user input and executes the proper
@@ -59,9 +65,9 @@ public class BloomCommands implements REPLCommands {
           break;
         case "load_bf":
           System.out.println("loading bf.");
+          this.loadBfCmd(argc, argv);
           break;
         case "similar_bf":
-          System.out.println("similar bf.");
           this.similarBfCmd(argc, argv);
           break;
         default:
@@ -162,6 +168,42 @@ public class BloomCommands implements REPLCommands {
   }
 
   /**
+   * Executes the "load_bf" command by attempting read in bloom filters from the
+   * given filepath. If successful, prints the number of filters read in. Prints
+   * informative error message upon failure.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   */
+  private void loadBfCmd(int argc, String[] argv)
+      throws IllegalArgumentException {
+    if (argc != 2) {
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
+          + "Expected 2 arguments but got " + argc);
+    }
+
+    CSVParser<CSVDatum> parser = new CSVParser<>();
+    try {
+      parser.parse(argv[1]);
+    } catch (IOException ex) {
+      System.err.println("ERROR: IOException encountered while attempting to"
+          + "read in csv.");
+    }
+    List<CSVDatum> data = parser.getData();
+    for (CSVDatum datum : data) {
+      if (datum.getMaxElts() > maxInsert) {
+        maxInsert = datum.getMaxElts();
+      }
+    }
+
+    for (CSVDatum datum : data) {
+      BloomFilter filter = datum.toBloomFilter(maxInsert);
+      int id = filter.getId();
+      allFilters.put(id, filter);
+    }
+  }
+
+  /**
    * Executes the "similar_bf" command by attempting to query the studentFilters
    * database for the k most similar filters in the database, based on the given
    * BloomComparator metric.
@@ -175,13 +217,15 @@ public class BloomCommands implements REPLCommands {
     if (argc != 3) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
           + "Expected 3 arguments but got " + argc);
+    } else if (allFilters == null) {
+      System.err.println("ERROR: please read in a dataset using the load_bf"
+          + " command before querying similar_bf.");
     }
 
-    int k, n;
-
-    try {
+    int k, id;
+    try { // attempt to parse
       k = Integer.parseInt(argv[1]);
-      n = Integer.parseInt(argv[2]);
+      id = Integer.parseInt(argv[2]);
     } catch (NumberFormatException ex) {
       throw new IllegalArgumentException("ERROR: k and student id must be "
           + "integer values");
@@ -192,12 +236,13 @@ public class BloomCommands implements REPLCommands {
     } else if (k == 0) {
       return;
     } else {
-      KNNCalculator knnCalc = new BloomKNNCalculator(currFilter, studentFilters, new XNORSimilarity(currFilter));
+      BloomKNNCalculator knnCalc = // TODO: update currFilter to use id
+          new BloomKNNCalculator(currFilter, allFilters, new XNORSimilarity(currFilter));
       List<Integer> knnList = knnCalc.knn(k);
-      // print knnList
+      for (int neighborID : knnList) {
+        System.out.println(neighborID);
+      }
     }
-
-
   }
 
   @Override
