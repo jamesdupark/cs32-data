@@ -40,4 +40,9 @@ public class XNORSimilarity implements BloomComparator {
     compSet.flip(0, baseFilter.size()); // xnor = complement of xor
     return compSet.cardinality();
   }
+
+  @Override
+  public BloomFilter getBase() {
+    return baseFilter;
+  }
 }

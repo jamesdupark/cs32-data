@@ -17,4 +17,10 @@ public interface BloomComparator extends Comparator<BloomFilter> {
    * @return integer representing filter similarity metric
    */
   int similarity(BloomFilter compFilter);
+
+  /**
+   * Returns the bloom filter used as the base of this BloomComparator.
+   * @return base filter for this comparator.
+   */
+  BloomFilter getBase();
 }

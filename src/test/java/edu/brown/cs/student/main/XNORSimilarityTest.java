@@ -46,4 +46,9 @@ public class XNORSimilarityTest {
     assertEquals(0, comp.compare(simSet, simCopy)); // copy equality
     assertEquals(1, comp.compare(compSet, simSet));
   }
+
+  @Test
+  public void testGetBase() {
+    assertEquals(comp.getBase(), baseSet);
+  }
 }

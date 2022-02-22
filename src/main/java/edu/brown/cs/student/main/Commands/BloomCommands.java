@@ -1,10 +1,14 @@
 package edu.brown.cs.student.main.Commands;
 
 import edu.brown.cs.student.main.BloomFilter.BloomFilter;
+import edu.brown.cs.student.main.BloomFilter.XNORSimilarity;
+import edu.brown.cs.student.main.BloomKNNCalculator;
 import edu.brown.cs.student.main.DuplicateCommandException;
+import edu.brown.cs.student.main.KNNCalculator;
 
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 
 /**
  * REPLCommands class that packages commands related to bloom filters.
@@ -15,13 +19,18 @@ public class BloomCommands implements REPLCommands {
    * List of strings representing the command keywords supported by this class.
    */
   private final List<String> commands =
-      List.of("create_bf", "insert_bf", "query_bf");
+      List.of("create_bf", "insert_bf", "query_bf", "load_bf", "similar_bf");
 
   /**
    * the most recently created BloomFilter, able to be inserted into and
    * queried.
    */
   private BloomFilter currFilter;
+
+  /**
+   * Map of all student bloom filters from their ID to their respective filter.
+   */
+  private Map<Integer, BloomFilter> studentFilters;
 
   /**
    * Takes in a tokenized array representing user input and executes the proper
@@ -47,6 +56,13 @@ public class BloomCommands implements REPLCommands {
           break;
         case "query_bf":
           this.queryBfCmd(argv, argc);
+          break;
+        case "load_bf":
+          System.out.println("loading bf.");
+          break;
+        case "similar_bf":
+          System.out.println("similar bf.");
+          this.similarBfCmd(argc, argv);
           break;
         default:
           System.err.println("ERROR: Command not recognized.");
@@ -143,6 +159,43 @@ public class BloomCommands implements REPLCommands {
       System.out.println("ERROR: Must create a bloom filter with the "
           + "create_bf <r> <n> command before inserting.");
     }
+  }
+
+  /**
+   * Executes the "similar_bf" command by attempting to query the studentFilters
+   * database for the k most similar filters in the database, based on the given
+   * BloomComparator metric.
+   *
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of args is incorrect
+   */
+  private void similarBfCmd(int argc, String[] argv)
+      throws IllegalArgumentException {
+    if (argc != 3) {
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
+          + "Expected 3 arguments but got " + argc);
+    }
+
+    int k, n;
+
+    try {
+      k = Integer.parseInt(argv[1]);
+      n = Integer.parseInt(argv[2]);
+    } catch (NumberFormatException ex) {
+      throw new IllegalArgumentException("ERROR: k and student id must be "
+          + "integer values");
+    }
+
+    if (k < 0) {
+      throw new IllegalArgumentException("ERROR: k cannot be negative.");
+    } else if (k == 0) {
+      return;
+    } else {
+      KNNCalculator knn = new BloomKNNCalculator(currFilter, studentFilters, new XNORSimilarity(currFilter));
+    }
+
+
   }
 
   @Override

@@ -1,5 +1,7 @@
 package edu.brown.cs.student.main.BloomFilter;
 
+import edu.brown.cs.student.main.KNNComparable;
+
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -12,7 +14,7 @@ import java.util.Objects;
  * and number of hashes.
  * @author jamesdupark
  */
-public class BloomFilter {
+public class BloomFilter implements KNNComparable {
   /** number of hashing functions used on new entries to the set. */
   private final int numHashes;
 
@@ -21,6 +23,9 @@ public class BloomFilter {
 
   /** size of the bloom filter or the number of bits used. */
   private final int size;
+
+  /** unique id of the bloom filter. */
+  private int id;
 
   /** radix for hashing functions. **/
   private static final int RADIX = 16;
@@ -51,6 +56,38 @@ public class BloomFilter {
       numHashes = Math.toIntExact(numHash);
       size = Math.toIntExact(numBits);
       filter = new BitSet(size);
+    } catch (ArithmeticException e) {
+      throw new IllegalArgumentException("ERROR: calculated filter size or "
+          + "hash number too large. Try a different value of <r> or <n>.");
+    } catch (AssertionError e) {
+      throw new IllegalArgumentException("ERROR: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Overloaded constructor for a BloomFilter object. Uses the given parameters
+   * to calculate the length of the filter's bitset and the number of hashes to
+   * use. Also sets the id field of the filter.
+   * @param fpRate desired false positive rate of this bloom filter
+   * @param maxElts maximum number of elements to be inserted
+   * @param id id associated with the bloom filter
+   * @throws IllegalArgumentException if an error is encountered that prevents
+   * proper creation of the filter.
+   */
+  public BloomFilter(double fpRate, int maxElts, int id)
+      throws IllegalArgumentException {
+    try {
+      assert fpRate > 0 && fpRate < 1
+          : "false positive rate must be between 0 and 1";
+      assert maxElts > 0 : "maximum number of elements must be greater than 0";
+
+      long numHash = Math.round(Math.ceil(-1 * Math.log(fpRate) / Math.log(2)));
+      long numBits = Math.round(Math.ceil((numHash * maxElts) / Math.log(2)));
+
+      numHashes = Math.toIntExact(numHash);
+      size = Math.toIntExact(numBits);
+      filter = new BitSet(size);
+      this.id = id;
     } catch (ArithmeticException e) {
       throw new IllegalArgumentException("ERROR: calculated filter size or "
           + "hash number too large. Try a different value of <r> or <n>.");
@@ -211,5 +248,10 @@ public class BloomFilter {
   @Override
   public int hashCode() {
     return Objects.hash(getNumHashes(), filter, size);
+  }
+
+  @Override
+  public int getId() {
+    return this.id;
   }
 }
