@@ -8,16 +8,13 @@ import edu.brown.cs.student.main.KDNodes.KDNode;
 public class Coordinate implements KDNode {
   /** double representing a star's x-coord. */
   private final double x;
-
   /** double representing a star's y-coord. */
   private final double y;
-
   /** double representing a star's z-coord. */
   private final double z;
 
   /**
    * Constructor for new Coordinate objects.
-   *
    * @param x - the x-coord of the new Coordinate object
    * @param y - the y-coord of the new Coordinate object
    * @param z - the z-coord of the new Coordinate object
@@ -31,15 +28,14 @@ public class Coordinate implements KDNode {
   /**
    * Calculates the euclidean distance between the current and given Coordinate
    * objects.
-   *
-   * @param coord - the Coordinate to calculate the distance to
+   * @param cord - the Coordinate to calculate the distance to
    * @return - double representing the distance from current coordinate to the
    * given one
    */
-  public double distance(Coordinate coord) {
-    double x2 = coord.getX();
-    double y2 = coord.getY();
-    double z2 = coord.getZ();
+  public double distance(Coordinate cord) {
+    double x2 = cord.getX();
+    double y2 = cord.getY();
+    double z2 = cord.getZ();
 
     double sumSquare =
         Math.pow(x - x2, 2) + Math.pow(y - y2, 2) + Math.pow(z - z2, 2);
@@ -86,7 +82,7 @@ public class Coordinate implements KDNode {
   public int hashCode() {
     return Double.hashCode(x + y + z);
   }
-
+  @Override
   public String toString() {
     return "(" + x + ", " + y + ", " + z + ")";
   }
