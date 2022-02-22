@@ -1,10 +1,11 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.BloomFilter;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.BitSet;
+import java.util.Objects;
 
 /**
  * Class representing a single bloom filter with a given false positive rate
@@ -20,6 +21,15 @@ public class BloomFilter {
 
   /** size of the bloom filter or the number of bits used. */
   private final int size;
+
+  /** radix for hashing functions. **/
+  private static final int RADIX = 16;
+
+  /** int representing all bits set. **/
+  private static final int ALL_SET = 0xFF;
+
+  /** int representing all lower bits set. **/
+  private static final int HALF_SET = 0x0F;
 
   /**
    * Constructor for a BloomFilter object. Uses the given parameters to
@@ -75,7 +85,7 @@ public class BloomFilter {
 
         // convert hash byte array to hex string, then to BigInteger
         String hexHash = bytesToHex(hash);
-        result[k] = new BigInteger(hexHash, 16);
+        result[k] = new BigInteger(hexHash, RADIX);
         k++;
       } catch (NoSuchAlgorithmException ex) {
         System.err.println("ERROR: SHA-1 Algorithm not found.");
@@ -95,9 +105,9 @@ public class BloomFilter {
     byte[] hexArray = "0123456789ABCDEF".getBytes(StandardCharsets.UTF_8);
     byte[] hexChars = new byte[bytes.length * 2];
     for (int j = 0; j < bytes.length; j++) {
-      int v = bytes[j] & 0xFF;
+      int v = bytes[j] & ALL_SET;
       hexChars[j * 2] = hexArray[v >>> 4];
-      hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+      hexChars[j * 2 + 1] = hexArray[v & HALF_SET];
     }
     return new String(hexChars, StandardCharsets.UTF_8);
   }
@@ -146,6 +156,30 @@ public class BloomFilter {
     return true;
   }
 
+  /**
+   * Method to look up the size of the filter's bitset.
+   * @return size of the bloom filter's bitset
+   */
+  public int size() {
+    return size;
+  }
+
+  /**
+   * Getter method for number of hashes associated with this filter.
+   * @return number of hashes for this bloom filter
+   */
+  public int getNumHashes() {
+    return numHashes;
+  }
+
+  /**
+   * Getter method for this filter's bitset.
+   * @return bitset of the bloom filter
+   */
+  public BitSet getFilter() {
+    return (BitSet) filter.clone();
+  }
+
   @Override
   public String toString() {
     StringBuilder bitString = new StringBuilder();
@@ -161,19 +195,21 @@ public class BloomFilter {
     return bitString.toString();
   }
 
-  /**
-   * Method to look up the size of the filter's bitset.
-   * @return size of the bloom filter's bitset
-   */
-  public int size() {
-    return size;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    BloomFilter that = (BloomFilter) o;
+    return getNumHashes() == that.getNumHashes() && size == that.size
+        && Objects.equals(filter, that.filter);
   }
 
-  /**
-   * Getter method for number of hashes associated with this filter.
-   * @return number of hashes for this bloom filter
-   */
-  public int getNumHashes() {
-    return numHashes;
+  @Override
+  public int hashCode() {
+    return Objects.hash(getNumHashes(), filter, size);
   }
 }

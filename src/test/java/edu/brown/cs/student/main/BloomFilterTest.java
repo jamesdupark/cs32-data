@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -71,6 +72,21 @@ public class BloomFilterTest {
 
     // false positive
     assertTrue(smallBloom.query("2"));
+  }
+
+  @Test
+  public void testEquals() {
+    BloomFilter smallCopy = new BloomFilter(0.5, 5);
+    BloomFilter setA = new BloomFilter(0.5, 5);
+    BloomFilter setB = new BloomFilter(0.5, 5);
+    setA.insert("hello");
+    setB.insert("hi");
+
+    assertEquals(smallBloom, smallBloom); // reflexive equals
+    assertEquals(smallBloom, smallCopy); // copy equals
+    assertNotEquals(smallBloom, tinyBloom); // diff maxelts
+    assertNotEquals(smallBloom, stdBloom); // diff fprate
+    assertNotEquals(setA, setB); // diff contents
   }
 
 }
