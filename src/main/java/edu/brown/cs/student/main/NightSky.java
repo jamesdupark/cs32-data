@@ -1,8 +1,7 @@
 package edu.brown.cs.student.main;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import edu.brown.cs.student.main.CSVData.CSVReader;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,81 +22,18 @@ public class NightSky {
   private final Map<String, Star> nameMap = new HashMap<>();
 
   /**
-   * Reads csv from the given file and populates the idMap and nameMap HashMaps.
-   *
-   * @param filename path to a .csv file containing all of and only StarID,
-   *                 ProperName, X, Y, and Z fields. Has a header row
-   *                 identifying these fields as well.
-   * @return boolean indicating whether csv was read in without any problems
-   * @throws IOException upon failure to open the given file
-   */
-  public boolean readCsv(String filename) throws IOException {
-    BufferedReader csvReader;
-    csvReader = new BufferedReader(new FileReader(filename));
-    int starCount = -1;
-
-    try {
-      String line = csvReader.readLine();
-      while (line != null) { // EOF not reached
-        String[] entries = line.split(",", -1);
-        this.addStar(entries, starCount);
-        starCount++;
-        line = csvReader.readLine();
-      }
-    } catch (AssertionError ex) {
-      System.err.println("ERROR: Poorly formatted line encountered "
-          + "while attempting to read csv.");
-      return false;
-    } catch (NumberFormatException ex) {
-      System.err.println("ERROR: non-numerical coordinate value found while"
-          + "attempting to read csv.");
-      return false;
-    }
-
-    // finished reading, print informative message
-    System.out.println("Read " + starCount + " stars from " + filename);
-    return true;
-  }
-
-  /**
    * Parses a single line of the csv and adds the associated data into the
    * star class.
-   * @param entries string array of single csv line split on commas
-   * @param starCount counter for number of stars read in
-   * @throws AssertionError when a poorly-formatted row is encountered
-   * @throws NumberFormatException when id or coordinate value is non-numerical
+   * @param filePath - the file path the CSV file to load data from.
    */
-  private void addStar(String[] entries, int starCount)
-      throws AssertionError, NumberFormatException {
-    assert entries.length == 5;
-
-    String idStr = entries[0];
-    String name = entries[1];
-    String xStr = entries[2];
-    String yStr = entries[3];
-    String zStr = entries[4];
-
-    if (starCount == -1) { // header row
-      boolean headerFormat = idStr.equals("StarID") && name.equals("ProperName")
-          && xStr.equals("X") && yStr.equals("Y") && zStr.equals("Z");
-
-      assert headerFormat; // AssertionError if poorly formatted header
-    } else { // read in stars normally
-      int id = Integer.parseInt(idStr);
-      double x = Double.parseDouble(xStr);
-      double y = Double.parseDouble(yStr);
-      double z = Double.parseDouble(zStr);
-
-      Star newStar;
-      if (!name.equals("")) {
-        newStar = new Star(id, name, x, y, z);
-        nameMap.put(name, newStar);
-      } else {
-        newStar = new Star(id, x, y, z);
-      }
-
-      idMap.put(id, newStar);
+  public boolean parseCSV(String filePath) {
+    CSVReader<Star> reader = new CSVReader<Star>(new StarBuilder());
+    reader.load(filePath);
+    for (Star star : reader.getDataList()) {
+      idMap.put(star.getId(), star);
+      nameMap.put(star.getName(), star);
     }
+    return true;
   }
 
   /**

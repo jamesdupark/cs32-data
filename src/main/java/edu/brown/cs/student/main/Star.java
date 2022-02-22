@@ -43,6 +43,21 @@ public class Star implements CSVDatum {
     this.cord = new Coordinate(x, y, z);
   }
 
+  /**
+   * Gets the id field of the star.
+   * @return - the id field of the star.
+   */
+  public int getId() {
+    return this.id;
+  }
+
+  /**
+   * Gets the name field of the star.
+   * @return - the name field of the star.
+   */
+  public String getName() {
+    return this.name;
+  }
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -81,5 +96,20 @@ public class Star implements CSVDatum {
   @Override
   public KDNode toKDNode() {
     return null;
+  }
+
+  @Override
+  public KDNode toKDNode() {
+    return null;
+  }
+
+  @Override
+  public BloomFilter toBloomFilter(int maxElts) {
+    return null;
+  }
+
+  @Override
+  public int getMaxElts() {
+    return 0;
   }
 }

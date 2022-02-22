@@ -1,7 +1,9 @@
 package edu.brown.cs.student.main.Commands;
 
+import edu.brown.cs.student.main.CSVData.CSVBuilder;
 import edu.brown.cs.student.main.CSVData.CSVDatum;
-import edu.brown.cs.student.main.CSVParser;
+import edu.brown.cs.student.main.CSVData.CSVParser;
+import edu.brown.cs.student.main.CSVData.CSVReader;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDTree;
@@ -83,6 +85,7 @@ public class KDCommands implements REPLCommands {
       this.kdTree = new KDTree<>();
       CSVParser parser = new CSVParser();
       parser.parse(argv[1]);
+//      CSVReader<CSVDatum> reader = new CSVReader();
       List<CSVDatum> studentCSVList = parser.getData();
       // turn my CSVDatum list into a list of KDNodes
       List<KDNode> studentList = new ArrayList<>();

@@ -46,17 +46,18 @@ public class NightSkyCommands implements REPLCommands {
     if (argc == 2) {
       String filepath = argv[1];
 
-      try {
-        NightSky newSky = new NightSky();
-        boolean readSuccess = newSky.readCsv(filepath);
-        if (readSuccess) { // file read from without encountering any errors
-          this.sky = newSky;
-        }
-      } catch (IOException ex) { // file not found
-        System.err.println("ERROR: file not found.");
+      //   try {
+      NightSky newSky = new NightSky();
+      boolean readSuccess = newSky.parseCSV(filepath);
+      if (readSuccess) { // file read from without encountering any errors
+        this.sky = newSky;
       }
-    } else { // signal incorrect number of args
-      throw new IllegalArgumentException();
+//      } catch (IOException ex) { // file not found
+//        System.err.println("ERROR: file not found.");
+//      }
+//    } else { // signal incorrect number of args
+//      System.err.println("ERROR: incorrect number of args");
+//    }
     }
   }
 
