@@ -1,31 +1,31 @@
 package edu.brown.cs.student.main.KDNodes;
 
-import edu.brown.cs.student.main.CSVData.Student;
-
 /**
  * Extensible class that takes a Student and extracts its relevant
  * fields for KDTree.
  */
 public class StudentNode implements KDNode {
   /** ID of the Student. */
-  private int id;
+  private final int id;
   /** number of years of experience a student has with computer science. */
-  private double yearsExp;
+  private final double yearsExp;
   /** number of hours a student is available weekly. */
-  private double weeklyAvail;
+  private final double weeklyAvail;
   /** the student's confidence of themselves in software engineering. */
-  private double sweConfidence;
+  private final double sweConfidence;
 
   /**
    * Constructor for my StudentNode Class.
-   * @param stud the student that we will be extracting the relevant
-   *             fields from for the KDTree
+   * @param id id
+   * @param yearsExp years exp
+   * @param weeklyAvail weekly avil
+   * @param sweConfidence swe confidence
    */
-  public StudentNode(Student stud) {
-    id = stud.getId();
-    yearsExp = stud.getYearsExp();
-    weeklyAvail = stud.getWeeklyAvail();
-    sweConfidence = stud.getSweConfidence();
+  public StudentNode(int id, double yearsExp, double weeklyAvail, double sweConfidence) {
+    this.id = id;
+    this.yearsExp = yearsExp;
+    this.weeklyAvail = weeklyAvail;
+    this.sweConfidence = sweConfidence;
   }
 
   /**
