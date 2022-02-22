@@ -84,6 +84,7 @@ public class KDCommands implements REPLCommands {
       CSVParser parser = new CSVParser();
       parser.parse(argv[1]);
       List<CSVDatum> studentCSVList = parser.getData();
+      // turn my CSVDatum list into a list of KDNodes
       List<KDNode> studentList = new ArrayList<>();
       for (CSVDatum stud : studentCSVList) {
         studentList.add(stud.toKDNode());
