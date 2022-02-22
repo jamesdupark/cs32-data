@@ -3,7 +3,8 @@ package edu.brown.cs.student.main;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-import edu.brown.cs.student.main.CSVData.Star;
+import edu.brown.cs.student.main.Onboarding.Coordinate;
+import edu.brown.cs.student.main.Onboarding.Star;
 import org.junit.Test;
 
 public class StarTest {

@@ -1,7 +1,5 @@
 package edu.brown.cs.student.main.KDNodes;
 
-import edu.brown.cs.student.main.CSVData.Star;
-
 /**
  * Extensible class that takes a Student and extracts its relevant
  * fields for KDTree.
@@ -21,11 +19,11 @@ public class StarNode implements KDNode {
    * @param star the star that we will be extracting the relevant
    *             fields from for the KDTree
    */
-  public StarNode(Star star) {
-    id = star.getCord().getID();
-    x = star.getCord().getX();
-    y = star.getCord().getY();
-    z = star.getCord().getZ();
+  public StarNode(int id, double x, double y, double z) {
+    this.id = id;
+    this.x = x;
+    this.y = y;
+    this.z = z;
   }
 
   /**

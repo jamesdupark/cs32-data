@@ -1,4 +1,6 @@
-package edu.brown.cs.student.main.CSVData;
+package edu.brown.cs.student.main;
+
+import edu.brown.cs.student.main.Builder.CSVBuilder;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,17 +14,18 @@ import java.util.regex.Pattern;
  * Class to Read CSV File and load its content into list of chosen classes.
  * @param <T> - the datatype of objects we make list of from CSV file.
  */
-public class CSVReader<T extends CSVDatum> {
+public class CSVParser<T> {
   private final List<T> dataList;
-  private CSVBuilder<T> classMaker;
+  private CSVBuilder<T> builder;
 
   /**
    * Constructor for CSVReader.
-//   * @param dataMaker - A class that implements the CSVBuilder interface.
+   * @param builder fill
    */
-  public CSVReader() {
-    this.dataList = new ArrayList<T>();
-    this.classMaker = (CSVBuilder<T>) new StudentBuilder();
+
+  public CSVParser(CSVBuilder<T> builder) {
+    this.dataList = new ArrayList<>();
+    this.builder = builder;
   }
   public List<T> getDataList() {
     return this.dataList;
@@ -32,8 +35,8 @@ public class CSVReader<T extends CSVDatum> {
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line = reader.readLine();
       // checking for correct CSV column titles.
-      if (!line.equals(this.classMaker.getColumnTitles())) {
-        throw new RuntimeException("ERROR: CSV column names does not match expected");
+      if (!this.builder.getColumnTitles().equals(line)) {
+        throw new IOException("ERROR: CSV column names does not match expected");
       } else {
         line = reader.readLine();
         int count = 0;
@@ -45,15 +48,23 @@ public class CSVReader<T extends CSVDatum> {
           while (regexMatcher.find()) {
             matchList.add(regexMatcher.group());
           }
-          this.dataList.add(this.classMaker.build(matchList));
+          this.dataList.add(builder.build(matchList));
           count++;
           line = reader.readLine();
         }
-        // prints total number of stars added/read from csv file
-//        System.out.println("Read " + count + " students from " + filePath);
       }
     } catch (IOException e) {
       System.out.println("ERROR:" + e);
     }
+  }
+
+
+  /**
+   * Gets the string representing the name of the objects being represented by
+   * this datum.
+   * @return string name of the CSVDatum class.
+   */
+  public String getDatumName() {
+    return null;
   }
 }

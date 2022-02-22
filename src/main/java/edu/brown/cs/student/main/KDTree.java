@@ -2,7 +2,6 @@ package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.Distances.Distances;
 import edu.brown.cs.student.main.KDNodes.KDNode;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Collections;
