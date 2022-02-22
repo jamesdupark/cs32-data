@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.CSVData.CSVReader;
+import edu.brown.cs.student.main.CSVData.Star;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +28,8 @@ public class NightSky {
    * @param filePath - the file path the CSV file to load data from.
    */
   public boolean parseCSV(String filePath) {
-    CSVReader<Star> reader = new CSVReader<Star>(new StarBuilder());
+//    CSVReader<Star> reader = new CSVReader<Star>(new StarBuilder());
+    CSVReader<Star> reader = new CSVReader<Star>();
     reader.load(filePath);
     for (Star star : reader.getDataList()) {
       idMap.put(star.getId(), star);

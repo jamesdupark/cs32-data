@@ -1,7 +1,6 @@
 package edu.brown.cs.student.main.KDNodes;
 
-import edu.brown.cs.student.main.CSVData.Student;
-import edu.brown.cs.student.main.Star;
+import edu.brown.cs.student.main.CSVData.Star;
 
 /**
  * Extensible class that takes a Student and extracts its relevant

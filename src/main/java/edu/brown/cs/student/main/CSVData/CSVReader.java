@@ -14,15 +14,15 @@ import java.util.regex.Pattern;
  */
 public class CSVReader<T extends CSVDatum> {
   private final List<T> dataList;
-  private final CSVBuilder<T> classMaker;
+  private CSVBuilder<T> classMaker;
 
   /**
    * Constructor for CSVReader.
-   * @param dataMaker - A class that implements the CSVBuilder interface.
+//   * @param dataMaker - A class that implements the CSVBuilder interface.
    */
-  public CSVReader(CSVBuilder<T> dataMaker) {
+  public CSVReader() {
     this.dataList = new ArrayList<T>();
-    this.classMaker = dataMaker;
+    this.classMaker = (CSVBuilder<T>) new StarBuilder();
   }
   public List<T> getDataList() {
     return this.dataList;
@@ -33,7 +33,7 @@ public class CSVReader<T extends CSVDatum> {
       String line = reader.readLine();
       // checking for correct CSV column titles.
       if (!line.equals(this.classMaker.getColumnTitles())) {
-        System.out.println("ERROR: CSV column names does not match expected");
+        throw new RuntimeException("ERROR: CSV column names does not match expected");
       } else {
         line = reader.readLine();
         int count = 0;
@@ -50,7 +50,7 @@ public class CSVReader<T extends CSVDatum> {
           line = reader.readLine();
         }
         // prints total number of stars added/read from csv file
-        System.out.println("Read " + count + " students from " + filePath);
+//        System.out.println("Read " + count + " students from " + filePath);
       }
     } catch (IOException e) {
       System.out.println("ERROR:" + e);

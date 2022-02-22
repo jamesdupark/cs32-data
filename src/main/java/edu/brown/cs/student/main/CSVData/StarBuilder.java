@@ -1,6 +1,4 @@
-package edu.brown.cs.student.main;
-
-import edu.brown.cs.student.main.CSVData.CSVBuilder;
+package edu.brown.cs.student.main.CSVData;
 
 import java.util.List;
 

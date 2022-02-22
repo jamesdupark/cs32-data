@@ -2,9 +2,8 @@ package edu.brown.cs.student.main.Commands;
 
 import edu.brown.cs.student.main.Coordinate;
 import edu.brown.cs.student.main.NightSky;
-import edu.brown.cs.student.main.Star;
+import edu.brown.cs.student.main.CSVData.Star;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 

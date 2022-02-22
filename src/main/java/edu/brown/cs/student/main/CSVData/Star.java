@@ -1,7 +1,9 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.CSVData;
 
-import edu.brown.cs.student.main.CSVData.CSVDatum;
+import edu.brown.cs.student.main.BloomFilter;
+import edu.brown.cs.student.main.Coordinate;
 import edu.brown.cs.student.main.KDNodes.KDNode;
+import edu.brown.cs.student.main.KDNodes.StarNode;
 
 /**
  * class representing data about individual stars.
@@ -23,7 +25,7 @@ public class Star implements CSVDatum {
    * @param y star's y-coordinate
    * @param z star's z coordinate
    */
-  Star(int id, String name, double x, double y, double z) {
+  public Star(int id, String name, double x, double y, double z) {
     this.id = id;
     this.name = name;
     this.cord = new Coordinate(x, y, z);
@@ -37,7 +39,7 @@ public class Star implements CSVDatum {
    * @param y star's y-coordinate
    * @param z star's z coordinate
    */
-  Star(int id, double x, double y, double z) {
+  public Star(int id, double x, double y, double z) {
     this.id = id;
     this.name = null;
     this.cord = new Coordinate(x, y, z);
@@ -94,13 +96,13 @@ public class Star implements CSVDatum {
   }
 
   @Override
-  public KDNode toKDNode() {
-    return null;
+  public CSVBuilder getBuilder() {
+    return new StarBuilder();
   }
 
   @Override
   public KDNode toKDNode() {
-    return null;
+    return new StarNode(this);
   }
 
   @Override
