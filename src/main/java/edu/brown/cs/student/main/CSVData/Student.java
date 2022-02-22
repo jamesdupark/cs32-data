@@ -42,6 +42,8 @@ public class Student implements CSVDatum {
   private final List<String> skills;
   // the interests of a student
   private final List<String> interests;
+  /** default false positive rate for bloom filters created for this class. */
+  private final double fprate = 0.1;
 
   /**
    * Constructor for a Student.
@@ -138,7 +140,7 @@ public class Student implements CSVDatum {
     toAdd.addAll(this.skills);
     toAdd.addAll(this.interests);
 
-    BloomFilter filter = new BloomFilter(0.1, maxElts);
+    BloomFilter filter = new BloomFilter(fprate, maxElts);
     for (String input : toAdd) {
       filter.insert(input);
     }

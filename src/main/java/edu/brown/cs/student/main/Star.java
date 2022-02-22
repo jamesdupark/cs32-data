@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 import edu.brown.cs.student.main.CSVData.CSVDatum;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 
@@ -15,6 +16,9 @@ public class Star implements CSVDatum {
 
   /** position of star in 3-dimensional space. May not be null. */
   private final Coordinate coord;
+
+  /** default false positive rate for bloom filters created for this class. */
+  private final double fprate = 0.1;
 
   /**
    * Constructor for stars when all 5 fields are given.
@@ -102,7 +106,10 @@ public class Star implements CSVDatum {
 
   @Override
   public BloomFilter toBloomFilter(int maxElts) {
-    return null;
+    BloomFilter starFilter = new BloomFilter(fprate, 1);
+    starFilter.insert(name);
+
+    return starFilter;
   }
 
   @Override

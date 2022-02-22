@@ -56,4 +56,14 @@ public class CSVReader<T extends CSVDatum> {
       System.out.println("ERROR:" + e);
     }
   }
+
+
+  /**
+   * Gets the string representing the name of the objects being represented by
+   * this datum.
+   * @return string name of the CSVDatum class.
+   */
+  public String getDatumName() {
+    return null;
+  }
 }

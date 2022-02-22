@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.Commands;
 
+import edu.brown.cs.student.main.BloomFilter.BloomComparator;
 import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 import edu.brown.cs.student.main.BloomFilter.XNORSimilarity;
 import edu.brown.cs.student.main.BloomKNNCalculator;
@@ -205,7 +206,7 @@ public class BloomCommands implements REPLCommands {
 
     int size = allFilters.size();
 
-    System.out.println("Read " + size + " ")
+    System.out.println("Read " + size + " " + data.);
   }
 
   /**
@@ -241,8 +242,10 @@ public class BloomCommands implements REPLCommands {
     } else if (k == 0) {
       return;
     } else {
-      BloomKNNCalculator knnCalc = // TODO: update currFilter to use id
-          new BloomKNNCalculator(currFilter, allFilters, new XNORSimilarity(currFilter));
+      BloomFilter base = allFilters.get(id);
+      BloomComparator defaultComparator = new XNORSimilarity(base);
+      BloomKNNCalculator knnCalc =
+          new BloomKNNCalculator(base, allFilters, defaultComparator);
       List<Integer> knnList = knnCalc.knn(k);
       for (int neighborID : knnList) {
         System.out.println(neighborID);
