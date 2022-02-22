@@ -1,9 +1,11 @@
 package edu.brown.cs.student.main.CSVData;
 
+import edu.brown.cs.student.main.BloomFilter;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDNodes.StudentNode;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student implements CSVDatum {
@@ -108,21 +110,45 @@ public class Student implements CSVDatum {
   public double getSweConfidence() {
     return this.sweConfidence;
   }
-  public String getStrengths() {
+  public List<String> getStrengths() {
     return this.strengths;
   }
-  public String getWeaknesses() {
+  public List<String> getWeaknesses() {
     return this.weaknesses;
   }
-  public String getSkills() {
+  public List<String> getSkills() {
     return this.skills;
   }
-  public String getInterests() {
+  public List<String> getInterests() {
     return this.interests;
   }
 
   @Override
   public KDNode toKDNode() {
     return new StudentNode(this);
+  }
+
+  @Override
+  public BloomFilter toBloomFilter(int maxElts) {
+    // class year, race, communication style, meeting style, meeting time, skills, interests
+    List<String> toAdd = new ArrayList<>();
+    toAdd.add(this.classYear);
+    toAdd.add(this.race);
+    toAdd.add(this.commStyle);
+    toAdd.add(this.meetingStyle);
+    toAdd.addAll(this.skills);
+    toAdd.addAll(this.interests);
+
+    BloomFilter filter = new BloomFilter(0.1, maxElts);
+    for (String input : toAdd) {
+      filter.insert(input);
+    }
+
+    return filter;
+  }
+
+  @Override
+  public int getMaxElts() {
+    return 4 + skills.size() + interests.size();
   }
 }
