@@ -99,4 +99,14 @@ public class Star implements CSVDatum {
   public KDNode toKDNode() {
     return null;
   }
+
+  @Override
+  public BloomFilter toBloomFilter(int maxElts) {
+    return null;
+  }
+
+  @Override
+  public int getMaxElts() {
+    return 0;
+  }
 }

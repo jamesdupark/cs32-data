@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.CSVData;
 
+import edu.brown.cs.student.main.BloomFilter;
 import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 
