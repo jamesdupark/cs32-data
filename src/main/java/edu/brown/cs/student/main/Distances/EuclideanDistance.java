@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.Distances;
 
-import edu.brown.cs.student.main.KDNode;
+import edu.brown.cs.student.main.KDNodes.KDNode;
 
 /**
  * Class that implements the Distances Interface that defines the
