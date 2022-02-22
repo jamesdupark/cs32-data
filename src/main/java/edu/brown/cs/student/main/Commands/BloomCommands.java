@@ -4,7 +4,8 @@ import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 import edu.brown.cs.student.main.BloomFilter.XNORSimilarity;
 import edu.brown.cs.student.main.BloomKNNCalculator;
 import edu.brown.cs.student.main.CSVData.CSVDatum;
-import edu.brown.cs.student.main.CSVParser;
+import edu.brown.cs.student.main.CSVData.CSVReader;
+import edu.brown.cs.student.main.CSVReader;
 import edu.brown.cs.student.main.DuplicateCommandException;
 
 import java.io.IOException;
@@ -182,14 +183,14 @@ public class BloomCommands implements REPLCommands {
           + "Expected 2 arguments but got " + argc);
     }
 
-    CSVParser<CSVDatum> parser = new CSVParser<>();
+    CSVReader<CSVDatum> parser = new CSVReader<>();
     try {
-      parser.parse(argv[1]);
+      parser.load(argv[1]);
     } catch (IOException ex) {
       System.err.println("ERROR: IOException encountered while attempting to"
           + "read in csv.");
     }
-    List<CSVDatum> data = parser.getData();
+    List<CSVDatum> data = parser.getDataList();
     for (CSVDatum datum : data) {
       if (datum.getMaxElts() > maxInsert) {
         maxInsert = datum.getMaxElts();
@@ -201,6 +202,10 @@ public class BloomCommands implements REPLCommands {
       int id = filter.getId();
       allFilters.put(id, filter);
     }
+
+    int size = allFilters.size();
+
+    System.out.println("Read " + size + " ")
   }
 
   /**

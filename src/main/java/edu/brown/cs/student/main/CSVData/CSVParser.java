@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.CSVData;
 
 import edu.brown.cs.student.main.CSVData.CSVDatum;
 import edu.brown.cs.student.main.CSVData.Student;
@@ -43,12 +43,7 @@ public class CSVParser<T extends CSVDatum> {
           matchList.add(regexMatcher.group());
         }
         // adding new Student to list of students
-        Student newStudent = new Student(Integer.parseInt(matchList.get(0)), matchList.get(1),
-            matchList.get(2), matchList.get(3), matchList.get(4), matchList.get(6),
-            matchList.get(7), Double.parseDouble(matchList.get(8)), matchList.get(9),
-            Double.parseDouble(matchList.get(10)), matchList.get(11), matchList.get(12),
-            Double.parseDouble(matchList.get(13)), matchList.get(14), matchList.get(15),
-            matchList.get(16), matchList.get(17));
+        Student newStudent = new Student(matchList);
         this.data.add(newStudent);
         count++;
         line = reader.readLine();
