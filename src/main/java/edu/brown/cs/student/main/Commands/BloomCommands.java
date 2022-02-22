@@ -3,10 +3,9 @@ package edu.brown.cs.student.main.Commands;
 import edu.brown.cs.student.main.BloomFilter.BloomComparator;
 import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 import edu.brown.cs.student.main.BloomFilter.XNORSimilarity;
-import edu.brown.cs.student.main.BloomKNNCalculator;
+import edu.brown.cs.student.main.KNNCalculator.BloomKNNCalculator;
 import edu.brown.cs.student.main.CSVData.CSVDatum;
 import edu.brown.cs.student.main.CSVData.CSVReader;
-import edu.brown.cs.student.main.CSVReader;
 import edu.brown.cs.student.main.DuplicateCommandException;
 
 import java.io.IOException;
@@ -185,8 +184,9 @@ public class BloomCommands implements REPLCommands {
     }
 
     CSVReader<CSVDatum> parser = new CSVReader<>();
+    String filepath = argv[1];
     try {
-      parser.load(argv[1]);
+      parser.load(filepath);
     } catch (IOException ex) {
       System.err.println("ERROR: IOException encountered while attempting to"
           + "read in csv.");
@@ -206,7 +206,8 @@ public class BloomCommands implements REPLCommands {
 
     int size = allFilters.size();
 
-    System.out.println("Read " + size + " " + data.);
+    System.out.println("Read " + size + " " + parser.getDatumName() + "s from "
+        + filepath);
   }
 
   /**

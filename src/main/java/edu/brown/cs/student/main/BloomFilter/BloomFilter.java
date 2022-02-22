@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.BloomFilter;
 
-import edu.brown.cs.student.main.KNNComparable;
+import edu.brown.cs.student.main.KNNCalculator.KNNComparable;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

@@ -28,7 +28,7 @@ public class CSVReader<T extends CSVDatum> {
     return this.dataList;
   }
 
-  public void load(String filePath) {
+  public void load(String filePath) throws IOException {
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line = reader.readLine();
       // checking for correct CSV column titles.

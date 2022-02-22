@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.KNNCalculator;
 
 /**
  * Interface for objects that can be used with KNNCalculator.

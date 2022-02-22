@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.KNNCalculator;
 
 import java.util.List;
 

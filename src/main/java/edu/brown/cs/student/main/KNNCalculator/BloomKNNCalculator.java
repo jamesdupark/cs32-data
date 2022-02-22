@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.KNNCalculator;
 
 import edu.brown.cs.student.main.BloomFilter.BloomComparator;
 import edu.brown.cs.student.main.BloomFilter.BloomFilter;
