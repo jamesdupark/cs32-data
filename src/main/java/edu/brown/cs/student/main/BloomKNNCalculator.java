@@ -3,6 +3,8 @@ package edu.brown.cs.student.main;
 import edu.brown.cs.student.main.BloomFilter.BloomComparator;
 import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,11 +15,6 @@ import java.util.PriorityQueue;
  * @author jamesdupark
  */
 public class BloomKNNCalculator implements KNNCalculator<BloomFilter> {
-  /**
-   * Base filter to find k-nearest neighbors for.
-   */
-  private final BloomFilter base;
-
   /**
    * Map of all student ids to their bloom filters.
    */
@@ -37,18 +34,45 @@ public class BloomKNNCalculator implements KNNCalculator<BloomFilter> {
    */
   public BloomKNNCalculator(BloomFilter base, Map<Integer, BloomFilter> filters,
                             BloomComparator comp) {
-    this.base = base;
     this.filters = new HashMap<Integer, BloomFilter>(filters);
     this.comp = comp;
 
     // remove base from students so it doesn't appear in our search results
     BloomFilter removed = filters.remove(base.getId());
-    assert base.equals(removed) && base.equals(comp.getBase());
+    assert base.equals(removed);
+    assert base.equals(comp.getBase())
+        : "Given comparator does not match base filter";
   }
 
   @Override
   public List<Integer> knn(int k) {
+    assert k > 0; // we check for negative and 0 values before calling
+
+    // enqueue all elements
     PriorityQueue<BloomFilter> queue = new PriorityQueue<>(comp);
-    return null;
+    queue.addAll(filters.values());
+
+    // get the first k elements from the queue
+    List<Integer> retList = new ArrayList<>();
+    while (retList.size() < k && !queue.isEmpty()) {
+      // create bin list
+      List<Integer> bin = new ArrayList<>();
+      int binDist = comp.similarity(queue.peek());
+      while (queue.peek() != null && comp.similarity(queue.peek()) == binDist) {
+        BloomFilter closest = queue.poll();
+        assert closest != null; // closest should never be null
+        bin.add(closest.getId());
+      }
+      Collections.shuffle(bin); // randomize our bin of filters
+
+      if (bin.size() + retList.size() <= k) { // still don't have enough filters
+        retList.addAll(bin);
+      } else { // this bin will put us over k elements, choose k-n elements
+        int numRequired = k - retList.size();
+        List<Integer> subBin = bin.subList(0, numRequired);
+        retList.addAll(subBin);
+      }
+    }
+    return retList;
   }
 }

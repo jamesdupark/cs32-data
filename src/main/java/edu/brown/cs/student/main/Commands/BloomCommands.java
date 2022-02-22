@@ -192,7 +192,9 @@ public class BloomCommands implements REPLCommands {
     } else if (k == 0) {
       return;
     } else {
-      KNNCalculator knn = new BloomKNNCalculator(currFilter, studentFilters, new XNORSimilarity(currFilter));
+      KNNCalculator knnCalc = new BloomKNNCalculator(currFilter, studentFilters, new XNORSimilarity(currFilter));
+      List<Integer> knnList = knnCalc.knn(k);
+      // print knnList
     }
 
 

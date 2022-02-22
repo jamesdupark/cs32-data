@@ -241,13 +241,13 @@ public class BloomFilter implements KNNComparable {
       return false;
     }
     BloomFilter that = (BloomFilter) o;
-    return getNumHashes() == that.getNumHashes() && size == that.size
-        && Objects.equals(filter, that.filter);
+    return numHashes == that.getNumHashes() && size == that.size
+        && Objects.equals(filter, that.filter) && id == that.getId();
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getNumHashes(), filter, size);
+    return Objects.hash(numHashes, filter, size, id);
   }
 
   @Override
