@@ -1,7 +1,11 @@
 package edu.brown.cs.student.main.CSVData;
 
+import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDNodes.StudentNode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Student implements CSVDatum {
   // id of a student
@@ -140,5 +144,29 @@ public class Student implements CSVDatum {
   @Override
   public KDNode toKDNode() {
     return new StudentNode(this);
+  }
+
+  @Override
+  public BloomFilter toBloomFilter(int maxElts) {
+    // class year, race, communication style, meeting style, meeting time, skills, interests
+    List<String> toAdd = new ArrayList<>();
+    toAdd.add(this.classYear);
+    toAdd.add(this.race);
+    toAdd.add(this.commStyle);
+    toAdd.add(this.meetingStyle);
+    toAdd.addAll(this.skills);
+    toAdd.addAll(this.interests);
+
+    BloomFilter filter = new BloomFilter(0.1, maxElts);
+    for (String input : toAdd) {
+      filter.insert(input);
+    }
+
+    return filter;
+  }
+
+  @Override
+  public int getMaxElts() {
+    return 4 + skills.size() + interests.size();
   }
 }
