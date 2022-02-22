@@ -7,7 +7,6 @@ package edu.brown.cs.student.main;
 public class DuplicateCommandException extends Exception {
   /**
    * Constructor for DuplicateCommandException exceptions.
-   *
    * @param message exception message
    */
   public DuplicateCommandException(String message) {

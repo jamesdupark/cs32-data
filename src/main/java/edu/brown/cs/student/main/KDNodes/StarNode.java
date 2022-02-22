@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.KDNodes;
 
 /**
- * Extensible class that takes a Student and extracts its relevant
+ * Extensible class that takes a Star and extracts its relevant
  * fields for KDTree.
  */
 public class StarNode implements KDNode {
@@ -16,8 +16,10 @@ public class StarNode implements KDNode {
 
   /**
    * Constructor for my StarNode Class.
-   * @param star the star that we will be extracting the relevant
-   *             fields from for the KDTree
+   * @param id the unique id of a Star
+   * @param x value corresponding to the x-axis of a Star
+   * @param y value corresponding to the y-axis of a Star
+   * @param z value corresponding to the z-axis of a Star
    */
   public StarNode(int id, double x, double y, double z) {
     this.id = id;
@@ -25,24 +27,10 @@ public class StarNode implements KDNode {
     this.y = y;
     this.z = z;
   }
-
-  /**
-   * Method to return the ID of the KDNode that is used when
-   * querying the nearest neighbors.
-   *
-   * @return the ID of the KDNode
-   */
   @Override
   public int getID() {
     return this.id;
   }
-
-  /**
-   * Method to find the axis value for the value at a Node.
-   * @param axis the axis to retrieve for the value
-   * @return the axis value for the value at a Node
-   * @throws RuntimeException if the axis is not integer 0, 1, or 2
-   */
   @Override
   public double getAxisVal(int axis) throws RuntimeException {
     if (axis == 0) {
@@ -55,16 +43,11 @@ public class StarNode implements KDNode {
       throw new RuntimeException("Attempt to get axis from student that does not exist");
     }
   }
-
-  /**
-   * Method to find the number of dimensions for a Student in the KDTree.
-   * @return the number of dimensions for the KDTree, which in this case is 3
-   */
   @Override
   public int getNumDimensions() {
     return 3;
   }
-
+  @Override
   public String toString() {
     return "(" + x + ", " + y + ", " + z + ")";
   }

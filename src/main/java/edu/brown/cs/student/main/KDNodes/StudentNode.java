@@ -16,10 +16,10 @@ public class StudentNode implements KDNode {
 
   /**
    * Constructor for my StudentNode Class.
-   * @param id id
-   * @param yearsExp years exp
-   * @param weeklyAvail weekly avil
-   * @param sweConfidence swe confidence
+   * @param id unique id of a student
+   * @param yearsExp numbers of years of experience a student has
+   * @param weeklyAvail number of weekly available hours a student has
+   * @param sweConfidence software engineering confidence a student ranked themselves as
    */
   public StudentNode(int id, double yearsExp, double weeklyAvail, double sweConfidence) {
     this.id = id;
@@ -27,24 +27,10 @@ public class StudentNode implements KDNode {
     this.weeklyAvail = weeklyAvail;
     this.sweConfidence = sweConfidence;
   }
-
-  /**
-   * Method to return the ID of the KDNode that is used when
-   * querying the nearest neighbors.
-   *
-   * @return the ID of the KDNode
-   */
   @Override
   public int getID() {
     return this.id;
   }
-
-  /**
-   * Method to find the axis value for the value at a Node.
-   * @param axis the axis to retrieve for the value
-   * @return the axis value for the value at a Node
-   * @throws RuntimeException if the axis is not integer 0, 1, or 2
-   */
   @Override
   public double getAxisVal(int axis) throws RuntimeException {
     if (axis == 0) {
@@ -57,16 +43,11 @@ public class StudentNode implements KDNode {
       throw new RuntimeException("Attempt to get axis from student that does not exist");
     }
   }
-
-  /**
-   * Method to find the number of dimensions for a Student in the KDTree.
-   * @return the number of dimensions for the KDTree, which in this case is 3
-   */
   @Override
   public int getNumDimensions() {
     return 3;
   }
-
+  @Override
   public String toString() {
     return "(" + this.yearsExp + ", " + this.weeklyAvail + ", " + this.sweConfidence + ")";
   }

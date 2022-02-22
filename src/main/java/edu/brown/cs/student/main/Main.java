@@ -13,7 +13,6 @@ import java.util.List;
  * The Main class of our project. This is where execution begins.
  */
 public final class Main {
-
   // use port 4567 by default when running server
   private static final int DEFAULT_PORT = 4567;
 
@@ -32,6 +31,9 @@ public final class Main {
     this.args = args;
   }
 
+  /**
+   * Method that will execute the application.
+   */
   private void run() {
     // set up parsing of command line flags
     OptionParser parser = new OptionParser();

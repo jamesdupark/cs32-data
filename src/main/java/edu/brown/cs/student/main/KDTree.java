@@ -93,11 +93,7 @@ public class KDTree<T extends KDNode> {
     for (KDNode ele : inputList) {
       copyList.add(ele);
     }
-
-//    System.out.println(copyList);
     copyList.sort(Comparator.comparingDouble(ele -> ele.getAxisVal(axis)));
-//    System.out.println(copyList);
-//    System.out.println();
     int start = 0;
     int end = copyList.size() - 1;
     int mid = (end - start) / 2;

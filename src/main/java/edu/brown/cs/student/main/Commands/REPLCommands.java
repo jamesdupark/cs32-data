@@ -11,7 +11,6 @@ import java.util.Map;
  * @author jamesdupark
  */
 public interface REPLCommands {
-
   /**
    * Takes in a tokenized array representing user input and executes the proper
    * command based on the input, if a corresponding command exists. Also handles
