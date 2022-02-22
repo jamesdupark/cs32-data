@@ -9,6 +9,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Student implements CSVDatum {
+  // index of id of input list for Student constructor
+  private static final int ID_INDEX = 0;
+  // index of name of input list for Student constructor
+  private static final int NAME_INDEX = 1;
+  // index of email of input list for Student constructor
+  private static final int EMAIL_INDEX = 2;
+  // index of gender of input list for Student constructor
+  private static final int GENDER_INDEX = 3;
+  // index of class year of input list for Student constructor
+  private static final int CLASS_YEAR_INDEX = 4;
+  // index of nationality of input list for Student constructor
+  private static final int NATIONALITY_INDEX = 6;
+  // index of race of input list for Student constructor
+  private static final int RACE_INDEX = 7;
+  // index of years experience of input list for Student constructor
+  private static final int YEARS_EXP_INDEX = 8;
+  // index of communication style of input list for Student constructor
+  private static final int COMM_STYLE_INDEX = 9;
+  // index of weekly available hours of input list for Student constructor
+  private static final int WEEKLY_AVAIL_INDEX = 10;
+  // index of meeting style of input list for Student constructor
+  private static final int MEETING_STYLE_INDEX = 11;
+  // index of meeting time of input list for Student constructor
+  private static final int MEETING_TIME_INDEX = 12;
+  // index of swe confidence of input list for Student constructor
+  private static final int SWE_CONFIDENCE_INDEX = 13;
+  // index of strenths of input list for Student constructor
+  private static final int STRENGTHS_INDEX = 14;
+  // index of weaknesses of input list for Student constructor
+  private static final int WEAKNESSES_INDEX = 15;
+  // index of skills of input list for Student constructor
+  private static final int SKILLS_INDEX = 16;
+  // index of interests of input list for Student constructor
+  private static final int INTERESTS_INDEX = 17;
   // id of a student
   private final int id;
   // name of a student
@@ -48,24 +82,24 @@ public class Student implements CSVDatum {
    * Constructor for a Student.
    * @param studentInfo - A list of strings to be converted into different data types.
    */
-  public Student(List<String> studentInfo) {
-    this.id = Integer.parseInt(studentInfo.get(0));
-    this.name = studentInfo.get(1);
-    this.email = studentInfo.get(2);
-    this.gender = studentInfo.get(3);
-    this.classYear = studentInfo.get(4);
-    this.nationality = studentInfo.get(6);
-    this.race = studentInfo.get(7);
-    this.yearsExp = Double.parseDouble(studentInfo.get(8));
-    this.commStyle = studentInfo.get(9);
-    this.weeklyAvail = Double.parseDouble(studentInfo.get(10));
-    this.meetingStyle = studentInfo.get(11);
-    this.meetingTime = studentInfo.get(12);
-    this.sweConfidence = Double.parseDouble(studentInfo.get(13));
-    this.strengths = Arrays.asList(studentInfo.get(14).split(", "));
-    this.weaknesses = Arrays.asList(studentInfo.get(15).split(", "));
-    this.skills = Arrays.asList(studentInfo.get(16).split(", "));
-    this.interests = Arrays.asList(studentInfo.get(17).split(", "));
+  public Student(List<String> studentInfo) throws NumberFormatException {
+    this.id = Integer.parseInt(studentInfo.get(ID_INDEX));
+    this.name = studentInfo.get(NAME_INDEX);
+    this.email = studentInfo.get(EMAIL_INDEX);
+    this.gender = studentInfo.get(GENDER_INDEX);
+    this.classYear = studentInfo.get(CLASS_YEAR_INDEX);
+    this.nationality = studentInfo.get(NATIONALITY_INDEX);
+    this.race = studentInfo.get(RACE_INDEX);
+    this.yearsExp = Double.parseDouble(studentInfo.get(YEARS_EXP_INDEX));
+    this.commStyle = studentInfo.get(COMM_STYLE_INDEX);
+    this.weeklyAvail = Double.parseDouble(studentInfo.get(WEEKLY_AVAIL_INDEX));
+    this.meetingStyle = studentInfo.get(MEETING_STYLE_INDEX);
+    this.meetingTime = studentInfo.get(MEETING_TIME_INDEX);
+    this.sweConfidence = Double.parseDouble(studentInfo.get(SWE_CONFIDENCE_INDEX));
+    this.strengths = Arrays.asList(studentInfo.get(STRENGTHS_INDEX).split(", "));
+    this.weaknesses = Arrays.asList(studentInfo.get(WEAKNESSES_INDEX).split(", "));
+    this.skills = Arrays.asList(studentInfo.get(SKILLS_INDEX).split(", "));
+    this.interests = Arrays.asList(studentInfo.get(INTERESTS_INDEX).split(", "));
   }
 
   /**

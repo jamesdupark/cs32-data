@@ -10,8 +10,6 @@ public class StudentBuilder implements CSVBuilder<CSVDatum> {
       newStudent = new Student(fields);
     } catch (NumberFormatException ex) {
       System.err.println("ERROR: input int or double field unable to be converted from string");
-    } catch (NullPointerException ex) {
-      System.err.println("ERROR: input int or double field was null");
     }
     return newStudent;
   }

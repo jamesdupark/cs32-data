@@ -32,6 +32,12 @@ public class CSVReader<T extends CSVDatum> {
     return this.dataList;
   }
 
+  /**
+   * Loads data from CSV file into list of CSVDatum.
+   * Regex and matchlist design inspired by: https://stackoverflow.com/questions/366202/ +
+   * regex-for-splitting-a-string-using-space-when-not-surrounded-by-single-or-double/366532#366532
+   * @param filePath - String that is the file path to CSV file.
+   */
   public void load(String filePath) {
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line = reader.readLine();
