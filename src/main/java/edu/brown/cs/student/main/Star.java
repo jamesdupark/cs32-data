@@ -1,9 +1,12 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.CSVData.CSVDatum;
+import edu.brown.cs.student.main.KDNodes.KDNode;
+
 /**
  * class representing data about individual stars.
  */
-public class Star {
+public class Star implements CSVDatum {
   /** unique, non-null identifier for each star. */
   private final int id;
 
@@ -42,6 +45,21 @@ public class Star {
     this.coord = new Coordinate(x, y, z);
   }
 
+  /**
+   * Gets the id field of the star.
+   * @return - the id field of the star.
+   */
+  public int getId() {
+    return this.id;
+  }
+
+  /**
+   * Gets the name field of the star.
+   * @return - the name field of the star.
+   */
+  public String getName() {
+    return this.name;
+  }
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -75,5 +93,10 @@ public class Star {
    */
   public Coordinate getCoord() {
     return this.coord;
+  }
+
+  @Override
+  public KDNode toKDNode() {
+    return null;
   }
 }

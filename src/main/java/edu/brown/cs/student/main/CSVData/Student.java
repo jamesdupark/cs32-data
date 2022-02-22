@@ -3,6 +3,9 @@ package edu.brown.cs.student.main.CSVData;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDNodes.StudentNode;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Student implements CSVDatum {
   // id of a student
   private final int id;
@@ -31,55 +34,36 @@ public class Student implements CSVDatum {
   // the student's confidence of themselves in software engineering
   private final double sweConfidence;
   // the strengths of a student
-  private final String strengths;
+  private final List<String> strengths;
   // the weaknesses of a student
-  private final String weaknesses;
+  private final List<String> weaknesses;
   // the skills of a student
-  private final String skills;
+  private final List<String> skills;
   // the interests of a student
-  private final String interests;
+  private final List<String> interests;
 
   /**
    * Constructor for a Student.
-   * @param id the ID of a student
-   * @param name name of a student
-   * @param email email of a student
-   * @param gender gender of a student
-   * @param classYear class year of a student
-   * @param nationality nationality of a student
-   * @param race race of a student
-   * @param yearsExp numbers of years of experience a student has
-   * @param commStyle preferred communication style of a student
-   * @param weeklyAvail weekly available hours a student has
-   * @param meetingStyle preferred meeting style a student has
-   * @param meetingTime preferred meeting time a student has
-   * @param sweConfidence confidence that a student has in their software engineering skills
-   * @param strengths strengths of a student
-   * @param weaknesses weaknesses of a student
-   * @param skills skills of a student
-   * @param interests interests of a student
+   * @param studentInfo - A list of strings to be converted into different data types.
    */
-  public Student(int id, String name, String email, String gender, String classYear,
-                 String nationality, String race, double yearsExp, String commStyle,
-                 double weeklyAvail, String meetingStyle, String meetingTime, double sweConfidence,
-                 String strengths, String weaknesses, String skills, String interests) {
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.gender = gender;
-    this.classYear = classYear;
-    this.nationality = nationality;
-    this.race = race;
-    this.yearsExp = yearsExp;
-    this.commStyle = commStyle;
-    this.weeklyAvail = weeklyAvail;
-    this.meetingStyle = meetingStyle;
-    this.meetingTime = meetingTime;
-    this.sweConfidence = sweConfidence;
-    this.strengths = strengths;
-    this.weaknesses = weaknesses;
-    this.skills = skills;
-    this.interests = interests;
+  public Student(List<String> studentInfo) {
+    this.id = Integer.parseInt(studentInfo.get(0));
+    this.name = studentInfo.get(1);
+    this.email = studentInfo.get(2);
+    this.gender = studentInfo.get(3);
+    this.classYear = studentInfo.get(4);
+    this.nationality = studentInfo.get(6);
+    this.race = studentInfo.get(7);
+    this.yearsExp = Double.parseDouble(studentInfo.get(8));
+    this.commStyle = studentInfo.get(9);
+    this.weeklyAvail = Double.parseDouble(studentInfo.get(10));
+    this.meetingStyle = studentInfo.get(11);
+    this.meetingTime = studentInfo.get(12);
+    this.sweConfidence = Double.parseDouble(studentInfo.get(13));
+    this.strengths = Arrays.asList(studentInfo.get(14).split(", "));
+    this.weaknesses = Arrays.asList(studentInfo.get(15).split(", "));
+    this.skills = Arrays.asList(studentInfo.get(16).split(", "));
+    this.interests = Arrays.asList(studentInfo.get(17).split(", "));
   }
 
   /**

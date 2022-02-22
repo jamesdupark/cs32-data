@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.Commands;
 
 import edu.brown.cs.student.main.CSVData.CSVDatum;
-import edu.brown.cs.student.main.CSVParser;
+import edu.brown.cs.student.main.CSVData.CSVParser;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDTree;
