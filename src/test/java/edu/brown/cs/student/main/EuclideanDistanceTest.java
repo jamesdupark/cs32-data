@@ -3,6 +3,7 @@ package edu.brown.cs.student.main;
 import static org.junit.Assert.assertEquals;
 
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
+import edu.brown.cs.student.main.Onboarding.Coordinate;
 import org.junit.Test;
 
 /**

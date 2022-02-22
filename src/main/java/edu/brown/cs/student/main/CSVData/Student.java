@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student implements CSVDatum {
+public class Student {
   // index of id of input list for Student constructor
   private static final int ID_INDEX = 0;
   // index of name of input list for Student constructor
