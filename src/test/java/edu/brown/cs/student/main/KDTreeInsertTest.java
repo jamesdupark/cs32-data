@@ -1,8 +1,8 @@
 package edu.brown.cs.student.main;
 
-import edu.brown.cs.student.main.CSVData.CSVDatum;
-import edu.brown.cs.student.main.CSVData.CSVReader;
+import edu.brown.cs.student.main.Builder.StudentNodeBuilder;
 import edu.brown.cs.student.main.KDNodes.KDNode;
+import edu.brown.cs.student.main.Onboarding.Coordinate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,13 +34,9 @@ public class KDTreeInsertTest {
 
     // initialize small student tree
     smallStudent = new KDTree<>();
-    CSVReader reader = new CSVReader();
-    reader.load("data/project1/proj1_small.csv");
-    List<CSVDatum> studentCSVList = reader.getDataList();
-    List<KDNode> studentsList = new ArrayList<>();
-    for (CSVDatum stud : studentCSVList) {
-      studentsList.add(stud.toKDNode());
-    }
+    CSVParser parser = new CSVParser(new StudentNodeBuilder());
+    parser.load("data/project1/proj1_small.csv");
+    List<KDNode> studentsList = parser.getDataList();
     smallStudent.insertList(studentsList, 0);
     smallStudent.printTree(smallStudent.getRoot(), "");
 
