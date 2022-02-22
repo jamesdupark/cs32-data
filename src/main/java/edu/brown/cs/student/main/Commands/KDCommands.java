@@ -4,6 +4,7 @@ import edu.brown.cs.student.main.CSVData.CSVBuilder;
 import edu.brown.cs.student.main.CSVData.CSVDatum;
 import edu.brown.cs.student.main.CSVData.CSVParser;
 import edu.brown.cs.student.main.CSVData.CSVReader;
+import edu.brown.cs.student.main.CSVData.StarBuilder;
 import edu.brown.cs.student.main.CSVData.Student;
 import edu.brown.cs.student.main.CSVData.StudentBuilder;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
@@ -90,7 +91,11 @@ public class KDCommands implements REPLCommands {
 //      List<CSVDatum> studentCSVList = parser.getData();
       // ====================
 
-      CSVReader<CSVDatum> reader = new CSVReader();
+      CSVBuilder<CSVDatum> starBuilder = new StarBuilder();
+      CSVBuilder<CSVDatum> studentBuilder = new StudentBuilder();
+      List<CSVBuilder<CSVDatum>> builderList = List.of(starBuilder, studentBuilder);
+
+      CSVReader<CSVDatum> reader = new CSVReader(builderList);
       reader.load(argv[1]);
       List<CSVDatum> studentCSVList = reader.getDataList();
       System.out.println(studentCSVList);

@@ -2,7 +2,7 @@ package edu.brown.cs.student.main.CSVData;
 
 import java.util.List;
 
-public class StarBuilder implements CSVBuilder<Star> {
+public class StarBuilder implements CSVBuilder<CSVDatum> {
   @Override
   public Star build(List<String> fields) {
     Star newStar;
