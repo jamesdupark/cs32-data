@@ -36,7 +36,7 @@ public class NightSky {
     builderList.add(builder);
     CSVReader<Star> reader = new CSVReader<Star>(builderList);
     reader.load(filePath);
-    List<Star> starList = reader.getDataList();
+//    List<Star> starList = reader.getDataList();
     for (CSVDatum star : reader.getDataList()) {
       Star st = (Star) star;
       idMap.put(st.getId(), st);
