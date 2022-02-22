@@ -1,17 +1,18 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.CSVData.CSVDatum;
+import edu.brown.cs.student.main.KDNodes.KDNode;
+
 /**
  * class representing data about individual stars.
  */
-public class Star {
+public class Star implements CSVDatum {
   /** unique, non-null identifier for each star. */
   private final int id;
-
   /** unique identifier for each star. May be null. */
   private final String name;
-
   /** position of star in 3-dimensional space. May not be null. */
-  private final Coordinate coord;
+  private final Coordinate cord;
 
   /**
    * Constructor for stars when all 5 fields are given.
@@ -25,7 +26,7 @@ public class Star {
   Star(int id, String name, double x, double y, double z) {
     this.id = id;
     this.name = name;
-    this.coord = new Coordinate(x, y, z);
+    this.cord = new Coordinate(x, y, z);
   }
 
   /**
@@ -39,7 +40,7 @@ public class Star {
   Star(int id, double x, double y, double z) {
     this.id = id;
     this.name = null;
-    this.coord = new Coordinate(x, y, z);
+    this.cord = new Coordinate(x, y, z);
   }
 
   @Override
@@ -50,7 +51,7 @@ public class Star {
 
     if (obj instanceof Star) {
       Star oStar = (Star) obj;
-      boolean nonNullFields = id == oStar.id && coord.equals(oStar.coord);
+      boolean nonNullFields = id == oStar.id && cord.equals(oStar.cord);
 
       if (!nonNullFields) {
         return false;
@@ -73,7 +74,12 @@ public class Star {
    * Getter method for star's coordinate field.
    * @return this star's coordinate
    */
-  public Coordinate getCoord() {
-    return this.coord;
+  public Coordinate getCord() {
+    return this.cord;
+  }
+
+  @Override
+  public KDNode toKDNode() {
+    return null;
   }
 }

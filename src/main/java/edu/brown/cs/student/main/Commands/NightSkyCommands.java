@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.Commands;
 
-import edu.brown.cs.student.main.Commands.REPLCommands;
 import edu.brown.cs.student.main.Coordinate;
 import edu.brown.cs.student.main.NightSky;
 import edu.brown.cs.student.main.Star;
@@ -99,7 +98,7 @@ public class NightSkyCommands implements REPLCommands {
           return;
         }
 
-        queryCoord = maskStar.getCoord();
+        queryCoord = maskStar.getCord();
       } else { // incorrect no. of args
         throw new IllegalArgumentException();
       }

@@ -149,7 +149,7 @@ public class NightSky {
     for (Map.Entry<Integer, Star> entry : idMap.entrySet()) {
       int id = entry.getKey();
       Star star = entry.getValue();
-      double distance = queryCoord.distance(star.getCoord());
+      double distance = queryCoord.distance(star.getCord());
       if (star.equals(mask)) {
         assert distance == 0;
         continue;

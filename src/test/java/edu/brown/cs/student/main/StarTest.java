@@ -58,6 +58,6 @@ public class StarTest {
     Star starZero = new Star(0, "zero", 0, 0, 0);
     Coordinate origin = new Coordinate(0, 0, 0);
 
-    assertEquals(origin, starZero.getCoord());
+    assertEquals(origin, starZero.getCord());
   }
 }
