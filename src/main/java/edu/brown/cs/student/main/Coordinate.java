@@ -1,5 +1,7 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.KDNodes.KDNode;
+
 /**
  * Class that represents coordinates of stars within 3-dimensional space.
  */

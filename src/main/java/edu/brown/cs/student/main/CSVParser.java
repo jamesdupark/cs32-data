@@ -1,18 +1,23 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.CSVData.CSVDatum;
+import edu.brown.cs.student.main.CSVData.Student;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CSVParser {
-  private ArrayList<KDNode> data;
+public class CSVParser<T extends CSVDatum> {
+  private List<CSVDatum> data;
+  private String header;
   public CSVParser() {
     this.data = new ArrayList<>();
   }
-  public ArrayList<KDNode> getData() {
+  public List<CSVDatum> getData() {
     return this.data;
   }
 
@@ -20,6 +25,7 @@ public class CSVParser {
     BufferedReader reader = new BufferedReader(new FileReader(path));
     String line = reader.readLine();
     // checking for correct CSV column titles.
+    header = line;
     if (!line.equals("id,name,email,gender,class_year,ssn,nationality,race,years_experience,"
         + "communication_style,weekly_avail_hours,meeting_style,meeting_time,"
         + "software_engn_confidence,strengths,weaknesses,skills,interests")) {

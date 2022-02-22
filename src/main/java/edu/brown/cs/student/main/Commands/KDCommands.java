@@ -1,8 +1,9 @@
 package edu.brown.cs.student.main.Commands;
 
+import edu.brown.cs.student.main.CSVData.CSVDatum;
 import edu.brown.cs.student.main.CSVParser;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
-import edu.brown.cs.student.main.KDNode;
+import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDTree;
 import edu.brown.cs.student.main.KIsNegativeException;
 import edu.brown.cs.student.main.KeyNotFoundException;
@@ -82,11 +83,13 @@ public class KDCommands implements REPLCommands {
       this.kdTree = new KDTree<>();
       CSVParser parser = new CSVParser();
       parser.parse(argv[1]);
-      List<KDNode> studentList = parser.getData();
-//      this.kdTree.insert(studentList, 0);
+      List<CSVDatum> studentCSVList = parser.getData();
+      // turn my CSVDatum list into a list of KDNodes
+      List<KDNode> studentList = new ArrayList<>();
+      for (CSVDatum stud : studentCSVList) {
+        studentList.add(stud.toKDNode());
+      }
       this.kdTree.insertList(studentList, 0);
-//       print statement for inserting nodes
-//      this.kdTree.printTree(this.kdTree.getRoot(), "");
       System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
     } catch (IllegalArgumentException ex) {
       System.err.println(ex.getMessage());
@@ -117,7 +120,7 @@ public class KDCommands implements REPLCommands {
     }
     try {
       kdTree.cleanDataStructures();
-      ArrayList<Integer> retList = this.kdTree.findKSN(Integer.parseInt(argv[1]),
+      List<Integer> retList = this.kdTree.findKSN(Integer.parseInt(argv[1]),
           Integer.parseInt(argv[2]), this.kdTree.getRoot(), new EuclideanDistance());
       for (Integer id : retList) {
         System.out.println(id);
