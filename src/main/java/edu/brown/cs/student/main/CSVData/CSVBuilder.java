@@ -15,5 +15,4 @@ public interface CSVBuilder<T extends CSVDatum> {
    * @return - String of the expected column titles of CSV file.
    */
   String getColumnTitles();
-
 }

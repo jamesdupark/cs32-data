@@ -9,6 +9,8 @@ import edu.brown.cs.student.main.KDNodes.KDNode;
  * is later inserted into the KDTree.
  */
 public interface CSVDatum {
+  CSVBuilder getBuilder();
+
   KDNode toKDNode();
 
   /**

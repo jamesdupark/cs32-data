@@ -1,6 +1,10 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.CSVData.CSVBuilder;
+import edu.brown.cs.student.main.CSVData.CSVDatum;
 import edu.brown.cs.student.main.CSVData.CSVReader;
+import edu.brown.cs.student.main.CSVData.Star;
+import edu.brown.cs.student.main.CSVData.StarBuilder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,12 +31,18 @@ public class NightSky {
    * @param filePath - the file path the CSV file to load data from.
    */
   public boolean parseCSV(String filePath) {
-    CSVReader<Star> reader = new CSVReader<Star>(new StarBuilder());
+    ArrayList<CSVBuilder<CSVDatum>> builderList = new ArrayList<CSVBuilder<CSVDatum>>();
+    CSVBuilder<CSVDatum> builder = new StarBuilder();
+    builderList.add(builder);
+    CSVReader<Star> reader = new CSVReader<Star>(builderList);
     reader.load(filePath);
-    for (Star star : reader.getDataList()) {
-      idMap.put(star.getId(), star);
-      nameMap.put(star.getName(), star);
+    List<Star> starList = reader.getDataList();
+    for (CSVDatum star : reader.getDataList()) {
+      Star st = (Star) star;
+      idMap.put(st.getId(), st);
+      nameMap.put(st.getName(), st);
     }
+    System.out.println("Read " + reader.getDataList().size() + " stars from " + filePath);
     return true;
   }
 
@@ -85,7 +95,7 @@ public class NightSky {
     for (Map.Entry<Integer, Star> entry : idMap.entrySet()) {
       int id = entry.getKey();
       Star star = entry.getValue();
-      double distance = queryCoord.distance(star.getCoord());
+      double distance = queryCoord.distance(star.getCord());
       if (star.equals(mask)) {
         assert distance == 0;
         continue;

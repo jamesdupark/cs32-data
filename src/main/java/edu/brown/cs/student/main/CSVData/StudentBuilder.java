@@ -2,7 +2,7 @@ package edu.brown.cs.student.main.CSVData;
 
 import java.util.List;
 
-public class StudentBuilder implements CSVBuilder<Student> {
+public class StudentBuilder implements CSVBuilder<CSVDatum> {
   @Override
   public Student build(List<String> fields) {
     Student newStudent = null;

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,18 +14,21 @@ import java.util.regex.Pattern;
  * @param <T> - the datatype of objects we make list of from CSV file.
  */
 public class CSVReader<T extends CSVDatum> {
-  private final List<T> dataList;
-  private final CSVBuilder<T> classMaker;
+  private final List<CSVDatum> dataList;
+  private final HashMap<String, CSVBuilder<CSVDatum>> builderMap;
 
   /**
    * Constructor for CSVReader.
-   * @param dataMaker - A class that implements the CSVBuilder interface.
+   * @param builderList - A list of classes that implements the CSVBuilder interface.
    */
-  public CSVReader(CSVBuilder<T> dataMaker) {
-    this.dataList = new ArrayList<T>();
-    this.classMaker = dataMaker;
+  public CSVReader(List<CSVBuilder<CSVDatum>> builderList) {
+    this.dataList = new ArrayList<CSVDatum>();
+    this.builderMap = new HashMap<String, CSVBuilder<CSVDatum>>();
+    for (CSVBuilder<CSVDatum> builder : builderList) {
+      builderMap.put(builder.getColumnTitles(), builder);
+    }
   }
-  public List<T> getDataList() {
+  public List<CSVDatum> getDataList() {
     return this.dataList;
   }
 
@@ -32,9 +36,10 @@ public class CSVReader<T extends CSVDatum> {
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line = reader.readLine();
       // checking for correct CSV column titles.
-      if (!line.equals(this.classMaker.getColumnTitles())) {
+      if (!this.builderMap.containsKey(line)) {
         System.out.println("ERROR: CSV column names does not match expected");
       } else {
+        CSVBuilder<CSVDatum> builder = this.builderMap.get(line);
         line = reader.readLine();
         int count = 0;
         // looping through each line in the csv file after the column names
@@ -45,12 +50,10 @@ public class CSVReader<T extends CSVDatum> {
           while (regexMatcher.find()) {
             matchList.add(regexMatcher.group());
           }
-          this.dataList.add(this.classMaker.build(matchList));
+          this.dataList.add(builder.build(matchList));
           count++;
           line = reader.readLine();
         }
-        // prints total number of stars added/read from csv file
-        System.out.println("Read " + count + " students from " + filePath);
       }
     } catch (IOException e) {
       System.out.println("ERROR:" + e);

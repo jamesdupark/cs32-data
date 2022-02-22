@@ -125,6 +125,11 @@ public class Student implements CSVDatum {
   }
 
   @Override
+  public CSVBuilder getBuilder() {
+    return new StudentBuilder();
+  }
+
+  @Override
   public KDNode toKDNode() {
     return new StudentNode(this);
   }
