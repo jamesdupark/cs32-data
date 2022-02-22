@@ -1,18 +1,14 @@
 package edu.brown.cs.student.main.Commands;
 
-import edu.brown.cs.student.main.CSVData.CSVBuilder;
 import edu.brown.cs.student.main.CSVData.CSVDatum;
-import edu.brown.cs.student.main.CSVData.CSVParser;
 import edu.brown.cs.student.main.CSVData.CSVReader;
-import edu.brown.cs.student.main.CSVData.Student;
-import edu.brown.cs.student.main.CSVData.StudentBuilder;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
+import edu.brown.cs.student.main.DuplicateCommandException;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDTree;
 import edu.brown.cs.student.main.KIsNegativeException;
 import edu.brown.cs.student.main.KeyNotFoundException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,26 +18,11 @@ import java.util.Map;
  * @author andrew7li
  */
 public class KDCommands implements REPLCommands {
-  /**
-   * List of strings representing the command keywords supported by this class.
-   */
-  private final List<String> commands =
-      List.of("load_kd", "similar_kd");
-
-  /**
-   * the most recently created KDTree, able to be inserted into and queried.
-   */
+  /** List of strings representing the command keywords supported by this class. */
+  private final List<String> commands = List.of("load_kd", "similar_kd");
+  /** the most recently created KDTree, able to be inserted into and queried. */
   private KDTree<KDNode> kdTree;
 
-  /**
-   * Takes in a tokenized array representing user input and executes the proper
-   * command based on the input, if a corresponding command exists. Also handles
-   * printing results of commands and error messages.
-   *
-   * @param cmd argv[0], the keyword indicating which command should be run
-   * @param argv array of strings tokenized from user input
-   * @param argc length of argv
-   */
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
     // verifying that command is a supported one; should never fail
@@ -81,29 +62,18 @@ public class KDCommands implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
           + "Expected 2 arguments but got " + argc);
     }
-
     try {
       // create new kd tree and insert elements into tree
       this.kdTree = new KDTree<>();
-//      CSVParser parser = new CSVParser();
-//      parser.parse(argv[1]);
-//      List<CSVDatum> studentCSVList = parser.getData();
-      // ====================
-
       CSVReader<CSVDatum> reader = new CSVReader();
       reader.load(argv[1]);
       List<CSVDatum> studentCSVList = reader.getDataList();
-//      System.out.println(studentCSVList);
-//      System.out.println(studentCSVList);
-
-      // ====================
 
       // turn my CSVDatum list into a list of KDNodes
       List<KDNode> nodesList = new ArrayList<>();
       for (CSVDatum stud : studentCSVList) {
         nodesList.add(stud.toKDNode());
       }
-//      System.out.println(nodesList);
       this.kdTree.insertList(nodesList, 0);
       System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
       this.kdTree.printTree(this.kdTree.getRoot(), "");
@@ -152,16 +122,24 @@ public class KDCommands implements REPLCommands {
     }
   }
 
-  /**
-   * Method to add commands relating to the KDTree to the commands field.
-   * @param replCommandsMap hashmap between all commands supported by a REPL and
-   *                        the specific REPLCommands objects which support
-   *                        each command.
-   */
   @Override
-  public void addCmds(Map<String, REPLCommands> replCommandsMap) {
-    for (String cmd : commands) {
-      replCommandsMap.put(cmd, this);
+  public void addCmds(Map<String, REPLCommands> replCommandsMap)
+      throws DuplicateCommandException {
+    for (int i = 0; i < commands.size(); i++) {
+      // check for duplicate commands
+      String cmd = commands.get(i);
+      REPLCommands dupPack = replCommandsMap.get(cmd);
+      if (dupPack != null) {
+        // if a duplicate value is found
+        for (int j = 0; j < i; j++) { // remove all previously added keys
+          String cmdToRemove = commands.get(j);
+          replCommandsMap.remove(cmdToRemove);
+        }
+        throw new DuplicateCommandException("ERROR: command " + cmd
+            + " already in this REPL's commandsMap");
+      } else { // no duplicates found, can put command in safely
+        replCommandsMap.put(cmd, this);
+      }
     }
   }
 }

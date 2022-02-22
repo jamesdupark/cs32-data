@@ -7,6 +7,9 @@ import edu.brown.cs.student.main.CSVData.Star;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * REPLCommands class that packages commands related to Stars.
+ */
 public class NightSkyCommands implements REPLCommands {
   private NightSky sky = new NightSky();
   @Override

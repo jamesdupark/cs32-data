@@ -11,32 +11,15 @@ import java.util.Map;
  * @author jamesdupark
  */
 public class BloomCommands implements REPLCommands {
-  /**
-   * List of strings representing the command keywords supported by this class.
-   */
-  private final List<String> commands =
-      List.of("create_bf", "insert_bf", "query_bf");
-
-  /**
-   * the most recently created BloomFilter, able to be inserted into and
-   * queried.
-   */
+  /** List of strings representing the command keywords supported by this class. */
+  private final List<String> commands = List.of("create_bf", "insert_bf", "query_bf");
+  /** the most recently created BloomFilter, able to be inserted into and queried. */
   private BloomFilter currFilter;
 
-  /**
-   * Takes in a tokenized array representing user input and executes the proper
-   * command based on the input, if a corresponding command exists. Also handles
-   * printing results of commands and error messages.
-   *
-   * @param cmd argv[0], the keyword indicating which command should be run
-   * @param argv array of strings tokenized from user input
-   * @param argc length of argv
-   */
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
     // verifying that command is a supported one; should never fail
     assert cmd.equals(argv[0]) && commands.contains(cmd);
-
     try {
       switch (cmd) {
         case "create_bf":
@@ -73,7 +56,6 @@ public class BloomCommands implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
           + "Expected 3 arguments but got " + argc);
     }
-
     try {
       // parse numerical params
       double fpRate = Double.parseDouble(argv[1]);
@@ -89,7 +71,6 @@ public class BloomCommands implements REPLCommands {
     } catch (IllegalArgumentException ex) {
       System.err.println(ex.getMessage());
     }
-
   }
 
   /**
@@ -107,7 +88,6 @@ public class BloomCommands implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
           + "Expected 2 arguments but got " + argc);
     }
-
     if (currFilter != null) {
       currFilter.insert(argv[1]);
       System.out.println(currFilter);
@@ -132,7 +112,6 @@ public class BloomCommands implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
           + "Expected 2 arguments but got " + argc);
     }
-
     if (currFilter != null) {
       if (currFilter.query(argv[1])) {
         System.out.println("\"" + argv[1] + "\" might be in the set.");
@@ -158,7 +137,6 @@ public class BloomCommands implements REPLCommands {
           String cmdToRemove = commands.get(j);
           replCommandsMap.remove(cmdToRemove);
         }
-
         throw new DuplicateCommandException("ERROR: command " + cmd
             + " already in this REPL's commandsMap");
       } else { // no duplicates found, can put command in safely

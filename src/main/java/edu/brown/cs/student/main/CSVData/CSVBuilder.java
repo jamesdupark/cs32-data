@@ -2,6 +2,10 @@ package edu.brown.cs.student.main.CSVData;
 
 import java.util.List;
 
+/**
+ * Interface that
+ * @param <T>
+ */
 public interface CSVBuilder<T extends CSVDatum> {
   /**
    * Adds class made from input line to list.
