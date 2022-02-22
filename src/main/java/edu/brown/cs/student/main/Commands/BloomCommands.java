@@ -3,12 +3,15 @@ package edu.brown.cs.student.main.Commands;
 import edu.brown.cs.student.main.BloomFilter.BloomComparator;
 import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 import edu.brown.cs.student.main.BloomFilter.XNORSimilarity;
+import edu.brown.cs.student.main.CSVData.CSVBuilder;
+import edu.brown.cs.student.main.CSVData.StarBuilder;
+import edu.brown.cs.student.main.CSVData.StudentBuilder;
 import edu.brown.cs.student.main.KNNCalculator.BloomKNNCalculator;
 import edu.brown.cs.student.main.CSVData.CSVDatum;
 import edu.brown.cs.student.main.CSVData.CSVReader;
 import edu.brown.cs.student.main.DuplicateCommandException;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,7 +68,6 @@ public class BloomCommands implements REPLCommands {
           this.queryBfCmd(argv, argc);
           break;
         case "load_bf":
-          System.out.println("loading bf.");
           this.loadBfCmd(argc, argv);
           break;
         case "similar_bf":
@@ -94,7 +96,7 @@ public class BloomCommands implements REPLCommands {
     // check correct number of args
     if (argc != 3) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 3 arguments but got " + argc);
+          + " Expected 3 arguments but got " + argc);
     }
 
     try {
@@ -128,7 +130,7 @@ public class BloomCommands implements REPLCommands {
     // check correct number of args
     if (argc != 2) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 2 arguments but got " + argc);
+          + " Expected 2 arguments but got " + argc);
     }
 
     if (currFilter != null) {
@@ -153,7 +155,7 @@ public class BloomCommands implements REPLCommands {
     // check correct number of args
     if (argc != 2) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 2 arguments but got " + argc);
+          + " Expected 2 arguments but got " + argc);
     }
 
     if (currFilter != null) {
@@ -180,34 +182,39 @@ public class BloomCommands implements REPLCommands {
       throws IllegalArgumentException {
     if (argc != 2) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 2 arguments but got " + argc);
+          + " Expected 2 arguments but got " + argc);
     }
 
-    CSVReader<CSVDatum> parser = new CSVReader<>();
+    CSVBuilder<CSVDatum> studentBuilder = new StudentBuilder();
+    CSVBuilder<CSVDatum> starBuilder = new StarBuilder();
+    List<CSVBuilder<CSVDatum>> builders = List.of(studentBuilder, starBuilder);
+    CSVReader<CSVDatum> parser = new CSVReader<>(builders);
     String filepath = argv[1];
-    try {
-      parser.load(filepath);
-    } catch (IOException ex) {
-      System.err.println("ERROR: IOException encountered while attempting to"
-          + "read in csv.");
+    if (!parser.load(filepath)) {
+      return;
     }
+
     List<CSVDatum> data = parser.getDataList();
+    System.out.println(data);
     for (CSVDatum datum : data) {
       if (datum.getMaxElts() > maxInsert) {
         maxInsert = datum.getMaxElts();
       }
     }
 
+    Map<Integer, BloomFilter> newFilters = new HashMap<>();
     for (CSVDatum datum : data) {
       BloomFilter filter = datum.toBloomFilter(maxInsert);
       int id = filter.getId();
-      allFilters.put(id, filter);
+      newFilters.put(id, filter);
     }
 
-    int size = allFilters.size();
+    int size = newFilters.size();
 
     System.out.println("Read " + size + " " + parser.getDatumName() + "s from "
         + filepath);
+
+    allFilters = newFilters;
   }
 
   /**
@@ -223,7 +230,7 @@ public class BloomCommands implements REPLCommands {
       throws IllegalArgumentException {
     if (argc != 3) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 3 arguments but got " + argc);
+          + " Expected 3 arguments but got " + argc);
     } else if (allFilters == null) {
       System.err.println("ERROR: please read in a dataset using the load_bf"
           + " command before querying similar_bf.");
@@ -244,6 +251,10 @@ public class BloomCommands implements REPLCommands {
       return;
     } else {
       BloomFilter base = allFilters.get(id);
+      if (base == null) {
+        System.err.println("ERROR: given id not in database.");
+        return;
+      }
       BloomComparator defaultComparator = new XNORSimilarity(base);
       BloomKNNCalculator knnCalc =
           new BloomKNNCalculator(base, allFilters, defaultComparator);

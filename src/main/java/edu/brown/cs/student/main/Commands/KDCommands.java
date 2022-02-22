@@ -2,10 +2,8 @@ package edu.brown.cs.student.main.Commands;
 
 import edu.brown.cs.student.main.CSVData.CSVBuilder;
 import edu.brown.cs.student.main.CSVData.CSVDatum;
-import edu.brown.cs.student.main.CSVData.CSVParser;
 import edu.brown.cs.student.main.CSVData.CSVReader;
 import edu.brown.cs.student.main.CSVData.StarBuilder;
-import edu.brown.cs.student.main.CSVData.Student;
 import edu.brown.cs.student.main.CSVData.StudentBuilder;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
 import edu.brown.cs.student.main.KDNodes.KDNode;
@@ -13,7 +11,6 @@ import edu.brown.cs.student.main.KDTree;
 import edu.brown.cs.student.main.KIsNegativeException;
 import edu.brown.cs.student.main.KeyNotFoundException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +93,9 @@ public class KDCommands implements REPLCommands {
       List<CSVBuilder<CSVDatum>> builderList = List.of(starBuilder, studentBuilder);
 
       CSVReader<CSVDatum> reader = new CSVReader(builderList);
-      reader.load(argv[1]);
+      if (reader.load(argv[1])) {
+        return;
+      }
       List<CSVDatum> studentCSVList = reader.getDataList();
       System.out.println(studentCSVList);
 //      System.out.println(studentCSVList);

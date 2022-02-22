@@ -29,14 +29,17 @@ public class NightSky {
    * Parses a single line of the csv and adds the associated data into the
    * star class.
    * @param filePath - the file path the CSV file to load data from.
+   * @return boolean whether csv was parsed correctly
    */
   public boolean parseCSV(String filePath) {
     ArrayList<CSVBuilder<CSVDatum>> builderList = new ArrayList<CSVBuilder<CSVDatum>>();
     CSVBuilder<CSVDatum> builder = new StarBuilder();
     builderList.add(builder);
     CSVReader<Star> reader = new CSVReader<Star>(builderList);
-    reader.load(filePath);
-    List<Star> starList = reader.getDataList();
+    if (!reader.load(filePath)) {
+      return false;
+    }
+//    List<Star> starList = reader.getDataList();
     for (CSVDatum star : reader.getDataList()) {
       Star st = (Star) star;
       idMap.put(st.getId(), st);

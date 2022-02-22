@@ -32,12 +32,13 @@ public class CSVReader<T extends CSVDatum> {
     return this.dataList;
   }
 
-  public void load(String filePath) throws IOException {
+  public boolean load(String filePath) {
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line = reader.readLine();
       // checking for correct CSV column titles.
       if (!this.builderMap.containsKey(line)) {
         System.out.println("ERROR: CSV column names does not match expected");
+        return false;
       } else {
         CSVBuilder<CSVDatum> builder = this.builderMap.get(line);
         line = reader.readLine();
@@ -54,9 +55,11 @@ public class CSVReader<T extends CSVDatum> {
           count++;
           line = reader.readLine();
         }
+        return true;
       }
     } catch (IOException e) {
-      System.out.println("ERROR:" + e);
+      System.out.println("ERROR: " + e.getMessage());
+      return false;
     }
   }
 

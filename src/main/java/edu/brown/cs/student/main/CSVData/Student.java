@@ -48,8 +48,9 @@ public class Student implements CSVDatum {
   /**
    * Constructor for a Student.
    * @param studentInfo - A list of strings to be converted into different data types.
+   * @throws NumberFormatException when numerical fields are not numbers
    */
-  public Student(List<String> studentInfo) {
+  public Student(List<String> studentInfo) throws NumberFormatException {
     this.id = Integer.parseInt(studentInfo.get(0));
     this.name = studentInfo.get(1);
     this.email = studentInfo.get(2);
