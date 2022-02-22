@@ -38,8 +38,8 @@ public class BloomKNNCalculator implements KNNCalculator<BloomFilter> {
     this.comp = comp;
 
     // remove base from students so it doesn't appear in our search results
-    BloomFilter removed = filters.remove(base.getId());
-    assert base.equals(removed);
+    BloomFilter removed = this.filters.remove(base.getId());
+    assert base.equals(removed) && !this.filters.containsKey(base.getId());
     assert base.equals(comp.getBase())
         : "Given comparator does not match base filter";
   }
@@ -47,6 +47,7 @@ public class BloomKNNCalculator implements KNNCalculator<BloomFilter> {
   @Override
   public List<Integer> knn(int k) {
     assert k > 0; // we check for negative and 0 values before calling
+    assert !filters.containsValue(comp.getBase()); // should be removed
 
     // enqueue all elements
     PriorityQueue<BloomFilter> queue = new PriorityQueue<>(comp);
