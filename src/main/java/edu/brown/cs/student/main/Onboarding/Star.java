@@ -1,14 +1,9 @@
-package edu.brown.cs.student.main.CSVData;
-
-import edu.brown.cs.student.main.BloomFilter.BloomFilter;;
-import edu.brown.cs.student.main.Coordinate;
-import edu.brown.cs.student.main.KDNodes.KDNode;
-import edu.brown.cs.student.main.KDNodes.StarNode;
+package edu.brown.cs.student.main.Onboarding;
 
 /**
  * class representing data about individual stars.
  */
-public class Star implements CSVDatum {
+public class Star {
   /** unique, non-null identifier for each star. */
   private final int id;
   /** unique identifier for each star. May be null. */
@@ -97,6 +92,7 @@ public class Star implements CSVDatum {
   public Coordinate getCord() {
     return this.cord;
   }
+<<<<<<< HEAD:src/main/java/edu/brown/cs/student/main/CSVData/Star.java
 
   @Override
   public CSVBuilder getBuilder() {
@@ -120,4 +116,6 @@ public class Star implements CSVDatum {
   public int getMaxElts() {
     return 0;
   }
+=======
+>>>>>>> master:src/main/java/edu/brown/cs/student/main/Onboarding/Star.java
 }

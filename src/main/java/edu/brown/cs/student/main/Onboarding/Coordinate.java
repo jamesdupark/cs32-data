@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.Onboarding;
 
 import edu.brown.cs.student.main.KDNodes.KDNode;
 

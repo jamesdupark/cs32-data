@@ -3,12 +3,8 @@ package edu.brown.cs.student.main.Commands;
 import edu.brown.cs.student.main.BloomFilter.BloomComparator;
 import edu.brown.cs.student.main.BloomFilter.BloomFilter;
 import edu.brown.cs.student.main.BloomFilter.XNORSimilarity;
-import edu.brown.cs.student.main.CSVData.CSVBuilder;
-import edu.brown.cs.student.main.CSVData.StarBuilder;
-import edu.brown.cs.student.main.CSVData.StudentBuilder;
+import edu.brown.cs.student.main.CSVParser;
 import edu.brown.cs.student.main.KNNCalculator.BloomKNNCalculator;
-import edu.brown.cs.student.main.CSVData.CSVDatum;
-import edu.brown.cs.student.main.CSVData.CSVReader;
 import edu.brown.cs.student.main.DuplicateCommandException;
 
 import java.util.HashMap;
@@ -41,16 +37,6 @@ public class BloomCommands implements REPLCommands {
    * Maximum number of strings in the fields used by our current dataset.
    */
   private int maxInsert = 0;
-
-  /**
-   * Takes in a tokenized array representing user input and executes the proper
-   * command based on the input, if a corresponding command exists. Also handles
-   * printing results of commands and error messages.
-   *
-   * @param cmd argv[0], the keyword indicating which command should be run
-   * @param argv array of strings tokenized from user input
-   * @param argc length of argv
-   */
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
     // verifying that command is a supported one; should never fail
@@ -185,10 +171,7 @@ public class BloomCommands implements REPLCommands {
           + " Expected 2 arguments but got " + argc);
     }
 
-    CSVBuilder<CSVDatum> studentBuilder = new StudentBuilder();
-    CSVBuilder<CSVDatum> starBuilder = new StarBuilder();
-    List<CSVBuilder<CSVDatum>> builders = List.of(studentBuilder, starBuilder);
-    CSVReader<CSVDatum> parser = new CSVReader<>(builders);
+    CSVParser<BloomFilter> parser = new CSVParser<>(new StudentBloomBuilder());
     String filepath = argv[1];
     if (!parser.load(filepath)) {
       return;

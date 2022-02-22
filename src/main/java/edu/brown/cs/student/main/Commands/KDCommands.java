@@ -1,17 +1,14 @@
 package edu.brown.cs.student.main.Commands;
 
-import edu.brown.cs.student.main.CSVData.CSVBuilder;
-import edu.brown.cs.student.main.CSVData.CSVDatum;
-import edu.brown.cs.student.main.CSVData.CSVReader;
-import edu.brown.cs.student.main.CSVData.StarBuilder;
-import edu.brown.cs.student.main.CSVData.StudentBuilder;
+
+import edu.brown.cs.student.main.CSVParser;
+import edu.brown.cs.student.main.Builder.StudentNodeBuilder;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDTree;
 import edu.brown.cs.student.main.KIsNegativeException;
 import edu.brown.cs.student.main.KeyNotFoundException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -83,33 +80,13 @@ public class KDCommands implements REPLCommands {
     try {
       // create new kd tree and insert elements into tree
       this.kdTree = new KDTree<>();
-//      CSVParser parser = new CSVParser();
-//      parser.parse(argv[1]);
-//      List<CSVDatum> studentCSVList = parser.getData();
-      // ====================
 
-      CSVBuilder<CSVDatum> starBuilder = new StarBuilder();
-      CSVBuilder<CSVDatum> studentBuilder = new StudentBuilder();
-      List<CSVBuilder<CSVDatum>> builderList = List.of(starBuilder, studentBuilder);
-
-      CSVReader<CSVDatum> reader = new CSVReader(builderList);
-      if (reader.load(argv[1])) {
-        return;
-      }
-      List<CSVDatum> studentCSVList = reader.getDataList();
-      System.out.println(studentCSVList);
-//      System.out.println(studentCSVList);
-
-      // ====================
-
-      // turn my CSVDatum list into a list of KDNodes
-      List<KDNode> nodesList = new ArrayList<>();
-      for (CSVDatum stud : studentCSVList) {
-        nodesList.add(stud.toKDNode());
-      }
+      CSVParser<KDNode> reader = new CSVParser(new StudentNodeBuilder());
+      reader.load(argv[1]);
+      List<KDNode> nodesList = reader.getDataList();
       this.kdTree.insertList(nodesList, 0);
       System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
-      this.kdTree.printTree(this.kdTree.getRoot(), "");
+//      this.kdTree.printTree(this.kdTree.getRoot(), "");
     } catch (IllegalArgumentException e) {
       System.err.println(e.getMessage());
     } catch (RuntimeException e) {

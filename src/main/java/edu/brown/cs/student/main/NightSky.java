@@ -1,11 +1,7 @@
 package edu.brown.cs.student.main;
 
-import edu.brown.cs.student.main.CSVData.CSVBuilder;
-import edu.brown.cs.student.main.CSVData.CSVDatum;
-import edu.brown.cs.student.main.CSVData.CSVReader;
-import edu.brown.cs.student.main.CSVData.Star;
-import edu.brown.cs.student.main.CSVData.StarBuilder;
-
+import edu.brown.cs.student.main.Onboarding.Coordinate;
+import edu.brown.cs.student.main.Onboarding.Star;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,15 +28,12 @@ public class NightSky {
    * @return boolean whether csv was parsed correctly
    */
   public boolean parseCSV(String filePath) {
-    ArrayList<CSVBuilder<CSVDatum>> builderList = new ArrayList<CSVBuilder<CSVDatum>>();
-    CSVBuilder<CSVDatum> builder = new StarBuilder();
-    builderList.add(builder);
-    CSVReader<Star> reader = new CSVReader<Star>(builderList);
+    CSVParser<Star> reader = new CSVParser<Star>();
     if (!reader.load(filePath)) {
       return false;
     }
 //    List<Star> starList = reader.getDataList();
-    for (CSVDatum star : reader.getDataList()) {
+    for (Star star : reader.getDataList()) {
       Star st = (Star) star;
       idMap.put(st.getId(), st);
       nameMap.put(st.getName(), st);
