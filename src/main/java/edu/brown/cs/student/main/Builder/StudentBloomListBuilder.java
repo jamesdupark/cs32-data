@@ -77,8 +77,8 @@ public class StudentBloomListBuilder implements CSVBuilder<List<String>> {
    * @param multField field of a csv that contains multiple elements
    * @return the same field as a list of strings with enclosing quotes removed
    */
-  public List<String> parseField(String multField) {
-    multField.replace("\"", "");
-    return Arrays.asList(multField.split(", ").clone());
+  private List<String> parseField(String multField) {
+    String quoteRemoved = multField.replace("\"", "");
+    return Arrays.asList(quoteRemoved.split(", ").clone());
   }
 }

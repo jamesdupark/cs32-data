@@ -1,0 +1,22 @@
+INPUT
+stars data/stars/ten-star.csv
+naive_neighbors 1 0 0 0
+stars data/test/bad-header.csv
+naive_neighbors 1 0 0 0
+stars one-star.csv
+stars data/stars/one-star.csv
+naive_neighbors 1 0 0 0
+naive_neighbors 1 "Sol"
+stars data/test/header-only.csv
+naive_neighbors 1 0 0 0
+OUTPUT
+Read 10 stars from data/stars/ten-star.csv
+0
+ERROR:
+0
+ERROR:
+Read 1 stars from data/stars/one-star.csv
+1
+ERROR:
+Read 0 stars from data/test/header-only.csv
+END

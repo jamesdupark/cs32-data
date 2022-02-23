@@ -11,17 +11,21 @@ public class NightSkyCommands implements REPLCommands {
   private NightSky sky = new NightSky();
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
-    switch (cmd) { // pattern matching for command strings
-      case ("stars"): // stars: read in CSV
-        this.starsCmd(argv, argc);
-        break;
+    try {
+      switch (cmd) { // pattern matching for command strings
+        case ("stars"): // stars: read in CSV
+          this.starsCmd(argv, argc);
+          break;
 
-      case ("naive_neighbors"): // knn algorithm
-        this.naiveNeighborsCmd(argv, argc);
-        break;
-      default: // not a recognized command
-        System.err.println("ERROR: Command not recognized.");
-        break;
+        case ("naive_neighbors"): // knn algorithm
+          this.naiveNeighborsCmd(argv, argc);
+          break;
+        default: // not a recognized command
+          System.err.println("ERROR: Command not recognized.");
+          break;
+      }
+    } catch (IllegalArgumentException ex) {
+      System.err.println(ex.getMessage());
     }
 
   }
@@ -52,7 +56,7 @@ public class NightSkyCommands implements REPLCommands {
         this.sky = newSky;
       }
     } else { // signal incorrect number of args
-      System.err.println("ERROR: incorrect number of args");
+      throw new IllegalArgumentException("ERROR: incorrect number of args");
     }
   }
 
@@ -96,7 +100,7 @@ public class NightSkyCommands implements REPLCommands {
 
         queryCoord = maskStar.getCoord();
       } else { // incorrect no. of args
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("ERROR: incorrect number of args");
       }
 
       List<Integer> neighbors = sky.knn(queryCoord, k, maskStar);

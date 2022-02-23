@@ -1,0 +1,5 @@
+INPUT
+stark data/stars/one-star.csv
+OUTPUT
+ERROR:
+END

@@ -1,0 +1,25 @@
+INPUT
+naive_neighbors 1 0 0 0
+stars data/stars/ten-star.csv
+naive_neighbors 1
+naive_neighbors 1 0 0 0
+naive_neighbors 1 0 0
+naive_neighbors 1 0 0 0
+naive_neighbors 1 "Proxima Centauri" "Sol"
+naive_neighbors 1 0 0 0
+naive_neighbors 1 "Proxima Centauri"Sol
+naive_neighbors 1 0 0 0
+naive_neighbors 1 "Proxima Centauri "Sol"
+OUTPUT
+ERROR:
+Read 10 stars from data/stars/ten-star.csv
+ERROR:
+0
+ERROR:
+0
+ERROR:
+0
+ERROR:
+0
+ERROR:
+END
