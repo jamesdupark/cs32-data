@@ -42,13 +42,12 @@ public class CSVParser<T> {
       String line = reader.readLine();
       // checking for correct CSV column titles.
       if (!this.builder.getColumnTitles().equals(line)) {
-        throw new IOException("ERROR: CSV column names does not match expected");
+        throw new IOException("CSV column names does not match expected");
       } else {
         line = reader.readLine();
-        int count = 0;
         // looping through each line in the csv file after the column names
         while (line != null) {
-          List<String> matchList = new ArrayList<String>();
+          List<String> matchList = new ArrayList<>();
           Pattern regex = Pattern.compile("[^,\"]+|\"([^\"]*)\"");
           Matcher regexMatcher = regex.matcher(line);
           while (regexMatcher.find()) {
@@ -63,12 +62,12 @@ public class CSVParser<T> {
             }
             return false;
           }
-          count++;
           line = reader.readLine();
         }
       }
     } catch (IOException e) {
-      System.out.println("ERROR:" + e);
+      System.out.println("ERROR: " + e);
+      return false;
     }
     return true;
   }

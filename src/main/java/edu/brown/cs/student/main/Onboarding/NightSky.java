@@ -88,13 +88,16 @@ public class NightSky {
    * @return list of k nearest ids to queryCoord
    */
   public List<Integer> knn(Coordinate queryCoord, int k, Star mask) {
+    if (idMap.isEmpty()) {
+      System.err.println("ERROR: stars must be called before naive_neighbors");
+    }
     TreeMap<Double, List<Integer>> distMap = new TreeMap<>();
 
     // traverse through all stars and calculate distances
     for (Map.Entry<Integer, Star> entry : idMap.entrySet()) {
       int id = entry.getKey();
       Star star = entry.getValue();
-      double distance = queryCoord.distance(star.getCord());
+      double distance = queryCoord.distance(star.getCoord());
       if (star.equals(mask)) {
         assert distance == 0;
         continue;

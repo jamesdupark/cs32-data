@@ -2,50 +2,50 @@ package edu.brown.cs.student.main;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import edu.brown.cs.student.main.Onboarding.Coordinate;
+import edu.brown.cs.student.main.Onboarding.NightSky;
+import edu.brown.cs.student.main.Onboarding.Star;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class NightSkyTest {
-  /*
   NightSky tenStar, emptySky, knnSky;
   boolean readState;
   Coordinate origin;
   Star sol;
 
   @Before
-  public void setup() throws IOException {
+  public void setup() {
     tenStar = new NightSky();
-    readState = tenStar.readCsv("data/stars/ten-star.csv");
+    readState = tenStar.parseCSV("data/stars/ten-star.csv");
     emptySky = new NightSky();
     knnSky = new NightSky();
-    knnSky.readCsv("data/test/knn-test.csv");
+    knnSky.parseCSV("data/test/knn-test.csv");
     origin = new Coordinate(0, 0, 0);
     sol = new Star(0, "Sol", 0, 0, 0);
   }
 
-  // @Test
-  public void testReadCsvNormal() throws IOException {
-    boolean headerOnly = emptySky.readCsv("data/test/header-only.csv");
-    boolean badHeader = emptySky.readCsv("data/test/bad-header.csv");
-    boolean fewEntries = emptySky.readCsv("data/test/4-entries.csv");
-    boolean manyEntries = emptySky.readCsv("data/test/6-entries.csv");
-    boolean noID = emptySky.readCsv("data/test/null-id.csv");
-    boolean noX = emptySky.readCsv("data/test/null-x.csv");
-    boolean noY = emptySky.readCsv("data/test/null-y.csv");
-    boolean noZ = emptySky.readCsv("data/test/null-z.csv");
-    boolean nonNumX = emptySky.readCsv("data/test/non-numerical-x.csv");
-    boolean nonNumY = emptySky.readCsv("data/test/non-numerical-y.csv");
-    boolean nonNumZ = emptySky.readCsv("data/test/non-numerical-z.csv");
+  @Test
+  public void testReadCsvNormal() {
+    boolean headerOnly = emptySky.parseCSV("data/test/header-only.csv");
+    boolean badHeader = emptySky.parseCSV("data/test/bad-header.csv");
+    boolean fewEntries = emptySky.parseCSV("data/test/4-entries.csv");
+    boolean manyEntries = emptySky.parseCSV("data/test/6-entries.csv");
+    boolean noID = emptySky.parseCSV("data/test/null-id.csv");
+    boolean noX = emptySky.parseCSV("data/test/null-x.csv");
+    boolean noY = emptySky.parseCSV("data/test/null-y.csv");
+    boolean noZ = emptySky.parseCSV("data/test/null-z.csv");
+    boolean nonNumX = emptySky.parseCSV("data/test/non-numerical-x.csv");
+    boolean nonNumY = emptySky.parseCSV("data/test/non-numerical-y.csv");
+    boolean nonNumZ = emptySky.parseCSV("data/test/non-numerical-z.csv");
 
     assertTrue(readState);
     assertTrue(headerOnly);
@@ -61,12 +61,7 @@ public class NightSkyTest {
     assertFalse(nonNumZ);
   }
 
-  // @Test
-  public void testReadCsvException() {
-    assertThrows(IOException.class, () -> emptySky.readCsv(""));
-  }
-
-  // @Test
+  @Test
   public void testNameToStar() {
     Star solQueried = tenStar.nameToStar("Sol");
     Star nonexistent = tenStar.nameToStar("hello");
@@ -75,7 +70,7 @@ public class NightSkyTest {
     assertNull(nonexistent);
   }
 
-  // @Test
+  @Test
   public void testIdToStar() {
     Star solQueried = tenStar.idToStar(0);
     Star nonexistent = tenStar.idToStar(10);
@@ -84,7 +79,7 @@ public class NightSkyTest {
     assertNull(nonexistent);
   }
 
-  // @Test
+  @Test
   public void testKnn() {
     // testing normal functionality
     List<Integer> tenSolQuery = tenStar.knn(origin, 1, null);
@@ -102,7 +97,7 @@ public class NightSkyTest {
     assertEquals(fiveExpected, fiveQuery);
   }
 
-  // @Test
+  @Test
   public void testKnnEdge() {
     // k > n
     List<Integer> knnOne = knnSky.knn(origin, 20, null);
@@ -143,7 +138,7 @@ public class NightSkyTest {
     double distFive = this.getBinDistance(distFiveBin, origin);
 
     assertEquals(5, distFive, Double.MIN_VALUE);
-  }*/
+  }
 
   /**
    * Iterates through a "bin" and checks whether the distances to a given coord
@@ -154,7 +149,6 @@ public class NightSkyTest {
    * @param coord Coordinate to check distance of stars against
    * @return distance of the bin to coord
    */
-  /*
   private double getBinDistance(List<Integer> idBin, Coordinate coord) {
     int firstID = idBin.get(0);
     Star firstStar = knnSky.idToStar(firstID);
@@ -168,5 +162,5 @@ public class NightSkyTest {
     }
 
     return distance;
-  }*/
+  }
 }

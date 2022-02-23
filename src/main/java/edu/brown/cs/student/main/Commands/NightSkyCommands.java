@@ -51,12 +51,8 @@ public class NightSkyCommands implements REPLCommands {
       if (readSuccess) { // file read from without encountering any errors
         this.sky = newSky;
       }
-//      } catch (IOException ex) { // file not found
-//        System.err.println("ERROR: file not found.");
-//      }
-//    } else { // signal incorrect number of args
-//      System.err.println("ERROR: incorrect number of args");
-//    }
+    } else { // signal incorrect number of args
+      System.err.println("ERROR: incorrect number of args");
     }
   }
 
@@ -98,7 +94,7 @@ public class NightSkyCommands implements REPLCommands {
           return;
         }
 
-        queryCoord = maskStar.getCord();
+        queryCoord = maskStar.getCoord();
       } else { // incorrect no. of args
         throw new IllegalArgumentException();
       }

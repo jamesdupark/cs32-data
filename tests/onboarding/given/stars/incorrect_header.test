@@ -1,0 +1,5 @@
+INPUT
+stars data/project1/proj1_small.csv
+OUTPUT
+ERROR:
+END

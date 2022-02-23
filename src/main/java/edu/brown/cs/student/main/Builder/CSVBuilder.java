@@ -6,7 +6,8 @@ public interface CSVBuilder<T> {
   /**
    * Adds class made from input line to list.
    * @param fields - List of Strings that is a line from CSV File.
-   * @return - object to add to data list of field where this method is called.
+   * @return - object to add to data list of field where this method is called. In the
+   * case of an error (such as a NumberFormat Exception), build will return null.
    */
   T build(List<String> fields);
 
