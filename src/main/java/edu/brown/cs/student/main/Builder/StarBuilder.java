@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.Builder;
 
 import edu.brown.cs.student.main.Onboarding.Star;
+
 import java.util.List;
 
 public class StarBuilder implements CSVBuilder<Star> {

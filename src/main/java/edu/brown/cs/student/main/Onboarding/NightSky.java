@@ -1,4 +1,3 @@
-
 package edu.brown.cs.student.main.Onboarding;
 
 import edu.brown.cs.student.main.Builder.StarBuilder;
@@ -30,7 +29,7 @@ public class NightSky {
    * @return - boolean of whether parseCSV succeeded.
    */
   public boolean parseCSV(String filePath) {
-    CSVParser<Star> reader = new CSVParser<Star>(new StarBuilder());
+    CSVParser<Star> reader = new CSVParser<>(new StarBuilder());
     boolean loadSuccess = reader.load(filePath);
     if (!loadSuccess) {
       return false;
