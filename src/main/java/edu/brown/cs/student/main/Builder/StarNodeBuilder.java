@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.Builder;
 
-import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDNodes.StarNode;
 
 import java.util.List;

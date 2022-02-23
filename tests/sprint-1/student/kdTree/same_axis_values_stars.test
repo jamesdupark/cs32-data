@@ -1,0 +1,5 @@
+INPUT
+load_kd data/test/test-kd-tree-same-x-axis-students.csv
+OUTPUT
+Read 5 students from data/test/test-kd-tree-same-x-axis-students.csv
+END

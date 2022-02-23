@@ -1,0 +1,6 @@
+id,name,email,gender,class_year,ssn,nationality,race,years_experience,communication_style,weekly_avail_hours,meeting_style,meeting_time,software_engn_confidence,strengths,weaknesses,skills,interests
+0,,,,jr,,,asian,1,email,2,virtual,,3,"a, b, c",,"1, 2","z, y, x"
+1,,,,jr,,,asian,1,email,3,virtual,,3,"b, c, a",,"2, 1","x, z, y"
+2,,,,sr,,,asian,1,email,5,virtual,,3,"a, b, c",,"1, 2","z, y, x"
+3,,,,fr,,,martian,1,slack,-2,hybrid,,3,"a, b, c",,"3, 2","z, w, x"
+4,,,,ye,,,ye,1,ye,2,ye,,0,ye,,ye,ye
