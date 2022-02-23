@@ -1,0 +1,15 @@
+INPUT
+load_kd
+load_kd data/project1/proj1_small.csv
+load_kd data/null-id.csv
+load_kd data/project1/proj1_small.csv
+load_kd data/test/same-stars.csv
+OUTPUT
+ERROR:
+Read 20 students from data/project1/proj1_small.csv
+ERROR:
+Read 0 students from data/null-id.csv
+Read 20 students from data/project1/proj1_small.csv
+ERROR:
+Read 0 students from data/test/same-stars.csv
+END

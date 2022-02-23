@@ -1,0 +1,25 @@
+INPUT
+load_kd data/project1/proj1_medium.csv
+similar_kd 9 39
+load_kd data/project1/proj1_medium.csv
+similar_kd 2 7
+load_kd data/project1/proj1_small.csv
+similar_kd 2 7
+OUTPUT
+Read 60 students from data/project1/proj1_medium.csv
+37
+23
+37
+23
+12
+52
+3
+38
+6
+Read 60 students from data/project1/proj1_medium.csv
+5
+12
+Read 20 students from data/project1/proj1_small.csv
+4
+12
+END
