@@ -51,13 +51,11 @@ public final class Main {
 
     // adding REPLCommands packages
     BloomCommands blooms = new BloomCommands();
-    // TODO : UNCOMMENT LINE 54 AND 58
     NightSkyCommands stars = new NightSkyCommands();
     KDCommands kdtree = new KDCommands();
 
     // creating list
     List<REPLCommands> commandsList = List.of(blooms, stars, kdtree);
-    // List<REPLCommands> commandsList = List.of(blooms, kdtree);
     Repl myRepl = new Repl(commandsList);
     myRepl.run();
   }
