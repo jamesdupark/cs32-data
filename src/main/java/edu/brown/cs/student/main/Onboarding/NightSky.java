@@ -88,7 +88,7 @@ public class NightSky {
    */
   public List<Integer> knn(Coordinate queryCoord, int k, Star mask) {
     if (idMap.isEmpty()) {
-      System.err.println("ERROR: stars must be called before naive_neighbors");
+      System.err.println("ERROR: stars list is empty");
     }
     TreeMap<Double, List<Integer>> distMap = new TreeMap<>();
 
