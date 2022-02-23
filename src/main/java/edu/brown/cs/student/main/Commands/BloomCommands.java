@@ -189,9 +189,14 @@ public class BloomCommands implements REPLCommands {
 
     Map<Integer, BloomFilter> newFilters = new HashMap<>();
     for (List<String> toInsert : data) {
-      BloomFilter filter = new StudentBloom(maxInsert, toInsert);
-      int id = filter.getId();
-      newFilters.put(id, filter);
+      try {
+        BloomFilter filter = new StudentBloom(maxInsert, toInsert);
+        int id = filter.getId();
+        newFilters.put(id, filter);
+      } catch (IllegalArgumentException ex) {
+        System.err.println(ex.getMessage());
+        return;
+      }
     }
 
     int size = data.size();
