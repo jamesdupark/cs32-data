@@ -5,6 +5,10 @@ import edu.brown.cs.student.main.KDNodes.StarNode;
 
 import java.util.List;
 
+/**
+ * Class to build a StarNode of type KDNode that will eventually be inserted
+ * into the KDTree.
+ */
 public class StarNodeBuilder implements CSVBuilder<KDNode> {
   @Override
   public KDNode build(List<String> fields) {

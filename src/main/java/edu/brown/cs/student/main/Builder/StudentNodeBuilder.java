@@ -5,10 +5,18 @@ import edu.brown.cs.student.main.KDNodes.StudentNode;
 
 import java.util.List;
 
+/**
+ * Class to build a StudentNode of type KDNode that will eventually be inserted
+ * into the KDTree.
+ */
 public class StudentNodeBuilder implements CSVBuilder<KDNode> {
+  /** the index corresponding to the ID field in the student CSV Data. */
   private final int idIndex = 0;
+  /** the index corresponding to the years of experience field in the student CSV Data. */
   private final int yearsExpIndex = 8;
+  /** the index corresponding to the weekly available hour field in the student CSV Data. */
   private final int weeklyAvailIndex = 10;
+  /** the index corresponding to the software confidence field in the student CSV Data. */
   private final int sweConfidenceIndex = 13;
 
   @Override
