@@ -18,7 +18,7 @@ public class EuclideanDistance implements Distances {
   public double calcDistance(KDNode origin, KDNode target) {
     double sum = 0;
     for (int i = 0; i < target.getNumDimensions(); i++) {
-      double deltaAxis = (target.getAxisVal(i) - origin.getAxisVal(i));
+      double deltaAxis = target.getAxisVal(i) - origin.getAxisVal(i);
       sum += Math.pow(deltaAxis, 2);
     }
     return Math.sqrt(sum);

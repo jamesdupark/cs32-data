@@ -17,15 +17,15 @@ public class StarBuilder implements CSVBuilder<Star> {
       }
       if (!fields.get(1).equals("")) { // null name
         int id = Integer.parseInt(fields.get(0));
-        double x = Double.parseDouble((fields.get(2)));
-        double y = Double.parseDouble((fields.get(3)));
-        double z = Double.parseDouble((fields.get(4)));
+        double x = Double.parseDouble(fields.get(2));
+        double y = Double.parseDouble(fields.get(3));
+        double z = Double.parseDouble(fields.get(4));
         return new Star(id, fields.get(1), x, y, z);
       } else {
         int id = Integer.parseInt(fields.get(0));
-        double x = Double.parseDouble((fields.get(2)));
-        double y = Double.parseDouble((fields.get(3)));
-        double z = Double.parseDouble((fields.get(4)));
+        double x = Double.parseDouble(fields.get(2));
+        double y = Double.parseDouble(fields.get(3));
+        double z = Double.parseDouble(fields.get(4));
         return new Star(id, x, y, z);
       }
     } catch (NumberFormatException ex) {
