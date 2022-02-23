@@ -2,7 +2,7 @@ package edu.brown.cs.student.main;
 
 import static org.junit.Assert.assertEquals;
 
-import edu.brown.cs.student.main.Builder.StudentBloomListBuilder;
+import edu.brown.cs.student.main.CSVParse.Builder.StudentBloomListBuilder;
 import org.junit.Test;
 
 import java.util.List;

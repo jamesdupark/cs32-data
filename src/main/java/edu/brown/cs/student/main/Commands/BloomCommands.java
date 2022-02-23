@@ -4,8 +4,8 @@ import edu.brown.cs.student.main.Blooms.BloomComparator;
 import edu.brown.cs.student.main.Blooms.BloomFilter;
 import edu.brown.cs.student.main.Blooms.StudentBloom;
 import edu.brown.cs.student.main.Blooms.XNORSimilarity;
-import edu.brown.cs.student.main.Builder.StudentBloomListBuilder;
-import edu.brown.cs.student.main.Builder.CSVParser;
+import edu.brown.cs.student.main.CSVParse.Builder.StudentBloomListBuilder;
+import edu.brown.cs.student.main.CSVParse.CSVParser;
 import edu.brown.cs.student.main.KNNCalculator.BloomKNNCalculator;
 
 import java.util.HashMap;

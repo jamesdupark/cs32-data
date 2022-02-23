@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main;
 
-import edu.brown.cs.student.main.Builder.CSVParser;
-import edu.brown.cs.student.main.Builder.StudentNodeBuilder;
+import edu.brown.cs.student.main.CSVParse.CSVParser;
+import edu.brown.cs.student.main.CSVParse.Builder.StudentNodeBuilder;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDNodes.StudentNode;
 import edu.brown.cs.student.main.KDimTree.KDTree;

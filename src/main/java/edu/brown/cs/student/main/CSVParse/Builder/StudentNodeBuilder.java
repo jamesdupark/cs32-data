@@ -1,5 +1,6 @@
-package edu.brown.cs.student.main.Builder;
+package edu.brown.cs.student.main.CSVParse.Builder;
 
+import edu.brown.cs.student.main.CSVParse.Builder.CSVBuilder;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDNodes.StudentNode;
 

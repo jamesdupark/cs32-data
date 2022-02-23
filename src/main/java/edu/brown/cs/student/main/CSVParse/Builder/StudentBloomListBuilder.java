@@ -1,4 +1,6 @@
-package edu.brown.cs.student.main.Builder;
+package edu.brown.cs.student.main.CSVParse.Builder;
+
+import edu.brown.cs.student.main.CSVParse.Builder.CSVBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;

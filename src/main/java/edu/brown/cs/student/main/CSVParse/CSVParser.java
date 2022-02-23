@@ -1,4 +1,6 @@
-package edu.brown.cs.student.main.Builder;
+package edu.brown.cs.student.main.CSVParse;
+
+import edu.brown.cs.student.main.CSVParse.Builder.CSVBuilder;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -66,7 +68,7 @@ public class CSVParser<T> {
           T item = builder.build(parseList);
           if (item != null) {
             this.dataList.add(builder.build(parseList));
-          } else {
+          } else { // deleting all previous entries since invalid line exists in CSV file
             for (T object : this.dataList) {
               this.dataList.remove(object);
             }

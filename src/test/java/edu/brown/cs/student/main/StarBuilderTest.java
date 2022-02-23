@@ -3,7 +3,7 @@ package edu.brown.cs.student.main;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import edu.brown.cs.student.main.Builder.StarBuilder;
+import edu.brown.cs.student.main.CSVParse.Builder.StarBuilder;
 import edu.brown.cs.student.main.Onboarding.Star;
 import org.junit.Test;
 import java.util.Arrays;
