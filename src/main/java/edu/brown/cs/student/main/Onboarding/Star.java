@@ -11,6 +11,9 @@ public class Star {
   /** position of star in 3-dimensional space. May not be null. */
   private final Coordinate getCoord;
 
+  /** default false positive rate for bloom filters created for this class. */
+  private final double fprate = 0.1;
+
   /**
    * Constructor for stars when all 5 fields are given.
    *

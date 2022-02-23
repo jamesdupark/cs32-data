@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 public class CSVParser<T> {
   private final List<T> dataList;
-  private CSVBuilder<T> builder;
+  private final CSVBuilder<T> builder;
 
   /**
    * Constructor for CSVReader.
@@ -26,6 +26,7 @@ public class CSVParser<T> {
     this.dataList = new ArrayList<>();
     this.builder = builder;
   }
+
   public List<T> getDataList() {
     return this.dataList;
   }
@@ -64,21 +65,11 @@ public class CSVParser<T> {
           }
           line = reader.readLine();
         }
+        return true;
       }
     } catch (IOException e) {
-      System.out.println("ERROR: " + e);
+      System.out.println("ERROR: " + e.getMessage());
       return false;
     }
-    return true;
-  }
-
-
-  /**
-   * Gets the string representing the name of the objects being represented by
-   * this datum.
-   * @return string name of the CSVDatum class.
-   */
-  public String getDatumName() {
-    return null;
   }
 }

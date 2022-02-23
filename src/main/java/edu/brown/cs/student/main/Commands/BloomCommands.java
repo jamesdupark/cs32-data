@@ -1,8 +1,15 @@
 package edu.brown.cs.student.main.Commands;
 
-import edu.brown.cs.student.main.BloomFilter;
+import edu.brown.cs.student.main.BloomFilter.BloomComparator;
+import edu.brown.cs.student.main.BloomFilter.BloomFilter;
+import edu.brown.cs.student.main.BloomFilter.StudentBloom;
+import edu.brown.cs.student.main.BloomFilter.XNORSimilarity;
+import edu.brown.cs.student.main.Builder.StudentBloomListBuilder;
+import edu.brown.cs.student.main.CSVParser;
+import edu.brown.cs.student.main.KNNCalculator.BloomKNNCalculator;
 import edu.brown.cs.student.main.DuplicateCommandException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +22,7 @@ public class BloomCommands implements REPLCommands {
    * List of strings representing the command keywords supported by this class.
    */
   private final List<String> commands =
-      List.of("create_bf", "insert_bf", "query_bf");
+      List.of("create_bf", "insert_bf", "query_bf", "load_bf", "similar_bf");
 
   /**
    * the most recently created BloomFilter, able to be inserted into and
@@ -24,14 +31,19 @@ public class BloomCommands implements REPLCommands {
   private BloomFilter currFilter;
 
   /**
-   * Takes in a tokenized array representing user input and executes the proper
-   * command based on the input, if a corresponding command exists. Also handles
-   * printing results of commands and error messages.
-   *
-   * @param cmd argv[0], the keyword indicating which command should be run
-   * @param argv array of strings tokenized from user input
-   * @param argc length of argv
+   * Map of all bloom filters from their ID to their respective filter.
    */
+  private Map<Integer, BloomFilter> allFilters;
+
+  /**
+   * Default false positive rate for filters to be initialized.
+   */
+  private static final double DEFAULT_FP_RATE = 0.1;
+
+  /**
+   * Maximum number of strings in the fields used by our current dataset.
+   */
+  private int maxInsert = 0;
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
     // verifying that command is a supported one; should never fail
@@ -47,6 +59,12 @@ public class BloomCommands implements REPLCommands {
           break;
         case "query_bf":
           this.queryBfCmd(argv, argc);
+          break;
+        case "load_bf":
+          this.loadBfCmd(argc, argv);
+          break;
+        case "similar_bf":
+          this.similarBfCmd(argc, argv);
           break;
         default:
           System.err.println("ERROR: Command not recognized.");
@@ -71,7 +89,7 @@ public class BloomCommands implements REPLCommands {
     // check correct number of args
     if (argc != 3) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 3 arguments but got " + argc);
+          + " Expected 3 arguments but got " + argc);
     }
 
     try {
@@ -105,7 +123,7 @@ public class BloomCommands implements REPLCommands {
     // check correct number of args
     if (argc != 2) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 2 arguments but got " + argc);
+          + " Expected 2 arguments but got " + argc);
     }
 
     if (currFilter != null) {
@@ -130,7 +148,7 @@ public class BloomCommands implements REPLCommands {
     // check correct number of args
     if (argc != 2) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
-          + "Expected 2 arguments but got " + argc);
+          + " Expected 2 arguments but got " + argc);
     }
 
     if (currFilter != null) {
@@ -142,6 +160,95 @@ public class BloomCommands implements REPLCommands {
     } else {
       System.out.println("ERROR: Must create a bloom filter with the "
           + "create_bf <r> <n> command before inserting.");
+    }
+  }
+
+  /**
+   * Executes the "load_bf" command by attempting read in bloom filters from the
+   * given filepath. If successful, prints the number of filters read in. Prints
+   * informative error message upon failure.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   */
+  private void loadBfCmd(int argc, String[] argv)
+      throws IllegalArgumentException {
+    if (argc != 2) {
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
+          + " Expected 2 arguments but got " + argc);
+    }
+
+    CSVParser<List<String>> parser = new CSVParser<>(new StudentBloomListBuilder());
+    String filepath = argv[1];
+    if (!parser.load(filepath)) {
+      return;
+    }
+
+    List<List<String>> data = parser.getDataList();
+    for (List<String> toInsert : data) {
+      if (toInsert.size() > maxInsert) {
+        maxInsert = toInsert.size();
+      }
+    }
+
+    Map<Integer, BloomFilter> newFilters = new HashMap<>();
+    for (List<String> toInsert : data) {
+      BloomFilter filter = new StudentBloom(maxInsert, toInsert);
+      int id = filter.getId();
+      newFilters.put(id, filter);
+    }
+
+    int size = data.size();
+    System.out.println("Read " + size + " " + "students from " + filepath);
+    allFilters = newFilters;
+  }
+
+  /**
+   * Executes the "similar_bf" command by attempting to query the studentFilters
+   * database for the k most similar filters in the database, based on the given
+   * BloomComparator metric.
+   *
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of args is incorrect
+   */
+  private void similarBfCmd(int argc, String[] argv)
+      throws IllegalArgumentException {
+    if (argc != 3) {
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
+          + " Expected 3 arguments but got " + argc);
+    } else if (allFilters == null) {
+      System.err.println("ERROR: please read in a dataset using the load_bf"
+          + " command before querying similar_bf.");
+      return;
+    }
+
+    int k, id;
+    try { // attempt to parse
+      k = Integer.parseInt(argv[1]);
+      id = Integer.parseInt(argv[2]);
+    } catch (NumberFormatException ex) {
+      throw new IllegalArgumentException("ERROR: k and student id must be "
+          + "integer values");
+    }
+
+    if (k < 0) {
+      throw new IllegalArgumentException("ERROR: k cannot be negative.");
+    } else if (k == 0) {
+      return;
+    } else {
+      BloomFilter base = allFilters.get(id);
+      if (base == null) {
+        System.err.println("ERROR: given id not in database.");
+        return;
+      }
+      BloomComparator defaultComparator = new XNORSimilarity(base);
+      BloomKNNCalculator knnCalc =
+          new BloomKNNCalculator(base, allFilters, defaultComparator);
+      List<Integer> knnList = knnCalc.knn(k);
+      for (int neighborID : knnList) {
+        System.out.println(neighborID);
+      }
     }
   }
 
