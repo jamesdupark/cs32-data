@@ -17,11 +17,6 @@ import java.util.List;
  */
 public class Repl {
   /**
-   * BufferedReader object that reads in input stream.
-   */
-  private final BufferedReader reader;
-
-  /**
    * hashMap of command strings to their respective REPLCommands classes.
    */
   private final HashMap<String, REPLCommands> cmdMap;
@@ -31,7 +26,6 @@ public class Repl {
    */
   Repl(List<REPLCommands> cmdList) {
     this.cmdMap = new HashMap<String, REPLCommands>();
-    this.reader = new BufferedReader(new InputStreamReader(System.in));
     for (REPLCommands cmdPackage : cmdList) {
       try {
         List<String> commands = cmdPackage.getCommandsList();
@@ -47,7 +41,7 @@ public class Repl {
    */
   public void run() {
     // initialize all commands
-    try {
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
       String line = reader.readLine();
       while (line != null) { // start REPL
         ArrayList<String> matchList = new ArrayList<String>();
@@ -75,8 +69,6 @@ public class Repl {
         }
         line = reader.readLine(); // read next line
       }
-      reader.close();
-
     } catch (IOException ex) { // catch IOexceptions
       System.err.println("ERROR: IOException encountered.");
     }
