@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,15 +49,23 @@ public class CSVParser<T> {
         line = reader.readLine();
         // looping through each line in the csv file after the column names
         while (line != null) {
-          List<String> matchList = new ArrayList<>();
-          Pattern regex = Pattern.compile("[^,\"]+|\"([^\"]*)\"");
-          Matcher regexMatcher = regex.matcher(line);
-          while (regexMatcher.find()) {
-            matchList.add(regexMatcher.group());
+          String[] quoteSplit = line.split("\"", -1);
+          List<String> parseList = new ArrayList<>();
+
+          for (int i = 0; i < quoteSplit.length; i++) {
+            String token = quoteSplit[i];
+
+            if (i % 2 == 0) { // odd numbered element, not in quotes
+              String[] commaSplit = token.split(",", -1);
+              parseList.addAll(Arrays.asList(commaSplit));
+            } else { // even numbered element, between quotes
+              token = "\"" + token + "\"";
+              parseList.add(token);
+            }
           }
-          T item = builder.build(matchList);
+          T item = builder.build(parseList);
           if (item != null) {
-            this.dataList.add(builder.build(matchList));
+            this.dataList.add(builder.build(parseList));
           } else {
             for (T object : this.dataList) {
               this.dataList.remove(object);
