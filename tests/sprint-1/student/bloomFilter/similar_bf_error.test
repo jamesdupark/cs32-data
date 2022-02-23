@@ -1,7 +1,26 @@
 INPUT
 similar_bf 3 1
-load_bf
+load_bf data/test/test-bloom-students.csv
+similar_bf -1 0
+similar_bf 1 0
+similar_bf 1 5
+similar_bf 3 0
+similar_bf 1 0.1
+similar_bf 8 0
+similar_bf 0.1 1
 OUTPUT
 ERROR:
-
+Read 5 students from data/test/test-bloom-students.csv
+ERROR:
+1
+ERROR:
+1
+2
+4
+ERROR:
+1
+2
+4
+3
+ERROR:
 END
