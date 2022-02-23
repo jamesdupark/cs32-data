@@ -1,0 +1,9 @@
+INPUT
+stars data/test/non-numerical-x.csv
+stars data/test/non-numerical-y.csv
+stars data/test/non-numerical-z.csv
+OUTPUT
+ERROR:
+ERROR:
+ERROR:
+END

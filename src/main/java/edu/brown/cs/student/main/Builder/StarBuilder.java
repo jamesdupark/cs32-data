@@ -4,10 +4,17 @@ import edu.brown.cs.student.main.Onboarding.Star;
 
 import java.util.List;
 
+/**
+ * Builder that makes class Star that will be used in NightSky.
+ */
 public class StarBuilder implements CSVBuilder<Star> {
   @Override
   public Star build(List<String> fields) {
     try {
+      if (fields.size() != 5) {
+        System.err.println("ERROR: too few or many inputs in CSV line");
+        return null;
+      }
       if (!fields.get(1).equals("")) { // null name
         int id = Integer.parseInt(fields.get(0));
         double x = Double.parseDouble((fields.get(2)));

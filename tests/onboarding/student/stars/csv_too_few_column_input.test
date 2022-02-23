@@ -1,0 +1,5 @@
+INPUT
+stars data/test/4-entries.csv
+OUTPUT
+ERROR:
+END

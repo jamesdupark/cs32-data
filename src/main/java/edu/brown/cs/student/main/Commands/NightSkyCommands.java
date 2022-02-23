@@ -7,7 +7,13 @@ import edu.brown.cs.student.main.Onboarding.Star;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * REPLCommands class that packages commands related to bloom filters.
+ */
 public class NightSkyCommands implements REPLCommands {
+  /**
+   * NightSky object that will store stars data and execute naive neighbors command.
+   */
   private NightSky sky = new NightSky();
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {

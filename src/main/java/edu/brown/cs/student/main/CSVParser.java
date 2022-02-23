@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Class to Read CSV File and load its content into list of chosen classes.
@@ -22,14 +20,17 @@ public class CSVParser<T> {
 
   /**
    * Constructor for CSVReader.
-   * @param builder fill
+   * @param builder - instance of CSVBuilder that directs what class to make from CSV file.
    */
-
   public CSVParser(CSVBuilder<T> builder) {
     this.dataList = new ArrayList<>();
     this.builder = builder;
   }
 
+  /**
+   * Retrieves the list of T /dataList field.
+   * @return - the dataList field.
+   */
   public List<T> getDataList() {
     return this.dataList;
   }
