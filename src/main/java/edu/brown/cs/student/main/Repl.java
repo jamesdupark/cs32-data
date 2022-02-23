@@ -1,4 +1,5 @@
 package edu.brown.cs.student.main;
+import edu.brown.cs.student.main.Commands.DuplicateCommandException;
 import edu.brown.cs.student.main.Commands.REPLCommands;
 
 import java.io.BufferedReader;

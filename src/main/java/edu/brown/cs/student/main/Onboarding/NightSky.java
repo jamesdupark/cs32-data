@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.Onboarding;
 
 import edu.brown.cs.student.main.Builder.StarBuilder;
-import edu.brown.cs.student.main.CSVParser;
+import edu.brown.cs.student.main.Builder.CSVParser;
 
 import java.util.ArrayList;
 import java.util.Collections;

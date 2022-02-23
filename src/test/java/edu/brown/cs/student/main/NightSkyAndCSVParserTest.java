@@ -12,7 +12,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NightSkyTest {
+public class NightSkyAndCSVParserTest {
   NightSky tenStar, emptySky, knnSky;
   boolean readState;
   Coordinate origin;
