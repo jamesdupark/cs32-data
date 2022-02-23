@@ -30,8 +30,10 @@ public class StudentNodeBuilder implements CSVBuilder<KDNode> {
       newStudent = new StudentNode(id, yearsExp, weeklyAvail, sweConfidence);
     } catch (NumberFormatException ex) {
       System.err.println("ERROR: input int or double field unable to be converted from string");
+      return null;
     } catch (NullPointerException ex) {
       System.err.println("ERROR: input int or double field was null");
+      return null;
     }
     return newStudent;
   }

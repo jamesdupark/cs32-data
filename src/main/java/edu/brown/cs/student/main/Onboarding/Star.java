@@ -9,7 +9,7 @@ public class Star {
   /** unique identifier for each star. May be null. */
   private final String name;
   /** position of star in 3-dimensional space. May not be null. */
-  private final Coordinate cord;
+  private final Coordinate getCoord;
 
   /**
    * Constructor for stars when all 5 fields are given.
@@ -23,7 +23,7 @@ public class Star {
   public Star(int id, String name, double x, double y, double z) {
     this.id = id;
     this.name = name;
-    this.cord = new Coordinate(x, y, z);
+    this.getCoord = new Coordinate(x, y, z);
   }
 
   /**
@@ -37,7 +37,7 @@ public class Star {
   public Star(int id, double x, double y, double z) {
     this.id = id;
     this.name = null;
-    this.cord = new Coordinate(x, y, z);
+    this.getCoord = new Coordinate(x, y, z);
   }
 
   /**
@@ -63,7 +63,7 @@ public class Star {
 
     if (obj instanceof Star) {
       Star oStar = (Star) obj;
-      boolean nonNullFields = id == oStar.id && cord.equals(oStar.cord);
+      boolean nonNullFields = id == oStar.id && getCoord.equals(oStar.getCoord);
 
       if (!nonNullFields) {
         return false;
@@ -86,7 +86,7 @@ public class Star {
    * Getter method for star's coordinate field.
    * @return this star's coordinate
    */
-  public Coordinate getCord() {
-    return this.cord;
+  public Coordinate getCoord() {
+    return this.getCoord;
   }
 }

@@ -1,0 +1,14 @@
+INPUT
+load_bf hello
+load_bf data/project1/proj1_small.csv
+load_bf
+load_bf data/project1/proj1_small.csv
+load_bf data/stars/ten-star.csv
+OUTPUT
+ERROR:
+Read 20 students from data/project1/proj1_small.csv
+ERROR:
+Read 20 students from data/project1/proj1_small.csv
+ERROR:
+Read 10 stars from data/stars/ten-star.csv
+END

@@ -1,0 +1,17 @@
+INPUT
+stars data/test/null-id.csv
+stars data/stars/one-star.csv
+stars data/test/null-x.csv
+stars data/stars/one-star.csv
+stars data/stars/null-y.csv
+stars data/stars/one-star.csv
+stars data/stars/null-z.csv
+OUTPUT
+ERROR:
+Read 1 stars from data/stars/one-star.csv
+ERROR:
+Read 1 stars from data/stars/one-star.csv
+ERROR:
+Read 1 stars from data/stars/one-star.csv
+ERROR:
+END

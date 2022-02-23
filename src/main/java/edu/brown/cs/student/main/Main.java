@@ -2,6 +2,7 @@ package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.Commands.BloomCommands;
 import edu.brown.cs.student.main.Commands.KDCommands;
+import edu.brown.cs.student.main.Commands.NightSkyCommands;
 import edu.brown.cs.student.main.Commands.REPLCommands;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -52,13 +53,11 @@ public final class Main {
 
     // adding REPLCommands packages
     BloomCommands blooms = new BloomCommands();
-    // TODO : UNCOMMENT LINE 54 AND 58
-//    NightSkyCommands stars = new NightSkyCommands();
+    NightSkyCommands stars = new NightSkyCommands();
     KDCommands kdtree = new KDCommands();
 
     // creating list
-//    List<REPLCommands> commandsList = List.of(blooms, stars, kdtree);
-    List<REPLCommands> commandsList = List.of(blooms, kdtree);
+    List<REPLCommands> commandsList = List.of(blooms, stars, kdtree);
     Repl myRepl = new Repl(commandsList);
     myRepl.run();
   }

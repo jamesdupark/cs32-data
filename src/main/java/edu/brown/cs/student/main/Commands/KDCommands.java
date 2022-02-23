@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.Commands;
 
+
 import edu.brown.cs.student.main.CSVParser;
 import edu.brown.cs.student.main.Builder.StudentNodeBuilder;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;

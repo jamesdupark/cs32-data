@@ -16,7 +16,8 @@ import java.util.regex.Pattern;
  */
 public class CSVParser<T> {
   private final List<T> dataList;
-  private CSVBuilder<T> builder;
+  private final CSVBuilder<T> builder;
+
 
   /**
    * Constructor for CSVReader.
@@ -27,44 +28,50 @@ public class CSVParser<T> {
     this.dataList = new ArrayList<>();
     this.builder = builder;
   }
+
   public List<T> getDataList() {
     return this.dataList;
   }
 
-  public void load(String filePath) {
+  /**
+   * Loads data from CSV file into list of CSVDatum.
+   * Regex and matchlist design inspired by: https://stackoverflow.com/questions/366202/ +
+   * regex-for-splitting-a-string-using-space-when-not-surrounded-by-single-or-double/366532#366532
+   * @param filePath - String that is the file path to CSV file.
+   * @return - boolean of whether loading in CSV file information succeeded or not.
+   */
+  public boolean load(String filePath) {
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line = reader.readLine();
       // checking for correct CSV column titles.
       if (!this.builder.getColumnTitles().equals(line)) {
-        throw new IOException("ERROR: CSV column names does not match expected");
+        throw new IOException("CSV column names does not match expected");
       } else {
         line = reader.readLine();
-        int count = 0;
         // looping through each line in the csv file after the column names
         while (line != null) {
-          List<String> matchList = new ArrayList<String>();
+          List<String> matchList = new ArrayList<>();
           Pattern regex = Pattern.compile("[^,\"]+|\"([^\"]*)\"");
           Matcher regexMatcher = regex.matcher(line);
           while (regexMatcher.find()) {
             matchList.add(regexMatcher.group());
           }
-          this.dataList.add(builder.build(matchList));
-          count++;
+          T item = builder.build(matchList);
+          if (item != null) {
+            this.dataList.add(builder.build(matchList));
+          } else {
+            for (T object : this.dataList) {
+              this.dataList.remove(object);
+            }
+            return false;
+          }
           line = reader.readLine();
         }
+        return true;
       }
     } catch (IOException e) {
-      System.out.println("ERROR:" + e);
+      System.out.println("ERROR: " + e.getMessage());
+      return false;
     }
-  }
-
-
-  /**
-   * Gets the string representing the name of the objects being represented by
-   * this datum.
-   * @return string name of the CSVDatum class.
-   */
-  public String getDatumName() {
-    return null;
   }
 }
