@@ -4,6 +4,9 @@ import edu.brown.cs.student.main.Onboarding.Star;
 
 import java.util.List;
 
+/**
+ * Class that builds a Star object which is used later for NightSky.
+ */
 public class StarBuilder implements CSVBuilder<Star> {
   @Override
   public Star build(List<String> fields) {
@@ -27,7 +30,6 @@ public class StarBuilder implements CSVBuilder<Star> {
       return null;
     }
   }
-
   @Override
   public String getColumnTitles() {
     return "StarID,ProperName,X,Y,Z";

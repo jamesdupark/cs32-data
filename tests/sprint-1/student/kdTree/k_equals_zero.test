@@ -1,0 +1,9 @@
+INPUT
+load_kd data/project1/proj1_small.csv
+similar_kd 0 1
+load_kd data/project1/proj1_big.csv
+similar_kd 0 12
+OUTPUT
+Read 20 students from data/project1/proj1_small.csv
+Read 500 students from data/project1/proj1_big.csv
+END
