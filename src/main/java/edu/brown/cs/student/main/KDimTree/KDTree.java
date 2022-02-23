@@ -286,9 +286,11 @@ public class KDTree<T extends KDNode> {
       insertIDIntoMap(distance, cursor.getVal().getID());
 
       // check if we add this node to our distance priority queue
-      if (distanceQueue.size() < k && targetID != cursor.val.getID()) {
+      if (distanceQueue.size() < k) {
         // our queue is not full yet
-        distanceQueue.add(distance);
+        if (targetID != cursor.val.getID() && !distanceQueue.contains(distance)) {
+          distanceQueue.add(distance);
+        }
         // traverse both children
         traverseTree(true, true, k, targetID, cursor, distMetric);
       } else {

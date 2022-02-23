@@ -17,9 +17,14 @@ import java.util.Map;
  * @author andrew7li
  */
 public class KDCommands implements REPLCommands {
-  /** List of strings representing the command keywords supported by this class. */
-  private final List<String> commands = List.of("load_kd", "similar_kd");
-  /** the most recently created KDTree, able to be inserted into and queried. */
+  /**
+   * List of strings representing the command keywords supported by this class.
+   * */
+  private final List<String> commands =
+      List.of("load_kd", "similar_kd");
+  /**
+   * the most recently created KDTree, able to be inserted into and queried.
+   * */
   private KDTree<KDNode> kdTree;
 
   @Override

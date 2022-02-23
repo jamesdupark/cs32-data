@@ -153,21 +153,131 @@ public class KDTreeFindNeighborsTest {
   @Test
   public void testKIsGreaterThanNumberOfNodes() throws KIsNegativeException, KeyNotFoundException {
     assertEquals(smallStudentTree.findKSN(20, 5,
-        smallStudentTree.getRoot(), new EuclideanDistance()).size(), 20);
+        smallStudentTree.getRoot(), new EuclideanDistance()).size(), 19);
     assertEquals(smallStudentTree.findKSN(31, 5,
         smallStudentTree.getRoot(), new EuclideanDistance()).size(), 31);
-//    assertEquals(sameStudentTree.findKSN(35, 1,
-//        sameStudentTree.getRoot(), new EuclideanDistance()).size(), 35);
-//    assertEquals(sameAxisStudentTree.findKSN(109, 0,
-//        sameAxisStudentTree.getRoot(), new EuclideanDistance()).size(), 109);
   }
 
   /**
    * Method to test finding the k most similar neighbors.
    */
   @Test
-  public void testFindKSN() {
+  public void testFindKSN() throws KIsNegativeException, KeyNotFoundException {
+    // initialize tree
+    KDTree<KDNode> kdTree = new KDTree<>();
+    StudentNode s1 = new StudentNode(0, 2.0, 2.0, 4.0);
+    StudentNode s2 = new StudentNode(1, 3, 2, 4);
+    StudentNode s3 = new StudentNode(2, -0.4, 0, 1);
+    StudentNode s4 = new StudentNode(3, -0.5, 0, 1);
+    List<KDNode> studentsList = new ArrayList<>();
+    studentsList.add(s1);
+    studentsList.add(s2);
+    studentsList.add(s3);
+    studentsList.add(s4);
+    kdTree.insertList(studentsList, 0);
 
+    // closest is root
+    List<Integer> nearestList = kdTree.findKSN(1, 2,
+        kdTree.getRoot(), new EuclideanDistance());
+    List<Integer> retList = new ArrayList<>();
+    retList.add(3);
+    assertEquals(nearestList, retList);
+    kdTree.cleanDataStructures();
+    retList.clear();
+
+    // closest is on the branch
+    nearestList = kdTree.findKSN(1, 0, kdTree.getRoot(), new EuclideanDistance());
+    retList.clear();
+    retList.add(1);
+    assertEquals(nearestList, retList);
+
+    retList.clear();
+    kdTree.cleanDataStructures();
+    nearestList = kdTree.findKSN(1, 1, kdTree.getRoot(), new EuclideanDistance());
+    retList.add(0);
+    assertEquals(nearestList, retList);
+
+    // k is greater than number of nodes
+    retList.clear();
+    kdTree.cleanDataStructures();
+    nearestList = kdTree.findKSN(8, 3, kdTree.getRoot(), new EuclideanDistance());
+    retList.add(2);
+    retList.add(0);
+    retList.add(1);
+    assertEquals(nearestList, retList);
   }
 
+  /**
+   * Method to test finding the k most similar neighbors where the closest neighbor
+   * is not on the same branch. That is, it is on the other branch.
+   */
+  @Test
+  public void testFindKSNWithClosestNotOnBranch()
+      throws KIsNegativeException, KeyNotFoundException {
+    // initialize tree
+    KDTree<KDNode> kdTree = new KDTree<>();
+    StudentNode s1 = new StudentNode(0, 5, 5, 5);
+    StudentNode s2 = new StudentNode(1, 8, -12, 4);
+    StudentNode s3 = new StudentNode(2, 5, -10, 4);
+    StudentNode s4 = new StudentNode(3, 4, -10, 4);
+    List<KDNode> studentsList = new ArrayList<>();
+    studentsList.add(s1);
+    studentsList.add(s2);
+    studentsList.add(s3);
+    studentsList.add(s4);
+    kdTree.insertList(studentsList, 0);
+
+    // closest is on other branch
+    List<Integer> nearestList = kdTree.findKSN(1, 2,
+        kdTree.getRoot(), new EuclideanDistance());
+    List<Integer> retList = new ArrayList<>();
+    retList.add(3);
+    assertEquals(nearestList, retList);
+
+    kdTree.cleanDataStructures();
+    retList.clear();
+    nearestList = kdTree.findKSN(2, 1, kdTree.getRoot(), new EuclideanDistance());
+    retList = new ArrayList<>();
+    retList.add(2);
+    retList.add(3);
+    assertEquals(nearestList, retList);
+    kdTree.cleanDataStructures();
+    retList.clear();
+  }
+
+  /**
+   * Method to test finding the k most similar neighbors where the closest neighbor
+   * is randomly selected. That is, the closest distance is shared by at least two KDNodes.
+   */
+  @Test
+  public void testFindKSNWithRandomSelection()
+      throws KIsNegativeException, KeyNotFoundException {
+    // initialize tree
+    KDTree<KDNode> kdTree = new KDTree<>();
+    StudentNode s1 = new StudentNode(0, 0, 0, 0);
+    StudentNode s2 = new StudentNode(1, -1, -1, -1);
+    StudentNode s3 = new StudentNode(2, 1, 1, 1);
+    StudentNode s4 = new StudentNode(3, 1, 1, 1);
+    StudentNode s5 = new StudentNode(4, -1, -1, -1);
+    List<KDNode> studentsList = new ArrayList<>();
+    studentsList.add(s1);
+    studentsList.add(s2);
+    studentsList.add(s3);
+    studentsList.add(s4);
+    studentsList.add(s5);
+    kdTree.insertList(studentsList, 0);
+    kdTree.printTree(kdTree.getRoot(), "");
+
+    // random selection - check properties
+    List<Integer> nearestList = kdTree.findKSN(2, 0,
+        kdTree.getRoot(), new EuclideanDistance());
+    List<Integer> retList = new ArrayList<>();
+    retList.add(3);
+    assertEquals(nearestList.size(), 2);
+    // should only be one distance in the queue
+    assertEquals(kdTree.getDistanceQueue().size(), 1);
+    assertEquals(kdTree.getDistanceQueue().peek(), 1.73, 0.1);
+    // all four students should have the same distance
+    assertEquals(kdTree.getDistToUserID().get(kdTree.getDistanceQueue().peek()).size(), 4);
+  }
 }
