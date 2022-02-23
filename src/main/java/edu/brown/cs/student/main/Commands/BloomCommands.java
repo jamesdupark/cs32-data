@@ -1,9 +1,9 @@
 package edu.brown.cs.student.main.Commands;
 
-import edu.brown.cs.student.main.BloomFilter.BloomComparator;
-import edu.brown.cs.student.main.BloomFilter.BloomFilter;
-import edu.brown.cs.student.main.BloomFilter.StudentBloom;
-import edu.brown.cs.student.main.BloomFilter.XNORSimilarity;
+import edu.brown.cs.student.main.Blooms.BloomComparator;
+import edu.brown.cs.student.main.Blooms.BloomFilter;
+import edu.brown.cs.student.main.Blooms.StudentBloom;
+import edu.brown.cs.student.main.Blooms.XNORSimilarity;
 import edu.brown.cs.student.main.Builder.StudentBloomListBuilder;
 import edu.brown.cs.student.main.CSVParser;
 import edu.brown.cs.student.main.KNNCalculator.BloomKNNCalculator;

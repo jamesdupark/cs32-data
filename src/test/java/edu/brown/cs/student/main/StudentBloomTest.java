@@ -4,8 +4,8 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-import edu.brown.cs.student.main.BloomFilter.BloomFilter;
-import edu.brown.cs.student.main.BloomFilter.StudentBloom;
+import edu.brown.cs.student.main.Blooms.BloomFilter;
+import edu.brown.cs.student.main.Blooms.StudentBloom;
 import org.junit.Test;
 
 import java.util.List;

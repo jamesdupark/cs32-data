@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.Builder.StudentNodeBuilder;
+import edu.brown.cs.student.main.Distances.EuclideanDistance;
 import edu.brown.cs.student.main.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDNodes.StudentNode;
 import org.junit.Before;
@@ -100,7 +101,7 @@ public class KDTreeFindNeighborsTest {
    * are cleared.
    */
   @Test
-  public void testCleanDataStuctures() {
+  public void testCleanDataStructures() {
     // check that data structure is cleared
     assertEquals(smallStudentTree.getDistToUserID().size(), 0);
     assertEquals(smallStudentTree.getDistanceQueue().size(), 0);
@@ -119,6 +120,52 @@ public class KDTreeFindNeighborsTest {
     smallStudentTree.cleanDataStructures();
     assertEquals(smallStudentTree.getDistToUserID().size(), 0);
     assertEquals(smallStudentTree.getDistanceQueue().size(), 0);
+  }
+
+  /**
+   * Method to test finding neighbors if k is negative.
+   */
+  @Test(expected = KIsNegativeException.class)
+  public void testKIsNegative() throws KIsNegativeException, KeyNotFoundException {
+    smallStudentTree.findKSN(-1, 0,
+        smallStudentTree.getRoot(), new EuclideanDistance());
+  }
+
+  /**
+   * Method to test finding neighbors if k is equal to zero.
+   */
+  @Test
+  public void testKIsZero() throws KIsNegativeException, KeyNotFoundException {
+    assertEquals(smallStudentTree.findKSN(0, 5,
+        smallStudentTree.getRoot(), new EuclideanDistance()), new ArrayList<>());
+    assertEquals(sameStudentTree.findKSN(0, 2,
+        sameStudentTree.getRoot(), new EuclideanDistance()), new ArrayList<>());
+    assertEquals(sameAxisStudentTree.findKSN(0, 4,
+        sameAxisStudentTree.getRoot(), new EuclideanDistance()), new ArrayList<>());
+  }
+
+  /**
+   * Method to test finding neighbors if k is greater than the number of nodes
+   * in the tree.
+   */
+  @Test
+  public void testKIsGreaterThanNumberOfNodes() throws KIsNegativeException, KeyNotFoundException {
+    assertEquals(smallStudentTree.findKSN(20, 5,
+        smallStudentTree.getRoot(), new EuclideanDistance()).size(), 20);
+    assertEquals(smallStudentTree.findKSN(31, 5,
+        smallStudentTree.getRoot(), new EuclideanDistance()).size(), 31);
+//    assertEquals(sameStudentTree.findKSN(35, 1,
+//        sameStudentTree.getRoot(), new EuclideanDistance()).size(), 35);
+//    assertEquals(sameAxisStudentTree.findKSN(109, 0,
+//        sameAxisStudentTree.getRoot(), new EuclideanDistance()).size(), 109);
+  }
+
+  /**
+   * Method to test finding the k most similar neighbors.
+   */
+  @Test
+  public void testFindKSN() {
+
   }
 
 }

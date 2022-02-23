@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.BloomFilter;
+package edu.brown.cs.student.main.Blooms;
 
 import edu.brown.cs.student.main.KNNCalculator.KNNComparable;
 

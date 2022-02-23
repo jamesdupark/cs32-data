@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.KNNCalculator;
 
-import edu.brown.cs.student.main.BloomFilter.BloomComparator;
-import edu.brown.cs.student.main.BloomFilter.BloomFilter;
+import edu.brown.cs.student.main.Blooms.BloomComparator;
+import edu.brown.cs.student.main.Blooms.BloomFilter;
 
 import java.util.ArrayList;
 import java.util.Collections;

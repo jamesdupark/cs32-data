@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
-import edu.brown.cs.student.main.BloomFilter.BloomFilter;
+import edu.brown.cs.student.main.Blooms.BloomFilter;
 import org.junit.Before;
 import org.junit.Test;
 
