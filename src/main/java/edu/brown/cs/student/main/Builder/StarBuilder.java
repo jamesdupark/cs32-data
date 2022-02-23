@@ -8,7 +8,7 @@ public class StarBuilder implements CSVBuilder<Star> {
   @Override
   public Star build(List<String> fields) {
     try {
-      if (fields.get(1).equals("")) { // null name
+      if (!fields.get(1).equals("")) { // null name
         int id = Integer.parseInt(fields.get(0));
         double x = Double.parseDouble((fields.get(2)));
         double y = Double.parseDouble((fields.get(3)));
