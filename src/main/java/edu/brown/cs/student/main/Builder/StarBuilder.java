@@ -34,7 +34,6 @@ public class StarBuilder implements CSVBuilder<Star> {
       return null;
     }
   }
-
   @Override
   public String getColumnTitles() {
     return "StarID,ProperName,X,Y,Z";
