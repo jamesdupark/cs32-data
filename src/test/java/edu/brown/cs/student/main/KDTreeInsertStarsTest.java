@@ -11,6 +11,9 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Class to test the KDTree insert functionality for Stars.
+ */
 public class KDTreeInsertStarsTest {
   /** a KDTree for Stars that is loaded from data/stars/ten-star.csv. */
   KDTree<KDNode> tenStars;
@@ -62,7 +65,7 @@ public class KDTreeInsertStarsTest {
   }
 
   /**
-   * Test insert() method for KDTree to see if one element can be added.
+   * Test insert method for KDTree to see if one element can be added.
    */
   @Test
   public void testInsert() {

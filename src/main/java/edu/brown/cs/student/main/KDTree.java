@@ -194,11 +194,11 @@ public class KDTree<T extends KDNode> {
    * @param key the distance corresponding to the key in the map
    * @param value the user ID to be added
    */
-  private void insertIDIntoMap(double key, int value) {
+  public void insertIDIntoMap(double key, int value) {
     if (distToUserID.containsKey(key)) {
       distToUserID.get(key).add(value);
     } else {
-      ArrayList<Integer> temp = new ArrayList<>();
+      List<Integer> temp = new ArrayList<>();
       temp.add(value);
       distToUserID.put(key, temp);
     }
@@ -384,5 +384,30 @@ public class KDTree<T extends KDNode> {
    */
   public int getDepth() {
     return depth;
+  }
+
+  /**
+   * Accessor method for getting the userIDToNode Map for the KDTree.
+   * @return the HashMap that maps from a user ID to the node on the tree
+   */
+  public Map<Integer, KDNode> getUserIDToNode() {
+    return userIDToNode;
+  }
+
+  /**
+   * Accessor method for getting the distToUserID Map for the KDTree.
+   * @return the HashMap that maps from euclidean distance to a list of
+   * user IDs associated with that distance
+   */
+  public Map<Double, List<Integer>> getDistToUserID() {
+    return distToUserID;
+  }
+
+  /**
+   * Accessor method for getting the distanceQueue priority queue for the KDTree.
+   * @return the priority queue that stores the k nearest euclidean distances
+   */
+  public Queue<Double> getDistanceQueue() {
+    return distanceQueue;
   }
 }

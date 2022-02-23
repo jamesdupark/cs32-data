@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Class to test the KDTree insert functionality.
+ * Class to test the KDTree insert functionality for Students.
  */
 public class KDTreeInsertStudentsTest {
   /** an empty KDTree. */
