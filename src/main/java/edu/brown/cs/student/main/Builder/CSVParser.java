@@ -15,7 +15,6 @@ public class CSVParser<T> {
   private final List<T> dataList;
   private final CSVBuilder<T> builder;
 
-
   /**
    * Constructor for CSVReader.
    * @param builder - instance of CSVBuilder that directs what class to make from CSV file.

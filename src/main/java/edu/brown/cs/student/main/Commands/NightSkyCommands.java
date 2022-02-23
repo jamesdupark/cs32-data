@@ -19,11 +19,10 @@ public class NightSkyCommands implements REPLCommands {
   public void executeCmds(String cmd, String[] argv, int argc) {
     try {
       switch (cmd) { // pattern matching for command strings
-        case ("stars"): // stars: read in CSV
+        case "stars": // stars: read in CSV
           this.starsCmd(argv, argc);
           break;
-
-        case ("naive_neighbors"): // knn algorithm
+        case "naive_neighbors": // knn algorithm
           this.naiveNeighborsCmd(argv, argc);
           break;
         default: // not a recognized command

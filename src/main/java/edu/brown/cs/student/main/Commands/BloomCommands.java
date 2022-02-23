@@ -35,11 +35,6 @@ public class BloomCommands implements REPLCommands {
   private Map<Integer, BloomFilter> allFilters;
 
   /**
-   * Default false positive rate for filters to be initialized.
-   */
-  private static final double DEFAULT_FP_RATE = 0.1;
-
-  /**
    * Maximum number of strings in the fields used by our current dataset.
    */
   private int maxInsert = 0;
