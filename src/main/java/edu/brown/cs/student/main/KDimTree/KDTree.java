@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.KDimTree;
 
 import edu.brown.cs.student.main.Distances.Distances;
 import edu.brown.cs.student.main.KDNodes.KDNode;

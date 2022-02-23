@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.Commands;
 
 /**
  * Exception class for when two command strings in a REPL's commandMap intersect

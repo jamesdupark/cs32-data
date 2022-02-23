@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.KDimTree;
 
 /**
  * Class to throw an exception if input k is negative.

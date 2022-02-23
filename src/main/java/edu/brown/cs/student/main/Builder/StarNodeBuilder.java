@@ -9,10 +9,14 @@ import java.util.List;
  * Class to build a StarNode of type KDNode that will eventually be inserted
  * into the KDTree.
  */
-public class StarNodeBuilder implements CSVBuilder<KDNode> {
+public class StarNodeBuilder implements CSVBuilder<StarNode> {
   @Override
-  public KDNode build(List<String> fields) {
+  public StarNode build(List<String> fields) {
     try {
+      if (fields.size() != 5) {
+        System.err.println("ERROR: too few or many arguments in CSV line");
+        return null;
+      }
       StarNode newStar;
       int id = Integer.parseInt(fields.get(0));
       double x = Double.parseDouble(fields.get(2));

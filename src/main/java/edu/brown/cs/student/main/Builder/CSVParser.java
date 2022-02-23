@@ -1,6 +1,4 @@
-package edu.brown.cs.student.main;
-
-import edu.brown.cs.student.main.Builder.CSVBuilder;
+package edu.brown.cs.student.main.Builder;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

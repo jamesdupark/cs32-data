@@ -1,5 +1,7 @@
 package edu.brown.cs.student.main.KDNodes;
 
+import edu.brown.cs.student.main.Onboarding.Star;
+
 /**
  * Extensible class that takes a Star and extracts its relevant
  * fields for KDTree.
@@ -50,5 +52,20 @@ public class StarNode implements KDNode {
   @Override
   public String toString() {
     return "(" + x + ", " + y + ", " + z + ")";
+  }
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+
+    if (obj instanceof StarNode) {
+      StarNode oStarNode = (StarNode) obj;
+      return id == oStarNode.id && x == oStarNode.x
+          && y == oStarNode.y && z == oStarNode.z;
+
+    } else {
+      return false;
+    }
   }
 }
