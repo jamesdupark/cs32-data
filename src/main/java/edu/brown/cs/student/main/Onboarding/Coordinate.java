@@ -111,7 +111,7 @@ public class Coordinate implements KDNode {
   public double getAxisVal(int axis) {
     if (axis == 0) {
       return this.x;
-    } else if(axis == 1) {
+    } else if (axis == 1) {
       return this.y;
     } else {
       return this.z;

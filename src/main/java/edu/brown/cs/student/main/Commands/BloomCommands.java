@@ -2,7 +2,9 @@ package edu.brown.cs.student.main.Commands;
 
 import edu.brown.cs.student.main.BloomFilter.BloomComparator;
 import edu.brown.cs.student.main.BloomFilter.BloomFilter;
+import edu.brown.cs.student.main.BloomFilter.StudentBloom;
 import edu.brown.cs.student.main.BloomFilter.XNORSimilarity;
+import edu.brown.cs.student.main.Builder.StudentBloomListBuilder;
 import edu.brown.cs.student.main.CSVParser;
 import edu.brown.cs.student.main.KNNCalculator.BloomKNNCalculator;
 import edu.brown.cs.student.main.DuplicateCommandException;
@@ -32,6 +34,11 @@ public class BloomCommands implements REPLCommands {
    * Map of all bloom filters from their ID to their respective filter.
    */
   private Map<Integer, BloomFilter> allFilters;
+
+  /**
+   * Default false positive rate for filters to be initialized.
+   */
+  private static final double DEFAULT_FP_RATE = 0.1;
 
   /**
    * Maximum number of strings in the fields used by our current dataset.
@@ -171,32 +178,28 @@ public class BloomCommands implements REPLCommands {
           + " Expected 2 arguments but got " + argc);
     }
 
-    CSVParser<BloomFilter> parser = new CSVParser<>(new StudentBloomBuilder());
+    CSVParser<List<String>> parser = new CSVParser<>(new StudentBloomListBuilder());
     String filepath = argv[1];
     if (!parser.load(filepath)) {
       return;
     }
 
-    List<CSVDatum> data = parser.getDataList();
-    System.out.println(data);
-    for (CSVDatum datum : data) {
-      if (datum.getMaxElts() > maxInsert) {
-        maxInsert = datum.getMaxElts();
+    List<List<String>> data = parser.getDataList();
+    for (List<String> toInsert : data) {
+      if (toInsert.size() > maxInsert) {
+        maxInsert = toInsert.size();
       }
     }
 
     Map<Integer, BloomFilter> newFilters = new HashMap<>();
-    for (CSVDatum datum : data) {
-      BloomFilter filter = datum.toBloomFilter(maxInsert);
+    for (List<String> toInsert : data) {
+      BloomFilter filter = new StudentBloom(maxInsert, toInsert);
       int id = filter.getId();
       newFilters.put(id, filter);
     }
 
-    int size = newFilters.size();
-
-    System.out.println("Read " + size + " " + parser.getDatumName() + "s from "
-        + filepath);
-
+    int size = data.size();
+    System.out.println("Read " + size + " " + "students from " + filepath);
     allFilters = newFilters;
   }
 
@@ -217,6 +220,7 @@ public class BloomCommands implements REPLCommands {
     } else if (allFilters == null) {
       System.err.println("ERROR: please read in a dataset using the load_bf"
           + " command before querying similar_bf.");
+      return;
     }
 
     int k, id;

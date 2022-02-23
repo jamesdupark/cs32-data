@@ -15,6 +15,9 @@ import java.util.Objects;
  * @author jamesdupark
  */
 public class BloomFilter implements KNNComparable {
+  /** maximum number of elements that can be inserted into this set. */
+  private final int maxElts;
+
   /** number of hashing functions used on new entries to the set. */
   private final int numHashes;
 
@@ -49,6 +52,7 @@ public class BloomFilter implements KNNComparable {
       assert fpRate > 0 && fpRate < 1
           : "false positive rate must be between 0 and 1";
       assert maxElts > 0 : "maximum number of elements must be greater than 0";
+      this.maxElts = maxElts;
 
       long numHash = Math.round(Math.ceil(-1 * Math.log(fpRate) / Math.log(2)));
       long numBits = Math.round(Math.ceil((numHash * maxElts) / Math.log(2)));
@@ -80,6 +84,7 @@ public class BloomFilter implements KNNComparable {
       assert fpRate > 0 && fpRate < 1
           : "false positive rate must be between 0 and 1";
       assert maxElts > 0 : "maximum number of elements must be greater than 0";
+      this.maxElts = maxElts;
 
       long numHash = Math.round(Math.ceil(-1 * Math.log(fpRate) / Math.log(2)));
       long numBits = Math.round(Math.ceil((numHash * maxElts) / Math.log(2)));
@@ -253,5 +258,13 @@ public class BloomFilter implements KNNComparable {
   @Override
   public int getId() {
     return this.id;
+  }
+
+  /**
+   * Getter method for maximum number of elements for a given filter.
+   * @return max elements that can be inserted into this filter.
+   */
+  public int getMaxElts() {
+    return this.maxElts;
   }
 }

@@ -92,30 +92,4 @@ public class Star {
   public Coordinate getCord() {
     return this.cord;
   }
-<<<<<<< HEAD:src/main/java/edu/brown/cs/student/main/CSVData/Star.java
-
-  @Override
-  public CSVBuilder getBuilder() {
-    return new StarBuilder();
-  }
-
-  @Override
-  public KDNode toKDNode() {
-    return new StarNode(this);
-  }
-
-  @Override
-  public BloomFilter toBloomFilter(int maxElts) {
-    BloomFilter starFilter = new BloomFilter(fprate, 1);
-    starFilter.insert(name);
-
-    return starFilter;
-  }
-
-  @Override
-  public int getMaxElts() {
-    return 0;
-  }
-=======
->>>>>>> master:src/main/java/edu/brown/cs/student/main/Onboarding/Star.java
 }

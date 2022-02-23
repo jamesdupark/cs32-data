@@ -21,26 +21,26 @@ public class NightSky {
   /** Hashmap containing named stars mapped from name to Star. */
   private final Map<String, Star> nameMap = new HashMap<>();
 
-  /**
-   * Parses a single line of the csv and adds the associated data into the
-   * star class.
-   * @param filePath - the file path the CSV file to load data from.
-   * @return boolean whether csv was parsed correctly
-   */
-  public boolean parseCSV(String filePath) {
-    CSVParser<Star> reader = new CSVParser<Star>();
-    if (!reader.load(filePath)) {
-      return false;
-    }
-//    List<Star> starList = reader.getDataList();
-    for (Star star : reader.getDataList()) {
-      Star st = (Star) star;
-      idMap.put(st.getId(), st);
-      nameMap.put(st.getName(), st);
-    }
-    System.out.println("Read " + reader.getDataList().size() + " stars from " + filePath);
-    return true;
-  }
+//  /**
+//   * Parses a single line of the csv and adds the associated data into the
+//   * star class.
+//   * @param filePath - the file path the CSV file to load data from.
+//   * @return boolean whether csv was parsed correctly
+//   */
+//  public boolean parseCSV(String filePath) {
+//    CSVParser<Star> reader = new CSVParser<Star>();
+//    if (!reader.load(filePath)) {
+//      return false;
+//    }
+////    List<Star> starList = reader.getDataList();
+//    for (Star star : reader.getDataList()) {
+//      Star st = (Star) star;
+//      idMap.put(st.getId(), st);
+//      nameMap.put(st.getName(), st);
+//    }
+//    System.out.println("Read " + reader.getDataList().size() + " stars from " + filePath);
+//    return true;
+//  }
 
   /**
    * Queries the nameMap with the given star name to get its corresponding
