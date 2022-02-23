@@ -34,7 +34,8 @@ public class Repl {
     this.reader = new BufferedReader(new InputStreamReader(System.in));
     for (REPLCommands cmdPackage : cmdList) {
       try {
-        cmdPackage.addCmds(this.cmdMap);
+        List<String> commands = cmdPackage.getCommandsList();
+        cmdPackage.addCmds(commands, this.cmdMap);
       } catch (DuplicateCommandException ex) {
         System.err.println(ex.getMessage());
       }

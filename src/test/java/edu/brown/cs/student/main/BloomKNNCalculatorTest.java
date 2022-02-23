@@ -6,7 +6,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import edu.brown.cs.student.main.Blooms.BloomFilter;
-import edu.brown.cs.student.main.Blooms.XNORSimilarity;
+import edu.brown.cs.student.main.Blooms.SimilarityMetrics.XNORSimilarity;
 import edu.brown.cs.student.main.KNNCalculator.BloomKNNCalculator;
 import org.junit.Before;
 import org.junit.Test;

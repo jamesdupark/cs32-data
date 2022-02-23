@@ -3,8 +3,8 @@ package edu.brown.cs.student.main;
 import static org.junit.Assert.assertEquals;
 
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
-import edu.brown.cs.student.main.KDNodes.KDNode;
-import edu.brown.cs.student.main.KDNodes.StarNode;
+import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
+import edu.brown.cs.student.main.KDimTree.KDNodes.StarNode;
 import org.junit.Test;
 
 /**

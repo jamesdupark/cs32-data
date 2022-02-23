@@ -36,8 +36,6 @@ public class CSVParser<T> {
 
   /**
    * Loads data from CSV file into list of CSVDatum.
-   * Regex and matchlist design inspired by: https://stackoverflow.com/questions/366202/ +
-   * regex-for-splitting-a-string-using-space-when-not-surrounded-by-single-or-double/366532#366532
    * @param filePath - String that is the file path to CSV file.
    * @return - boolean of whether loading in CSV file information succeeded or not.
    */

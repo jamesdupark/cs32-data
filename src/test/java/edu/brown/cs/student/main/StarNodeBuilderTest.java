@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.CSVParse.Builder.StarNodeBuilder;
-import edu.brown.cs.student.main.KDNodes.StarNode;
+import edu.brown.cs.student.main.KDimTree.KDNodes.StarNode;
 import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;

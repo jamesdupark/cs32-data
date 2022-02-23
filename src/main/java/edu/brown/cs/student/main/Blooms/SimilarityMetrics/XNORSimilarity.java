@@ -1,4 +1,6 @@
-package edu.brown.cs.student.main.Blooms;
+package edu.brown.cs.student.main.Blooms.SimilarityMetrics;
+
+import edu.brown.cs.student.main.Blooms.BloomFilter;
 
 import java.util.BitSet;
 

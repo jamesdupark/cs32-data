@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.KDNodes;
+package edu.brown.cs.student.main.KDimTree.KDNodes;
 
 /**
  * Extensible class that takes a Student and extracts its relevant

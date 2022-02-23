@@ -80,25 +80,8 @@ public class BloomFilter implements KNNComparable {
    */
   public BloomFilter(double fpRate, int maxElts, int id)
       throws IllegalArgumentException {
-    try {
-      assert fpRate > 0 && fpRate < 1
-          : "false positive rate must be between 0 and 1";
-      assert maxElts > 0 : "maximum number of elements must be greater than 0";
-      this.maxElts = maxElts;
-
-      long numHash = Math.round(Math.ceil(-1 * Math.log(fpRate) / Math.log(2)));
-      long numBits = Math.round(Math.ceil((numHash * maxElts) / Math.log(2)));
-
-      numHashes = Math.toIntExact(numHash);
-      size = Math.toIntExact(numBits);
-      filter = new BitSet(size);
-      this.id = id;
-    } catch (ArithmeticException e) {
-      throw new IllegalArgumentException("ERROR: calculated filter size or "
-          + "hash number too large. Try a different value of <r> or <n>.");
-    } catch (AssertionError e) {
-      throw new IllegalArgumentException("ERROR: " + e.getMessage());
-    }
+    this(fpRate, maxElts);
+    this.id = id;
   }
 
   /**

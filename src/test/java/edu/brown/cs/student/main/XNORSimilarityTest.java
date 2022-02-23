@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.Blooms.BloomFilter;
-import edu.brown.cs.student.main.Blooms.XNORSimilarity;
+import edu.brown.cs.student.main.Blooms.SimilarityMetrics.XNORSimilarity;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;

@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.KDimTree;
 
 import edu.brown.cs.student.main.Distances.Distances;
-import edu.brown.cs.student.main.KDNodes.KDNode;
+import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
 
 import java.util.ArrayList;
 import java.util.Collections;

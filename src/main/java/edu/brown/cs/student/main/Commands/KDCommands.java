@@ -4,13 +4,12 @@ package edu.brown.cs.student.main.Commands;
 import edu.brown.cs.student.main.CSVParse.CSVParser;
 import edu.brown.cs.student.main.CSVParse.Builder.StudentNodeBuilder;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
-import edu.brown.cs.student.main.KDNodes.KDNode;
+import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDimTree.KDTree;
 import edu.brown.cs.student.main.KDimTree.KIsNegativeException;
 import edu.brown.cs.student.main.KDimTree.KeyNotFoundException;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * REPLCommands class that packages commands related to k-d tree.
@@ -121,23 +120,7 @@ public class KDCommands implements REPLCommands {
   }
 
   @Override
-  public void addCmds(Map<String, REPLCommands> replCommandsMap)
-      throws DuplicateCommandException {
-    for (int i = 0; i < commands.size(); i++) {
-      // check for duplicate commands
-      String cmd = commands.get(i);
-      REPLCommands dupPack = replCommandsMap.get(cmd);
-      if (dupPack != null) {
-        // if a duplicate value is found
-        for (int j = 0; j < i; j++) { // remove all previously added keys
-          String cmdToRemove = commands.get(j);
-          replCommandsMap.remove(cmdToRemove);
-        }
-        throw new DuplicateCommandException("ERROR: command " + cmd
-            + " already in this REPL's commandsMap");
-      } else { // no duplicates found, can put command in safely
-        replCommandsMap.put(cmd, this);
-      }
-    }
+  public List<String> getCommandsList() {
+    return this.commands;
   }
 }

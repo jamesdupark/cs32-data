@@ -1,7 +1,6 @@
 package edu.brown.cs.student.main.CSVParse.Builder;
 
-import edu.brown.cs.student.main.CSVParse.Builder.CSVBuilder;
-import edu.brown.cs.student.main.KDNodes.StarNode;
+import edu.brown.cs.student.main.KDimTree.KDNodes.StarNode;
 
 import java.util.List;
 

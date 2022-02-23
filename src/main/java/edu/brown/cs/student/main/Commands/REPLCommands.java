@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.Commands;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,6 +20,12 @@ public interface REPLCommands {
    * @param argc length of argv
    */
   void executeCmds(String cmd, String[] argv, int argc);
+  /**
+   * Gets a list of strings representing the commands supported by this
+   * REPLCommands object.
+   * @return Commands supported by this REPLCommands object.
+   */
+  List<String> getCommandsList();
 
   /**
    * Adds the string command keywords that this class supports to the given
@@ -26,12 +33,31 @@ public interface REPLCommands {
    * is found to already be in the hashmap, none of the commands for the given
    * REPLCommands class will be added and an exception will be thrown.
    *
+   * @param commands list of commands this package supports, accessed via the
+   *                 .getCommandsList() method.
    * @param replCommandsMap hashmap between all commands supported by a REPL and
    *                        the specific REPLCommands objects which support
    *                        each command.
    * @throws DuplicateCommandException if one of the commands that belongs to
    * the class is already a key for a different commands package.
    */
-  void addCmds(Map<String, REPLCommands> replCommandsMap)
-      throws DuplicateCommandException;
+  default void addCmds(List<String> commands, Map<String, REPLCommands> replCommandsMap)
+      throws DuplicateCommandException {
+    for (int i = 0; i < commands.size(); i++) {
+      // check for duplicate commands
+      String cmd = commands.get(i);
+      REPLCommands dupPack = replCommandsMap.get(cmd);
+      if (dupPack != null) {
+        // if a duplicate value is found
+        for (int j = 0; j < i; j++) { // remove all previously added keys
+          String cmdToRemove = commands.get(j);
+          replCommandsMap.remove(cmdToRemove);
+        }
+        throw new DuplicateCommandException("ERROR: command " + cmd
+            + " already in this REPL's commandsMap");
+      } else { // no duplicates found, can put command in safely
+        replCommandsMap.put(cmd, this);
+      }
+    }
+  }
 }

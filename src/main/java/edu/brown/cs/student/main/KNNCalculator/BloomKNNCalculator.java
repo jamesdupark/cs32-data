@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.KNNCalculator;
 
-import edu.brown.cs.student.main.Blooms.BloomComparator;
+import edu.brown.cs.student.main.Blooms.SimilarityMetrics.BloomComparator;
 import edu.brown.cs.student.main.Blooms.BloomFilter;
 
 import java.util.ArrayList;

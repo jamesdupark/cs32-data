@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.Distances;
 
-import edu.brown.cs.student.main.KDNodes.KDNode;
+import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
 
 /**
  * Interface for a package of related Distances that is used to compare
