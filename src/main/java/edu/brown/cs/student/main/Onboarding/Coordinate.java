@@ -1,11 +1,9 @@
 package edu.brown.cs.student.main.Onboarding;
 
-import edu.brown.cs.student.main.KDNodes.KDNode;
-
 /**
  * Class that represents coordinates of stars within 3-dimensional space.
  */
-public class Coordinate implements KDNode {
+public class Coordinate {
   /** double representing a star's x-coord. */
   private final double x;
   /** double representing a star's y-coord. */
@@ -85,41 +83,5 @@ public class Coordinate implements KDNode {
   @Override
   public String toString() {
     return "(" + x + ", " + y + ", " + z + ")";
-  }
-
-  /**
-   * Method to return the ID of the KDNode that is used when
-   * querying the nearest neighbors.
-   *
-   * @return the ID of the KDNode
-   */
-  @Override
-  public int getID() {
-    return -1;
-  }
-
-  /**
-   * Method to find the axis value for the Coordinate.
-   * @param axis the axis to retrieve for the Coordinate
-   * @return the value at the corresponding axis to the Coordinate
-   */
-  @Override
-  public double getAxisVal(int axis) {
-    if (axis == 0) {
-      return this.x;
-    } else if(axis == 1) {
-      return this.y;
-    } else {
-      return this.z;
-    }
-  }
-
-  /**
-   * Method to find the number of dimensions for the KDTree.
-   * @return the number of dimensions, which in this case is 3
-   */
-  @Override
-  public int getNumDimensions() {
-    return 3;
   }
 }

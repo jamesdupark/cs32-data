@@ -10,13 +10,15 @@ public class StarNodeBuilder implements CSVBuilder<KDNode> {
   public KDNode build(List<String> fields) {
     StarNode newStar;
     int id = Integer.parseInt(fields.get(0));
+    if (fields.size() == 4) {
+      fields.add(1, "");
+    }
     double x = Double.parseDouble(fields.get(2));
     double y = Double.parseDouble(fields.get(3));
     double z = Double.parseDouble(fields.get(4));
     newStar = new StarNode(id, x, y, z);
     return newStar;
   }
-
   @Override
   public String getColumnTitles() {
     return "StarID,ProperName,X,Y,Z";

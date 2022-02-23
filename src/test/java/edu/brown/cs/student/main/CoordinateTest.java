@@ -60,6 +60,4 @@ public class CoordinateTest {
     assertEquals(y, 3, delta);
     assertEquals(z, 4, delta);
   }
-
-
 }
