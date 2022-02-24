@@ -73,7 +73,6 @@ public class KDCommands implements REPLCommands {
       List<KDNode> nodesList = reader.getDataList();
       this.kdTree.insertList(nodesList, 0);
       System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
-//      this.kdTree.printTree(this.kdTree.getRoot(), "");
     } catch (IllegalArgumentException e) {
       System.err.println(e.getMessage());
     } catch (RuntimeException e) {
