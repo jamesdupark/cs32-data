@@ -6,3 +6,4 @@ target/
 **.DS_Store**
 *.prefs
 sprint-1.iml
+config/secret/*

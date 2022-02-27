@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.main.Commands.APICommands;
 import edu.brown.cs.student.main.Commands.BloomCommands;
 import edu.brown.cs.student.main.Commands.KDCommands;
 import edu.brown.cs.student.main.Commands.NightSkyCommands;
@@ -55,9 +56,10 @@ public final class Main {
     BloomCommands blooms = new BloomCommands();
     NightSkyCommands stars = new NightSkyCommands();
     KDCommands kdtree = new KDCommands();
+    APICommands api = new APICommands();
 
     // creating list
-    List<REPLCommands> commandsList = List.of(blooms, stars, kdtree);
+    List<REPLCommands> commandsList = List.of(blooms, stars, kdtree, api);
     Repl myRepl = new Repl(commandsList);
     myRepl.run();
   }
