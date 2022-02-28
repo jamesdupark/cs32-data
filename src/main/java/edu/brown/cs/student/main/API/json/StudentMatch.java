@@ -57,10 +57,10 @@ public class StudentMatch implements JSONable {
       return false;
     }
     StudentMatch that = (StudentMatch) o;
-    return id == that.id && softwareEngnConfidence == that.softwareEngnConfidence &&
-        Objects.equals(name, that.name) && Objects.equals(gender, that.gender) &&
-        Objects.equals(nationality, that.nationality) &&
-        Objects.equals(race, that.race);
+    return id == that.id && softwareEngnConfidence == that.softwareEngnConfidence
+        && Objects.equals(name, that.name) && Objects.equals(gender, that.gender)
+        && Objects.equals(nationality, that.nationality)
+        && Objects.equals(race, that.race);
   }
 
   @Override

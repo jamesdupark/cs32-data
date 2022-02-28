@@ -9,6 +9,7 @@ import edu.brown.cs.student.main.API.json.JSONParser;
 import edu.brown.cs.student.main.API.json.StudentInfo;
 import edu.brown.cs.student.main.API.json.StudentMatch;
 
+import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class APICommands implements REPLCommands {
    * List of commands supported by APICommands, to be retrieved by the
    * getCommandsList() method.
    */
-  private final List<String> commands = List.of("active", "api");
+  private final List<String> commands = List.of("active", "api", "load_json");
   /**
    * APIRequestHandler for executing single API requests.
    */
@@ -49,6 +50,9 @@ public class APICommands implements REPLCommands {
           break;
         case "api":
           this.apiCmd(argc, argv);
+          break;
+        case "load_json":
+          this.loadJsonCmd(argc, argv);
           break;
         default:
           System.err.println("ERROR: Command not recognized.");
@@ -159,6 +163,25 @@ public class APICommands implements REPLCommands {
       System.err.println("ERROR: " + bse.getMessage());
     } catch (JsonSyntaxException jse) {
       System.err.println("ERROR: received json format did not match expected format.");
+    }
+  }
+
+  /**
+   * Reads in info from a local json file and displays the result. DEMO ONLY
+   * @param argc number of args in argv
+   * @param argv string array of parsed user input.
+   */
+  private void loadJsonCmd(int argc, String[] argv) {
+    if (argc != 2) {
+      throw new IllegalArgumentException("ERROR: incorrect number of args.");
+    }
+    // load file
+    String filepath = argv[1];
+    try {
+      List<StudentMatch> list = JSONParser.readJsonFile(filepath, StudentMatch.class);
+      System.out.println(list);
+    } catch (IOException iox) {
+      System.err.println(iox.getMessage());
     }
   }
 

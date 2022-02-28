@@ -53,12 +53,12 @@ public class StudentInfo implements JSONable {
       return false;
     }
     StudentInfo that = (StudentInfo) o;
-    return id == that.id && yearsExperience == that.yearsExperience &&
-        weeklyAvailHours == that.weeklyAvailHours && Objects.equals(name, that.name) &&
-        Objects.equals(classYear, that.classYear) &&
-        Objects.equals(communicationStyle, that.communicationStyle) &&
-        Objects.equals(meetingStyle, that.meetingStyle) &&
-        Objects.equals(meetingTime, that.meetingTime);
+    return id == that.id && yearsExperience == that.yearsExperience
+        && weeklyAvailHours == that.weeklyAvailHours && Objects.equals(name, that.name)
+        && Objects.equals(classYear, that.classYear)
+        && Objects.equals(communicationStyle, that.communicationStyle)
+        && Objects.equals(meetingStyle, that.meetingStyle)
+        && Objects.equals(meetingTime, that.meetingTime);
   }
 
   @Override

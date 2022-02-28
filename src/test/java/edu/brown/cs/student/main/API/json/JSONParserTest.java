@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 public class JSONParserTest {
@@ -43,7 +44,7 @@ public class JSONParserTest {
     match = new StudentMatch(1, 41, "Petr Dillingstone",
         "Female", "Egypt", "and Native Hawaiian or Other Pacific Islander");
     // intialize json lists
-    List<String> activeList = List.of("/match-one", "/match-two", "/match-three");
+    activeList = List.of("/match-one", "/match-two", "/match-three");
     StudentInfo infoTwo = new StudentInfo(List.of(2, 19, 19),
         List.of("Gerri Enterle", "sophomore", "zoom", "in person", "morning"));
     StudentMatch matchTwo = new StudentMatch(2, 76, "Gerri Enterle",
@@ -69,9 +70,17 @@ public class JSONParserTest {
     assertEquals(match, JSONParser.getJsonObject(jsonStudentMatch, StudentMatch.class));
   }
 
+//  @Test
+//  public void testGetJsonObjectList() {
+//    assertEquals(infos, JSONParser.getJsonObjectList(jsonStudentInfoList, StudentInfo.class));
+//    assertEquals(matches, JSONParser.getJsonObjectList(jsonStudentMatchList, StudentMatch.class));
+//  }
+
   @Test
-  public void testGetJsonObjectList() {
-    assertEquals(infos, JSONParser.getJsonObjectList(jsonStudentInfoList, StudentInfo.class));
-    assertEquals(matches, JSONParser.getJsonObjectList(jsonStudentMatchList, StudentMatch.class));
+  public void testReadJsonFile() throws IOException {
+    String infoFilePath = "data/recommendation/json/studentInfoTest.json";
+    String matchFilePath = "data/recommendation/json/studentMatchTest.json";
+    assertEquals(infos, JSONParser.readJsonFile(infoFilePath, StudentInfo.class));
+    assertEquals(matches, JSONParser.readJsonFile(matchFilePath, StudentMatch.class));
   }
 }

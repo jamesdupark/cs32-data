@@ -5,8 +5,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import edu.brown.cs.student.main.CSVParse.FileParser;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,7 +62,7 @@ public final class JSONParser {
    * @return list of type T
    * @throws JsonSyntaxException upon encountering ill-formatted json
    */
-  public static <T extends JSONable> List<T> getJsonObjectList(String jsonObject, Class<T> tClass)
+  public static <T> List<T> getJsonObjectList(String jsonObject, Class<T> tClass)
       throws JsonSyntaxException {
     Gson parser = new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -77,11 +81,47 @@ public final class JSONParser {
    * @return object of type T
    * @throws JsonSyntaxException upon encountering ill-formatted json
    */
-  public static <T extends JSONable> T getJsonObject(String jsonObject, Class<T> tClass)
+  public static <T> T getJsonObject(String jsonObject, Class<T> tClass)
       throws JsonSyntaxException {
     Gson parser = new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
     return parser.fromJson(jsonObject, tClass);
+  }
+
+  /**
+   * Reads a json file into a list of objects of type T. Each line of the json file
+   * represents a single json object.
+   * @param filepath filepath to the .json file.
+   * @param tClass class of T
+   * @param <T> type of the json object to be returned
+   * @return list of type T
+   * @throws IOException upon encountering an issue with json formatting or reading the file.
+   */
+  public static <T> List<T> readJsonFile(String filepath, Class<T> tClass)
+      throws IOException {
+    try {
+      FileParser parser = new FileParser(filepath);
+      List<T> jsonList = new ArrayList<>();
+      String line = parser.readNewLine();
+      while (line != null) {
+        // find json object within line (ignoring extraneous vals like "," and "[")
+        int openInd = line.indexOf("{");
+        int closeInd = line.indexOf("}");
+        assert openInd >= 0 && closeInd >= 0 : "json object lacks enclosing {}";
+        String jsonString = line.substring(openInd, closeInd + 1);
+        // convert jsonString to jsonObject
+        T jsonObject = JSONParser.getJsonObject(jsonString, tClass);
+        jsonList.add(jsonObject);
+        line = parser.readNewLine();
+      }
+      return jsonList;
+    } catch (FileNotFoundException fe) {
+      throw new IOException("ERROR: file " + filepath + " not found.");
+    } catch (JsonSyntaxException jse) {
+      throw new IOException("ERROR: json fields do not match the fields of " + tClass.getName());
+    } catch (AssertionError ase) {
+      throw new IOException("ERROR" + ase.getMessage());
+    }
   }
 }

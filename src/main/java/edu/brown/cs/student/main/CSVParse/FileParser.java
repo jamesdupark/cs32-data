@@ -16,14 +16,10 @@ public class FileParser {
    * A FP constructor.
    *
    * @param file - a String file path
+   * @throws FileNotFoundException if the given file cannot be found.
    */
-  public FileParser(String file) {
-
-    try {
-      this.bufRead = new BufferedReader(new FileReader(file));
-    } catch (FileNotFoundException f) {
-      System.out.println("ERROR: File not found");
-    }
+  public FileParser(String file) throws FileNotFoundException {
+    this.bufRead = new BufferedReader(new FileReader(file));
   }
 
   /**

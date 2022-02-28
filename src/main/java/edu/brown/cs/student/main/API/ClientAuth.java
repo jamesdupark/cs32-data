@@ -2,6 +2,8 @@ package edu.brown.cs.student.main.API;
 
 import edu.brown.cs.student.main.CSVParse.FileParser;
 
+import java.io.FileNotFoundException;
+
 /**
  * This simple class is for reading the API Key from the secret file. Taken from the cs32
  * API lab.
@@ -19,7 +21,12 @@ public final class ClientAuth {
    * @return a String of the api key.
    */
   public static String getApiKey() {
-    FileParser parser = new FileParser("config/secret/apikey.txt");
-    return parser.readNewLine();
+    try {
+      FileParser parser = new FileParser("config/secret/apikey.txt");
+      return parser.readNewLine();
+    } catch (FileNotFoundException fe) {
+      System.err.println("ERROR: file not found.");
+      return null;
+    }
   }
 }
