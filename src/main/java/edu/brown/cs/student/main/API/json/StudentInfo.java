@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.API.json;
 import com.google.gson.Gson;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * StudentInfo class for storing json information from student info API endpoints.
@@ -41,5 +42,27 @@ public class StudentInfo implements JSONable {
   public String toString() {
     Gson parser = new Gson();
     return parser.toJson(this);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    StudentInfo that = (StudentInfo) o;
+    return id == that.id && yearsExperience == that.yearsExperience &&
+        weeklyAvailHours == that.weeklyAvailHours && Objects.equals(name, that.name) &&
+        Objects.equals(classYear, that.classYear) &&
+        Objects.equals(communicationStyle, that.communicationStyle) &&
+        Objects.equals(meetingStyle, that.meetingStyle) &&
+        Objects.equals(meetingTime, that.meetingTime);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name);
   }
 }

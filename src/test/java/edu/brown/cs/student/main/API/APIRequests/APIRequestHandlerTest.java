@@ -21,6 +21,7 @@ public class APIRequestHandlerTest {
   private final APIAggregator infoAggregator = new APIAggregator("info");
   private final APIAggregator matchAggregator = new APIAggregator("match");
   private String apiKey, auth;
+  private String[] urlAuth, badUrlAuth, postHead, badHead, postBody, badBody;
 
   @Before
   public void init() throws BadStatusException {
@@ -36,18 +37,17 @@ public class APIRequestHandlerTest {
     // retrieve api key and auth token
     apiKey = ClientAuth.getApiKey();
     auth = "jpark236";
+    // prep authentication
+    urlAuth = new String[]{"auth", auth, "key", apiKey};
+    badUrlAuth = new String[]{"auth", "username", "key", "password"};
+    postHead = new String[]{"x-api-key", apiKey};
+    badHead = new String[]{"x-api-key", "apiKey"};
+    postBody = new String[]{"auth", auth};
+    badBody = new String[]{"auth", "me"};
   }
 
   @Test
-  public void testMakeRequest() throws BadStatusException {
-    // prep authentication
-    String[] urlAuth = new String[]{"auth", auth, "key", apiKey};
-    String[] badUrlAuth = new String[]{"auth", "username", "key", "password"};
-    String[] postHead = new String[]{"x-api-key", apiKey};
-    String[] badHead = new String[]{"x-api-key", "apiKey"};
-    String[] postBody = new String[]{"auth", auth};
-    String[] badBody = new String[]{"auth", "me"};
-
+  public void testBasicGet() throws BadStatusException {
     // basic get request with no additional params
     HttpRequest basicGet = activeBuilder.get(null, null);
     HttpResponse<String> getResponse = handler.makeRequest(basicGet);
@@ -56,7 +56,10 @@ public class APIRequestHandlerTest {
     List<String> responseList = JSONParser.toStringList(getResponse.body());
     assertTrue(responseList.equals(activeOne)
         || responseList.equals(activeThree));
+  }
 
+  @Test
+  public void testAuthGet() {
     // authenticated get request + failed authentication + no authentication
     HttpRequest authGet = infoBuilder.get(urlAuth, null);
     HttpRequest failedAuthGet = infoBuilder.get(badUrlAuth, null);
@@ -68,11 +71,15 @@ public class APIRequestHandlerTest {
         assertEquals(200, authResponse.statusCode());
         // TODO: convert to students
         done = true;
-      } catch (BadStatusException ignored) { }
+      } catch (BadStatusException ignored) {
+      }
     } while (!done);
     assertThrows(BadStatusException.class, () -> handler.makeRequest(failedAuthGet));
     assertThrows(BadStatusException.class, () -> handler.makeRequest(noAuthGet));
+  }
 
+  @Test
+  public void testAuthPost() {
     // authenticated post request + failed authentication + no authentication
     HttpRequest authPost = matchBuilder.post(postHead, postBody);
     HttpRequest failedAuth = matchBuilder.post(badHead, badBody);
@@ -84,11 +91,15 @@ public class APIRequestHandlerTest {
         assertEquals(200, authResponse.statusCode());
         // TODO: convert to students
         postDone = true;
-      } catch (BadStatusException ignored) { }
+      } catch (BadStatusException ignored) {
+      }
     } while (!postDone);
     assertThrows(BadStatusException.class, () -> handler.makeRequest(failedAuth));
     assertThrows(BadStatusException.class, () -> handler.makeRequest(noAuth));
-    
+  }
+
+  @Test
+  public void testIllegalRequest() {
     // get to post-only and post to get-only
     HttpRequest badGet = matchBuilder.get(urlAuth, null);
     HttpRequest badPost = infoBuilder.post(postHead, postBody);

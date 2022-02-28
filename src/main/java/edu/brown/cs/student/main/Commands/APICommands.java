@@ -152,7 +152,7 @@ public class APICommands implements REPLCommands {
           System.out.println("Received information about " + studentMatches.size() + " students.");
           System.out.println(studentMatches);
           break;
-        default: // should never here since we already checked for other types
+        default: // should never get here since we already checked for other types
           break;
       }
     } catch (BadStatusException bse) {

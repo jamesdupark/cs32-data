@@ -52,11 +52,11 @@ public final class JSONParser {
    * Conversion method taken from: https://www.baeldung.com/gson-list.
    * camelCase matching method from: https://stackoverflow.com/questions/2370745/
    * convert-json-style-properties-names-to-java-camelcase-names-with-gson
-   * @param jsonObject json object storing the studentInfo information
+   * @param jsonObject json object storing the information about type T
    * @param <T> type of object to be read from the json
    * @param tClass class to be read from the json
-   * @return list of StudentInfo
-   * @throws JsonSyntaxException upon encountering ill-formatted
+   * @return list of type T
+   * @throws JsonSyntaxException upon encountering ill-formatted json
    */
   public static <T extends JSONable> List<T> getJsonObjectList(String jsonObject, Class<T> tClass)
       throws JsonSyntaxException {
@@ -71,11 +71,11 @@ public final class JSONParser {
    * Converts a json representing a single JSONable object to its respective object.
    * camelCase matching method from: https://stackoverflow.com/questions/2370745/
    * convert-json-style-properties-names-to-java-camelcase-names-with-gson
-   * @param jsonObject json object storing the studentInfo information
+   * @param jsonObject json object storing the information about type T
    * @param <T> type of object to be read from the json
    * @param tClass class to be read from the json
-   * @return list of StudentInfo
-   * @throws JsonSyntaxException upon encountering ill-formatted
+   * @return object of type T
+   * @throws JsonSyntaxException upon encountering ill-formatted json
    */
   public static <T extends JSONable> T getJsonObject(String jsonObject, Class<T> tClass)
       throws JsonSyntaxException {
