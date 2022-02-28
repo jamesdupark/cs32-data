@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.API;
+package edu.brown.cs.student.main.API.APIRequests;
 
 import java.net.URI;
 import java.net.http.HttpRequest;
@@ -26,23 +26,24 @@ public class APIRequestBuilder {
    * @param headers string array of header param names and values.
    * @return HTTPRequest object to this APIRequestBuilder's endpoint with the
    * given headers.
-   * @throws IllegalArgumentException when encountering an issue with the headers.
+   * @throws IllegalArgumentException when encountering an issue with the headers or url params.
    */
   public HttpRequest get(String[] urlParams, String[] headers) throws IllegalArgumentException {
     try {
-      assert headers.length % 2 == 0 : "Length of headers must be even.";
-      URI getUrl = addUrlParams(urlParams); // add url params to the request url
+      URI getUrl = URI.create(url);
+      if (urlParams != null) { // no url params provided
+        assert urlParams.length % 2 == 0 : "Length of url params must be even.";
+        getUrl = addUrlParams(urlParams); // add url params to the request url
+      }
 
       HttpRequest.Builder builder = HttpRequest.newBuilder(getUrl);
-      // add each header to the request
-      for (int i = 0; i < headers.length; i += 2) {
-        String name = headers[i];
-        String value = headers[i + 1];
-        builder = builder.header(name, value);
+      if (headers != null) { // no header provided
+        assert headers.length % 2 == 0 : "Length of headers must be even.";
+        builder = addHeaders(headers, builder);
       }
       return builder.build();
     } catch (IllegalArgumentException iex) {
-      throw new IllegalArgumentException("ERROR: invalid headers");
+      throw new IllegalArgumentException("ERROR: invalid URL");
     } catch (AssertionError ae) {
       throw new IllegalArgumentException("ERROR:" + ae.getMessage());
     }
@@ -54,27 +55,43 @@ public class APIRequestBuilder {
    * @param body body of the POST request in the format {headerName:value}
    * @return HTTPRequest object to this APIRequestBuilder's endpoint with the
    * given headers.
-   * @throws IllegalArgumentException when encountering an issue with the headers.
+   * @throws IllegalArgumentException when encountering an issue with the headers or body.
    */
   public HttpRequest post(String[] headers, String[] body) throws IllegalArgumentException {
     try {
-      assert headers.length % 2 == 0 : "Length of headers must be even.";
-      assert body.length % 2 == 0 : "Length of body must be even.";
-      String bodyString = buildBodyString(body);
+      String bodyString = "";
+      if (body != null) {
+        assert body.length % 2 == 0 : "Length of body must be even.";
+        bodyString = buildBodyString(body);
+      }
       HttpRequest.Builder builder = HttpRequest.newBuilder(URI.create(url))
           .POST(HttpRequest.BodyPublishers.ofString(bodyString));
-      // add each header to the request
-      for (int i = 0; i < headers.length; i += 2) {
-        String name = headers[i];
-        String value = headers[i + 1];
-        builder = builder.header(name, value);
+      if (headers != null) { // no headers provided
+        assert headers.length % 2 == 0 : "Length of headers must be even.";
+        builder = addHeaders(headers, builder);
       }
       return builder.build();
     } catch (IllegalArgumentException iex) {
-      throw new IllegalArgumentException("ERROR: invalid headers");
+      throw new IllegalArgumentException("ERROR: invalid URL");
     } catch (AssertionError ae) {
       throw new IllegalArgumentException("ERROR:" + ae.getMessage());
     }
+  }
+
+  /**
+   * Adds header key-value pairs to the given HttpRequest builder.
+   * @param headers array of alternating key-value pairs
+   * @param builder the builder to add the headers to
+   * @return the same builder but with the given headers added
+   */
+  private HttpRequest.Builder addHeaders(String[] headers, HttpRequest.Builder builder) {
+    // add each header to the request
+    for (int i = 0; i < headers.length; i += 2) {
+      String name = headers[i];
+      String value = headers[i + 1];
+      builder = builder.header(name, value);
+    }
+    return builder;
   }
 
   /**
@@ -87,7 +104,7 @@ public class APIRequestBuilder {
     for (int i = 0; i < urlParams.length; i += 2) {
       String name = urlParams[i];
       String value = urlParams[i + 1];
-      urlBuilder.append(name + "=" + value + "&");
+      urlBuilder.append(name).append("=").append(value).append("&");
     }
     // truncate final "&"
     String newUrl = urlBuilder.toString();

@@ -1,11 +1,14 @@
 package edu.brown.cs.student.main.API.json;
 
 /**
- * Simple Message class for interacting with JSON parsers.
+ * Simple Message class for interacting with JSON parsers. Taken from the cs32
+ * API lab.
  *
  */
 public class Message {
-
+  /**
+   * Message stored by the json object.
+   */
   private String message;
 
   /**

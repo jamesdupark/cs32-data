@@ -1,12 +1,17 @@
 package edu.brown.cs.student.main.Commands;
 
 import com.google.gson.JsonSyntaxException;
-import edu.brown.cs.student.main.API.APIRequestBuilder;
-import edu.brown.cs.student.main.API.APIRequestHandler;
+import edu.brown.cs.student.main.API.APIAggregator;
+import edu.brown.cs.student.main.API.APIRequests.APIRequestBuilder;
+import edu.brown.cs.student.main.API.APIRequests.APIRequestHandler;
+import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.JSONParser;
+import edu.brown.cs.student.main.API.json.StudentInfo;
+import edu.brown.cs.student.main.API.json.StudentMatch;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,14 +22,22 @@ import java.util.Map;
  */
 public class APICommands implements REPLCommands {
   /**
-   * APIRequestHandler for executing single API requests.
-   */
-  private APIRequestHandler handler = new APIRequestHandler();
-  /**
    * List of commands supported by APICommands, to be retrieved by the
    * getCommandsList() method.
    */
   private final List<String> commands = List.of("active", "api");
+  /**
+   * APIRequestHandler for executing single API requests.
+   */
+  private final APIRequestHandler handler = new APIRequestHandler();
+  /**
+   * APIAggregator for studentinfo API endpoints.
+   */
+  private final APIAggregator infoAggregator = new APIAggregator("info");
+  /**
+   * APIAggregator for studentmatch API endpoints.
+   */
+  private final APIAggregator matchAggregator = new APIAggregator("match");
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
     // verifying that command is a supported one; should never fail
@@ -58,6 +71,24 @@ public class APICommands implements REPLCommands {
     if (argc != 2) {
       throw new IllegalArgumentException("ERROR: incorrect number of args.");
     }
+    String type = argv[1];
+    List<String> activeList = new ArrayList<>();
+    try {
+      switch (type) {
+        case "info":
+          activeList = infoAggregator.getActiveClients();
+          break;
+        case "match":
+          activeList = matchAggregator.getActiveClients();
+          break;
+        default:
+          throw new IllegalArgumentException("ERROR: type not recognized.");
+      }
+    } catch (BadStatusException bse) {
+      System.err.println("ERROR: " + bse.getMessage());
+    }
+
+    System.out.println("active " + type + " clients: " + activeList);
   }
 
   /**
@@ -68,27 +99,27 @@ public class APICommands implements REPLCommands {
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
   private void apiCmd(int argc, String[] argv) throws IllegalArgumentException {
-    if (argc != 4) {
+    if (argc != 4 && argc != 3) {
       throw new IllegalArgumentException("ERROR: incorrect number of args.");
     }
 
     String type = argv[1];
     String url = argv[2];
-    String params = argv[3];
-    // split params
-    Map<String, String[]> paramsMap = parseParams(params);
-    // try to grab header and body
-    String[] header = new String[0];
-    String[] body = new String[0];
-    String[] urlParams = new String[0];
-    if (paramsMap.containsKey("url")) {
-      urlParams = paramsMap.get("url");
-    }
-    if (paramsMap.containsKey("header")) {
-      header = paramsMap.get("header");
-    }
-    if (paramsMap.containsKey("body")) {
-      body = paramsMap.get("body");
+    // check if params were provided
+    String[] header = null, body = null, urlParams = null;
+    if (argc == 4) {
+      String params = argv[3];
+      // split params
+      Map<String, String[]> paramsMap = parseParams(params);
+      if (paramsMap.containsKey("url")) {
+        urlParams = paramsMap.get("url");
+      }
+      if (paramsMap.containsKey("header")) {
+        header = paramsMap.get("header");
+      }
+      if (paramsMap.containsKey("body")) {
+        body = paramsMap.get("body");
+      }
     }
 
     APIRequestBuilder builder = new APIRequestBuilder(url);
@@ -98,28 +129,36 @@ public class APICommands implements REPLCommands {
         request = builder.get(urlParams, header); // body has no meaning to GET request
         break;
       case "POST":
-        request = builder.post(header, body);
+        request = builder.post(header, body); // auth should be provided in body
         break;
       default:
         throw new IllegalArgumentException("ERROR: type not recognized.");
     }
 
-    // TODO: execute command
-    HttpResponse<String> response = handler.makeRequest(request); // will abort if request fails
-    int status = response.statusCode();
-    final int placeVal = 100; // place value to round the status code to
-    int codeType = status - status % placeVal; // rounded down to the nearest 100
     try {
-      if (codeType == 200) {
-        // parse student
-
-      } else {
-        String statusMessage = JSONParser.getMessage(response.body());
-        System.err.println("ERROR: status " + status + " code received: " + statusMessage);
+      HttpResponse<String> response = handler.makeRequest(request); // will abort if request fails
+      // TODO: convert request response to studentjson object and remove print statements
+      System.out.println("Status " + response.statusCode());
+      switch (type) {
+        case "GET":
+          List<StudentInfo> studentInfos =
+              JSONParser.getJsonObjectList(response.body(), StudentInfo.class);
+          System.out.println("Received information about " + studentInfos.size() + " students.");
+          System.out.println(studentInfos);
+          break;
+        case "POST":
+          List<StudentMatch> studentMatches =
+              JSONParser.getJsonObjectList(response.body(), StudentMatch.class);
+          System.out.println("Received information about " + studentMatches.size() + " students.");
+          System.out.println(studentMatches);
+          break;
+        default: // should never here since we already checked for other types
+          break;
       }
+    } catch (BadStatusException bse) {
+      System.err.println("ERROR: " + bse.getMessage());
     } catch (JsonSyntaxException jse) {
-      System.err.println("ERROR: request status " + status
-          + ": error while attempting to parse json.");
+      System.err.println("ERROR: received json format did not match expected format.");
     }
   }
 

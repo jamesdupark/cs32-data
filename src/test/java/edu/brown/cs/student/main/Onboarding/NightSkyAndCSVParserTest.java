@@ -1,12 +1,9 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.Onboarding;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import edu.brown.cs.student.main.Onboarding.Coordinate;
-import edu.brown.cs.student.main.Onboarding.NightSky;
-import edu.brown.cs.student.main.Onboarding.Star;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;

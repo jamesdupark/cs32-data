@@ -1,8 +1,7 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.Distances;
 
 import static org.junit.Assert.assertEquals;
 
-import edu.brown.cs.student.main.Distances.EuclideanDistance;
 import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDimTree.KDNodes.StarNode;
 import org.junit.Test;

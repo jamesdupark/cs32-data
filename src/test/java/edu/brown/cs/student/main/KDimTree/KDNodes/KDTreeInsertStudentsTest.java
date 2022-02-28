@@ -1,9 +1,7 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.KDimTree.KDNodes;
 
 import edu.brown.cs.student.main.CSVParse.CSVParser;
 import edu.brown.cs.student.main.CSVParse.Builder.StudentNodeBuilder;
-import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
-import edu.brown.cs.student.main.KDimTree.KDNodes.StudentNode;
 import edu.brown.cs.student.main.KDimTree.KDTree;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Class to test the KDTree insert functionality for Students.
@@ -81,7 +80,7 @@ public class KDTreeInsertStudentsTest {
     assertEquals(sameAxisStudentTree.getNumNodes(), 4);
 
     // test if root is inserted correctly
-    assertEquals(emptyTree.getRoot(), null);
+    assertNull(emptyTree.getRoot());
     assertEquals(smallStudentTree.getRoot().getVal().getAxisVal(0), 10, 0);
     assertEquals(smallStudentTree.getRoot().getVal().getAxisVal(1), 16, 0);
     assertEquals(smallStudentTree.getRoot().getVal().getAxisVal(2), 32, 0);
@@ -99,8 +98,8 @@ public class KDTreeInsertStudentsTest {
 
     // test parent
     // null case
-    assertEquals(smallStudentTree.getRoot().getParent(), null);
-    assertEquals(sameStudentTree.getRoot().getParent(), null);
+    assertNull(smallStudentTree.getRoot().getParent());
+    assertNull(sameStudentTree.getRoot().getParent());
     assertEquals(sameAxisStudentTree.getRoot().getParent(), null);
     // not null case
     assertEquals(smallStudentTree.getRoot().getLeft().getParent().getVal(),

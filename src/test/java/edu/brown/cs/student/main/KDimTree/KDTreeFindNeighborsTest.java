@@ -1,13 +1,10 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.KDimTree;
 
 import edu.brown.cs.student.main.CSVParse.CSVParser;
 import edu.brown.cs.student.main.CSVParse.Builder.StudentNodeBuilder;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
 import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDimTree.KDNodes.StudentNode;
-import edu.brown.cs.student.main.KDimTree.KDTree;
-import edu.brown.cs.student.main.KDimTree.KIsNegativeException;
-import edu.brown.cs.student.main.KDimTree.KeyNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 

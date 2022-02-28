@@ -1,5 +1,12 @@
 package edu.brown.cs.student.main.API;
 
+import edu.brown.cs.student.main.API.APIRequests.APIRequestBuilder;
+import edu.brown.cs.student.main.API.APIRequests.APIRequestHandler;
+import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
+import edu.brown.cs.student.main.API.json.JSONParser;
+
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,6 +20,14 @@ public class APIAggregator {
    * requests.
    */
   private final String baseUrl;
+  /**
+   * handler for API requests made by the aggregator.
+   */
+  private final APIRequestHandler handler = new APIRequestHandler();
+  /**
+   * builds GET requests to find active APIs.
+   */
+  private final APIRequestBuilder activeBuilder;
 
   /**
    * Constructor for the APIAggregator class.
@@ -25,6 +40,7 @@ public class APIAggregator {
       assert type.equals("info") || type.equals("match")
           : "Type not supported.";
       baseUrl = "https://student" + type + "api.herokuapp.com";
+      activeBuilder = new APIRequestBuilder(baseUrl + "/get-active");
     } catch (AssertionError ase) {
       throw new IllegalArgumentException("ERROR: " + ase.getMessage());
     }
@@ -35,15 +51,18 @@ public class APIAggregator {
    * base URL, and returns a list of Strings representing the currently active
    * API endpoints.
    * @return currently active API endpoints
+   * @throws BadStatusException when the API request returns a bad status code
    */
-  public List<String> getActiveClients() {
-    // TODO: fill
-    return List.of();
+  public List<String> getActiveClients() throws BadStatusException {
+    HttpRequest activeRequest = activeBuilder.get(null, null);
+    HttpResponse<String> response = handler.makeRequest(activeRequest);
+
+    return JSONParser.toStringList(response.body());
   }
 
   /**
-   * Aggregates APIs by cycling through them based on the given ranking algorithms.
-   * @param apiRanker
+   * Aggregates APIs by cycling through them based on the given ranking algorithm.
+   * @param apiRanker a comparator for APIRequestBuilders that
    */
   public void aggregate(Comparator<APIRequestBuilder> apiRanker) {
 

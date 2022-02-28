@@ -1,9 +1,8 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.Onboarding;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-import edu.brown.cs.student.main.Onboarding.Coordinate;
 import org.junit.Before;
 import org.junit.Test;
 
