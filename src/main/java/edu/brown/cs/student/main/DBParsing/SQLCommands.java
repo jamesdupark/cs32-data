@@ -1,16 +1,11 @@
 package edu.brown.cs.student.main.DBParsing;
 
-import edu.brown.cs.student.main.CSVParse.Builder.StudentNodeBuilder;
-import edu.brown.cs.student.main.CSVParse.CSVParser;
 import edu.brown.cs.student.main.Commands.REPLCommands;
-import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
-import edu.brown.cs.student.main.KDimTree.KDTree;
 
+import java.io.FileNotFoundException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +16,11 @@ public class SQLCommands implements REPLCommands {
    */
   private final List<String> commands =
       List.of("connect_db", "select_names", "get_people_interests");
+  private final Map<String, Integer> dbTableCount = new HashMap<>() {{
+      put("data/recommendation/sql/data.sqlite3", 4);
+      put("data/recommendation/sql/horoscopes.sqlite3", 4);
+      put("data/recommendation/sql/zoo.sqlite3", 1);
+    }};
   private static Connection conn = null;
   private Proxy proxy = null;
 
@@ -59,6 +59,15 @@ public class SQLCommands implements REPLCommands {
     }
     try {
       String filepath = argv[1];
+      // check correct number of args
+      if (!dbTableCount.containsKey(argv[1])) {
+        System.out.println("ERROR: Database Proxy does not support commands for this database");
+        return;
+      }
+      if (dbTableCount.get(argv[1]) != argc - 2) {
+        throw new IllegalArgumentException("ERROR: Incorrect number of arguments");
+      }
+
       Map<String, String> tablePermissions = new HashMap<>();
 
       Map<Integer, String> indexTables = new HashMap<>();
@@ -67,13 +76,18 @@ public class SQLCommands implements REPLCommands {
       indexTables.put(2, "skills");
       indexTables.put(3, "interests");
 
-      for (int i = 0; i < argv.length - 2; i++) {
-        tablePermissions.put(indexTables.get(i), argv[i + 2]);
+      for (int i = 2; i < argv.length; i++) {
+        if (argv[i] != "R" || argv[i] != "W" || argv[i] != "RW") {
+          throw new RuntimeException("ERROR: permission is not <R> or <W> or <RW>");
+        }
+        tablePermissions.put(indexTables.get(i-2), argv[i]);
       }
       proxy = new Proxy(filepath, tablePermissions);
       proxy.connectDB();
       conn = proxy.getConn();
       System.out.println("Connection made to " + conn);
+    } catch (FileNotFoundException e) {
+      System.err.println("ERROR: " + argv[1] + " is an invalid filename");
     } catch (IllegalArgumentException e) {
       System.err.println(e.getMessage());
     } catch (SQLException e) {
@@ -95,17 +109,13 @@ public class SQLCommands implements REPLCommands {
       throw new RuntimeException("ERROR: Database has not been contacted!");
     }
     try {
-      String sql = "SELECT name FROM names";
+      String sqlQuery = "SELECT name FROM names";
       Map<String, String> commandToTable = new HashMap<>();
       commandToTable.put("SELECT", "names");
       if (proxy.validateQuery(commandToTable)) {
         // valid query
         System.out.println("Valid query!");
-        List<String> tas = new ArrayList<>();
-        //      String sql = "SELECT name FROM tas WHERE role = ?";
-        PreparedStatement rolefinder = conn.prepareStatement(sql);
-        //      rolefinder.setString(1, role);
-        ResultSet rs = rolefinder.executeQuery();
+        ResultSet rs = proxy.execQuery(sqlQuery);
         while (rs.next()) {
           System.out.println(rs.getString(1));
         }

@@ -1,11 +1,18 @@
 package edu.brown.cs.student.main.DBParsing;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Proxy {
@@ -32,16 +39,12 @@ public class Proxy {
     sqlPermissions.put("TRUNCATE", "RW");
   }
 
-  public void connectDB() throws ClassNotFoundException, SQLException {
-    try {
-      Paths.get(this.filepath);
-      System.out.println("Inside connect DB Proxy!");
-      Class.forName("org.sqlite.JDBC");
-      String urlToDB = "jdbc:sqlite:" + filepath;
-      conn = DriverManager.getConnection(urlToDB);
-    } catch (InvalidPathException ex) {
-      System.out.println("ERROR: file not found");
-    }
+  public void connectDB() throws ClassNotFoundException, SQLException, FileNotFoundException {
+    BufferedReader reader = new BufferedReader(new FileReader(filepath));
+    System.out.println("Inside connect DB Proxy!");
+    Class.forName("org.sqlite.JDBC");
+    String urlToDB = "jdbc:sqlite:" + filepath;
+    conn = DriverManager.getConnection(urlToDB);
   }
 
   public boolean validateQuery(Map<String, String> commandToTable) {
@@ -57,6 +60,12 @@ public class Proxy {
       }
     }
     return true;
+  }
+
+  public ResultSet execQuery(String sqlQuery) throws SQLException {
+    PreparedStatement rolefinder = conn.prepareStatement(sqlQuery);
+    ResultSet rs = rolefinder.executeQuery();
+    return rs;
   }
 
   public Connection getConn() {
