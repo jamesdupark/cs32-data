@@ -56,8 +56,8 @@ public class APIRequestHandler {
           String statusMessage = JSONParser.getMessage(apiResponse.body());
           throw new BadStatusException("status " + status + " code received: " + statusMessage);
         } catch (JsonSyntaxException jse) {
-          throw new IllegalArgumentException("ERROR: request status " + status
-              + ": error while attempting to parse json.");
+          throw new BadStatusException("couldn't parse status response as message json."
+          + "status " + status + ": " + apiResponse.body());
         }
       }
     } catch (IOException ioe) {
@@ -68,7 +68,7 @@ public class APIRequestHandler {
       throw new IllegalArgumentException("ERROR: The operation was interrupted.");
 
     } catch (IllegalArgumentException iae) {
-      throw new IllegalArgumentException("ERROR: The request argument was invalid.");
+      throw new IllegalArgumentException("ERROR: The request argument was invalid. " + iae.getMessage());
 
     } catch (SecurityException se) {
       throw new IllegalArgumentException("ERROR: There was a security configuration error.");

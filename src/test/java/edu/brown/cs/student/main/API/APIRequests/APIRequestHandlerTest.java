@@ -103,7 +103,7 @@ public class APIRequestHandlerTest {
     // get to post-only and post to get-only
     HttpRequest badGet = matchBuilder.get(urlAuth, null);
     HttpRequest badPost = infoBuilder.post(postHead, postBody);
-    assertThrows(IllegalArgumentException.class, () -> handler.makeRequest(badGet));
-    assertThrows(IllegalArgumentException.class, () -> handler.makeRequest(badPost));
+    assertThrows(BadStatusException.class, () -> handler.makeRequest(badGet));
+    assertThrows(BadStatusException.class, () -> handler.makeRequest(badPost));
   }
 }
