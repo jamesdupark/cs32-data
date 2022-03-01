@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class SQLCommands implements REPLCommands {
       indexTables.put(3, "interests");
 
       for (int i = 2; i < argv.length; i++) {
-        if (argv[i] != "R" || argv[i] != "W" || argv[i] != "RW") {
+        if (!argv[i].equals("R") && !argv[i].equals("W") && !argv[i].equals("RW")) {
           throw new RuntimeException("ERROR: permission is not <R> or <W> or <RW>");
         }
         tablePermissions.put(indexTables.get(i-2), argv[i]);
@@ -116,9 +117,15 @@ public class SQLCommands implements REPLCommands {
         // valid query
         System.out.println("Valid query!");
         ResultSet rs = proxy.execQuery(sqlQuery);
+        List<DatabaseStudent> dbStud = new ArrayList<>();
         while (rs.next()) {
-          System.out.println(rs.getString(1));
+          DatabaseStudent student = new DatabaseStudent();
+          String name = rs.getString(1);
+          student.setName(name);
+          dbStud.add(student);
+          System.out.println(name);
         }
+        System.out.println(dbStud);
       } else {
         // error: sql table does not have this level of permission
         System.out.println("ERROR: SQL Table does not have the level of permission");
