@@ -12,16 +12,11 @@ public class StudentMatch implements JSONable {
    * integer parameters for student match - unique id and software engineering
    * confidence.
    */
-  private int id, softwareEngnConfidence;
+  private final int id, softwareEngnConfidence;
   /**
    * String parameters for student match - name, gender, nationality, and race.
    */
-  private String name, gender, nationality, race;
-  /**
-   * Transient string parameters for student match to allow reading of jsons with
-   * ssn field but never storing it.
-   */
-  private final transient String ssn = null;
+  private final String name, gender, nationality, race;
 
   /**
    * Constructor for manually creating studentMatch objects (for testing).

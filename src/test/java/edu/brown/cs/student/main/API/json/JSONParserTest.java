@@ -68,13 +68,14 @@ public class JSONParserTest {
   public void testGetJsonObject() {
     assertEquals(info, JSONParser.getJsonObject(jsonStudentInfo, StudentInfo.class));
     assertEquals(match, JSONParser.getJsonObject(jsonStudentMatch, StudentMatch.class));
+    System.out.println(match);
   }
 
-//  @Test
-//  public void testGetJsonObjectList() {
-//    assertEquals(infos, JSONParser.getJsonObjectList(jsonStudentInfoList, StudentInfo.class));
-//    assertEquals(matches, JSONParser.getJsonObjectList(jsonStudentMatchList, StudentMatch.class));
-//  }
+  @Test
+  public void testGetJsonObjectList() {
+    assertEquals(infos, JSONParser.getJsonObjectList(jsonStudentInfoList, StudentInfo.class));
+    assertEquals(matches, JSONParser.getJsonObjectList(jsonStudentMatchList, StudentMatch.class));
+  }
 
   @Test
   public void testReadJsonFile() throws IOException {

@@ -17,7 +17,7 @@ public class APIRequestHandler {
   /**
    * HTTPClient that makes the API requests.
    */
-  private HttpClient client;
+  private final HttpClient client;
   /**
    * max duration in seconds to wait before a request expires.
    */
@@ -68,7 +68,8 @@ public class APIRequestHandler {
       throw new IllegalArgumentException("ERROR: The operation was interrupted.");
 
     } catch (IllegalArgumentException iae) {
-      throw new IllegalArgumentException("ERROR: The request argument was invalid. " + iae.getMessage());
+      throw new IllegalArgumentException("ERROR: The request argument was invalid. "
+          + iae.getMessage());
 
     } catch (SecurityException se) {
       throw new IllegalArgumentException("ERROR: There was a security configuration error.");

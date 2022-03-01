@@ -65,7 +65,8 @@ public class APICommands implements REPLCommands {
 
   /**
    * Executes the "active" command to query the given API type (either "info" or
-   * "match") for currently active API endpoints. TODO: add more about i/o
+   * "match") for currently active API endpoints and prints the resultant list of
+   * currently active endpoints.
    * @param argv array of strings representing tokenized user input
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
@@ -97,7 +98,10 @@ public class APICommands implements REPLCommands {
 
   /**
    * Executes the "api" command to make a request of the given type with the
-   * given params to the API endpoint at the given URL. TODO: add more about i/o
+   * given params to the API endpoint at the given URL. Attempts to read the resultant
+   * json into a list of StudentInfo or StudentMatch, and prints response body upon
+   * failure to read into json. Prints informative error message upon failure to make
+   * request.
    * @param argv array of strings representing tokenized user input
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
@@ -139,30 +143,38 @@ public class APICommands implements REPLCommands {
         throw new IllegalArgumentException("ERROR: type not recognized.");
     }
 
+    // get response
+    HttpResponse<String> response;
     try {
-      HttpResponse<String> response = handler.makeRequest(request); // will abort if request fails
-      // TODO: convert request response to studentjson object and remove print statements
-      System.out.println("Status " + response.statusCode());
-      switch (type) {
+      response = handler.makeRequest(request); // will abort if request fails
+    } catch (BadStatusException bse) {
+      System.err.println("ERROR: " + bse.getMessage());
+      return;
+    }
+
+    try {
+      switch (type) { // attempt to convert to list of studentInfos
         case "GET":
           List<StudentInfo> studentInfos =
               JSONParser.getJsonObjectList(response.body(), StudentInfo.class);
-          System.out.println("Received information about " + studentInfos.size() + " students.");
+          System.out.println("Status " + response.statusCode() + ": Received information about "
+              + studentInfos.size() + " students.");
           System.out.println(studentInfos);
           break;
         case "POST":
           List<StudentMatch> studentMatches =
               JSONParser.getJsonObjectList(response.body(), StudentMatch.class);
-          System.out.println("Received information about " + studentMatches.size() + " students.");
+          System.out.println("Status " + response.statusCode() + ": Received information about "
+              + studentMatches.size() + " students.");
           System.out.println(studentMatches);
           break;
         default: // should never get here since we already checked for other types
+          assert false : "reached impossible branch.";
           break;
       }
-    } catch (BadStatusException bse) {
-      System.err.println("ERROR: " + bse.getMessage());
     } catch (JsonSyntaxException jse) {
-      System.err.println("ERROR: received json format did not match expected format.");
+      System.err.println("ERROR: received json format did not match student"
+          + " format. Response: " + response.body());
     }
   }
 

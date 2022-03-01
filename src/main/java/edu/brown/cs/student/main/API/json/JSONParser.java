@@ -56,18 +56,20 @@ public final class JSONParser {
    * Conversion method taken from: https://www.baeldung.com/gson-list.
    * camelCase matching method from: https://stackoverflow.com/questions/2370745/
    * convert-json-style-properties-names-to-java-camelcase-names-with-gson
+   * Generic parametrized list typing from: https://stackoverflow.com/questions/20773850/
+   * gson-typetoken-with-dynamic-arraylist-item-type
    * @param jsonObject json object storing the information about type T
    * @param <T> type of object to be read from the json
    * @param tClass class to be read from the json
    * @return list of type T
    * @throws JsonSyntaxException upon encountering ill-formatted json
    */
-  public static <T> List<T> getJsonObjectList(String jsonObject, Class<T> tClass)
+  public static <T extends JSONable> List<T> getJsonObjectList(String jsonObject, Class<T> tClass)
       throws JsonSyntaxException {
     Gson parser = new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
-    Type jsonObjectListType = new TypeToken<List<T>>() { } .getType();
+    Type jsonObjectListType = TypeToken.getParameterized(List.class, tClass).getType();
     return parser.fromJson(jsonObject, jsonObjectListType);
   }
 
@@ -81,7 +83,7 @@ public final class JSONParser {
    * @return object of type T
    * @throws JsonSyntaxException upon encountering ill-formatted json
    */
-  public static <T> T getJsonObject(String jsonObject, Class<T> tClass)
+  public static <T extends JSONable> T getJsonObject(String jsonObject, Class<T> tClass)
       throws JsonSyntaxException {
     Gson parser = new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -98,7 +100,7 @@ public final class JSONParser {
    * @return list of type T
    * @throws IOException upon encountering an issue with json formatting or reading the file.
    */
-  public static <T> List<T> readJsonFile(String filepath, Class<T> tClass)
+  public static <T extends JSONable> List<T> readJsonFile(String filepath, Class<T> tClass)
       throws IOException {
     try {
       FileParser parser = new FileParser(filepath);

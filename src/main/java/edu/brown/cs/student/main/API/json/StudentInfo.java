@@ -13,12 +13,12 @@ public class StudentInfo implements JSONable {
    * integer parameters for student info - unique id, years of experience, and
    * weekly available hours.
    */
-  private int id, yearsExperience, weeklyAvailHours;
+  private final int id, yearsExperience, weeklyAvailHours;
   /**
    * String parameters for student info - name, class year, communication style,
    * meeting style, and meeting time.
    */
-  private String name, classYear, communicationStyle, meetingStyle, meetingTime;
+  private final String name, classYear, communicationStyle, meetingStyle, meetingTime;
 
   /**
    * Constructor for manually creating StudentInfo objects (for testing).
