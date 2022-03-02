@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * REPLCommands class that packages commands related to SQL queries.
+ */
 public class SQLCommands implements REPLCommands {
   /**
    * List of strings representing the command keywords supported by this class.
@@ -52,7 +55,6 @@ public class SQLCommands implements REPLCommands {
     }
   }
 
-
   private void connectDBCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     // check correct number of args
@@ -82,7 +84,7 @@ public class SQLCommands implements REPLCommands {
         if (!argv[i].equals("R") && !argv[i].equals("W") && !argv[i].equals("RW")) {
           throw new RuntimeException("ERROR: permission is not <R> or <W> or <RW>");
         }
-        tablePermissions.put(indexTables.get(i-2), argv[i]);
+        tablePermissions.put(indexTables.get(i - 2), argv[i]);
       }
       proxy = new Proxy(filepath, tablePermissions);
       proxy.connectDB();
