@@ -1,0 +1,17 @@
+INPUT
+connect_db data/recommendation/sql/data.sqlite3 RW RW RW RW
+connect_db data/recommendation/sql/horoscopes.sqlite3 R R R R
+connect_db data/recommendation/sql/zoo.sqlite3 R
+connect_db data/recommendation/sql/zoo.sqlite3 RW
+connect_db data/recommendation/sql/data.sqlite3 R R R R
+connect_db data/recommendation/sql/horoscopes.sqlite3 R R W R
+connect_db data/recommendation/sql/horoscopes.sqlite3 R R RW R
+OUTPUT
+Successful connection made to data/recommendation/sql/data.sqlite3
+Successful connection made to data/recommendation/sql/horoscopes.sqlite3
+Successful connection made to data/recommendation/sql/zoo.sqlite3
+Successful connection made to data/recommendation/sql/zoo.sqlite3
+Successful connection made to data/recommendation/sql/data.sqlite3
+Successful connection made to data/recommendation/sql/horoscopes.sqlite3
+Successful connection made to data/recommendation/sql/horoscopes.sqlite3
+END
