@@ -5,6 +5,7 @@ import edu.brown.cs.student.main.Commands.BloomCommands;
 import edu.brown.cs.student.main.Commands.KDCommands;
 import edu.brown.cs.student.main.Commands.NightSkyCommands;
 import edu.brown.cs.student.main.Commands.REPLCommands;
+import edu.brown.cs.student.main.DBParsing.SQLCommands;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;
@@ -57,9 +58,9 @@ public final class Main {
     NightSkyCommands stars = new NightSkyCommands();
     KDCommands kdtree = new KDCommands();
     APICommands api = new APICommands();
-
+    SQLCommands sql = new SQLCommands();
     // creating list
-    List<REPLCommands> commandsList = List.of(blooms, stars, kdtree, api);
+    List<REPLCommands> commandsList = List.of(blooms, stars, kdtree, api, sql);
     Repl myRepl = new Repl(commandsList);
     myRepl.run();
   }
