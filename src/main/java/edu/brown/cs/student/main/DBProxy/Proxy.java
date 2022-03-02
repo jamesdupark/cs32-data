@@ -120,4 +120,12 @@ public class Proxy {
   public Connection getConn() {
     return conn;
   }
+
+  /**
+   * Accessor method for the sql permissions table of the Proxy.
+   * @return the sqlPermissions field of the Proxy.
+   */
+  public Map<String, String> getSqlPermissions() {
+    return sqlPermissions;
+  }
 }
