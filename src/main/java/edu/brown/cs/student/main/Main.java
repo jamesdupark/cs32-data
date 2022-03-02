@@ -5,7 +5,7 @@ import edu.brown.cs.student.main.Commands.BloomCommands;
 import edu.brown.cs.student.main.Commands.KDCommands;
 import edu.brown.cs.student.main.Commands.NightSkyCommands;
 import edu.brown.cs.student.main.Commands.REPLCommands;
-import edu.brown.cs.student.main.DBParsing.SQLCommands;
+import edu.brown.cs.student.main.Commands.SQLCommands;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;
