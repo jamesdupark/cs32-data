@@ -21,12 +21,20 @@ public class SQLCommands implements REPLCommands {
    */
   private final List<String> commands =
       List.of("connect_db", "select_names", "get_people_interests");
+  /**
+   * HashMap mapping from the database filepath supported by this class to the
+   * number of tables it contains.
+   */
   private final Map<String, Integer> dbTableCount = new HashMap<>() {{
       put("data/recommendation/sql/data.sqlite3", 4);
       put("data/recommendation/sql/horoscopes.sqlite3", 4);
       put("data/recommendation/sql/zoo.sqlite3", 1);
     }};
+  /** Connection used to establish a connection to the database through a filepath. */
   private static Connection conn = null;
+  /** Proxy that sits between the client and the database used to add a layer of
+   * abstraction in the program so that users do not have to directly interact
+   * with the SQL database. */
   private Proxy proxy = null;
 
   @Override
@@ -55,6 +63,15 @@ public class SQLCommands implements REPLCommands {
     }
   }
 
+  /**
+   * Executes the "connect_db" command by creating a new Proxy that will be used to
+   * connect to the database when given the database filepath. If successful, updates
+   * the Connection and Proxy fields and prints the connection made to the database.
+   * Prints informative error message upon failure.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   */
   private void connectDBCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     // check correct number of args
@@ -101,6 +118,14 @@ public class SQLCommands implements REPLCommands {
     }
   }
 
+  /**
+   * Executes the "select_names" command which queries off the Students Database. If successful,
+   * the names of all the students should be printed.
+   * Prints informative error message upon failure.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   */
   private void selectNamesCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     // check correct number of args
