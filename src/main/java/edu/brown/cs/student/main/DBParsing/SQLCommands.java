@@ -24,7 +24,7 @@ public class SQLCommands implements REPLCommands {
    * List of strings representing the command keywords supported by this class.
    */
   private final List<String> commands =
-      List.of("connect_db", "select_names", "get_people_interests");
+      List.of("connect_db", "select_names", "find_same_interests");
   /**
    * HashMap mapping from the database filepath supported by this class to an index.
    */
@@ -39,6 +39,12 @@ public class SQLCommands implements REPLCommands {
    * abstraction in the program so that users do not have to directly interact
    * with the SQL database. */
   private Proxy proxy = null;
+  /**
+   * Map mapping from a SQL Command to the corresponding database table that it applies to.
+   * This Map is used when checking whether a table supports the level of access to
+   * execute the SQL Command.
+   */
+  private Map<String, String> commandToTable = new HashMap<>();
 
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
@@ -52,9 +58,9 @@ public class SQLCommands implements REPLCommands {
         case "select_names":
           this.selectNamesCmd(argv, argc);
           break;
-//        case "get_people_interests":
-//          this.similarKDCmd(argv, argc);
-//          break;
+        case "find_same_interests":
+          this.findSameInterestsCmd(argv, argc);
+          break;
         default:
           System.err.println("ERROR: Command not recognized.");
           break;
@@ -127,7 +133,7 @@ public class SQLCommands implements REPLCommands {
       proxy = new Proxy(filepath, tablePermissions);
       proxy.connectDB();
       conn = proxy.getConn();
-      System.out.println("Connection made to " + conn);
+      System.out.println("Successful connection made to " + filepath);
     } catch (FileNotFoundException e) {
       System.err.println("ERROR: " + argv[1] + " is an invalid filename");
     } catch (IllegalArgumentException e) {
@@ -152,19 +158,20 @@ public class SQLCommands implements REPLCommands {
     // check correct number of args
     if (argc != 1) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
-        + "Expected 1 argument but got " + argc);
+          + "Expected 1 argument but got " + argc);
     }
     // check if connection to database has been made
     if (conn == null) {
-      throw new RuntimeException("ERROR: Database has not been contacted!");
+      throw new RuntimeException("ERROR: Database has not been connected!");
     }
     try {
       String sqlQuery = "SELECT name FROM names";
-      Map<String, String> commandToTable = new HashMap<>();
+      // clear commandToTable and add to it
+      commandToTable.clear();
       commandToTable.put("SELECT", "names");
       if (proxy.validateQuery(commandToTable)) {
         // valid query
-        System.out.println("Valid query!");
+        System.out.println("Valid query! Selecting names!");
         ResultSet rs = proxy.execQuery(sqlQuery);
         List<DatabaseStudent> dbStud = new ArrayList<>();
         while (rs.next()) {
@@ -174,7 +181,6 @@ public class SQLCommands implements REPLCommands {
           dbStud.add(student);
           System.out.println(name);
         }
-        System.out.println(dbStud);
       } else {
         // error: sql table does not have this level of permission
         System.out.println("ERROR: SQL Table does not have the level of permission");
@@ -183,89 +189,58 @@ public class SQLCommands implements REPLCommands {
       System.err.println("ERROR: " + e.getMessage());
     }
   }
-//      // create new kd tree and insert elements into tree
-//      this.kdTree = new KDTree<>();
-//      CSVParser<KDNode> reader = new CSVParser(new StudentNodeBuilder());
-//      reader.load(argv[1]);
-//      List<KDNode> nodesList = reader.getDataList();
-//      this.kdTree.insertList(nodesList, 0);
-//      System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
-//    } catch (IllegalArgumentException e) {
-//      System.err.println(e.getMessage());
-//    } catch (RuntimeException e) {
-//      System.err.println(e.getMessage());
-//    }
-  // }
 
-//  /**
-//   * Executes the "load_kd" command by creating a new KD Tree and then inserting
-//   * elements into the Tree that is parsed from a CSV. If successful, updates
-//   * the KDTree field and prints how many entries were inserted successfully to stdout.
-//   * Prints informative error message upon failure.
-//   * @param argv array of strings representing tokenized user input
-//   * @param argc length of argv
-//   * @throws IllegalArgumentException if number of arguments is incorrect
-//   */
-//  private void loadKDCmd(String[] argv, int argc)
-//      throws IllegalArgumentException {
-//    // check correct number of args
-//    if (argc != 2) {
-//      throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
-//          + "Expected 2 arguments but got " + argc);
-//    }
-//    try {
-//      // create new kd tree and insert elements into tree
-//      this.kdTree = new KDTree<>();
-//      CSVParser<KDNode> reader = new CSVParser(new StudentNodeBuilder());
-//      reader.load(argv[1]);
-//      List<KDNode> nodesList = reader.getDataList();
-//      this.kdTree.insertList(nodesList, 0);
-//      System.out.println("Read " + this.kdTree.getNumNodes() + " students from " + argv[1]);
-//    } catch (IllegalArgumentException e) {
-//      System.err.println(e.getMessage());
-//    } catch (RuntimeException e) {
-//      System.err.println(e.getMessage());
-//    }
-//  }
-//
-//  /**
-//   * Executes the "similar_kd" command by querying for the k most similar
-//   * values on the tree by some defined distance criteria that implements Distances
-//   * interface. If successful, prints out the IDs of the k most similar values to stdout.
-//   * Prints informative error message upon failure.
-//   * @param argv array of strings representing tokenized user input
-//   * @param argc length of argv
-//   * @throws IllegalArgumentException if number of arguments is incorrect
-//   * @throws RuntimeException if the KDTree is empty
-//   */
-//  private void similarKDCmd(String[] argv, int argc)
-//      throws IllegalArgumentException, RuntimeException {
-//    // check correct number of args
-//    if (argc != 3) {
-//      throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
-//          + "Expected 3 arguments but got " + argc);
-//    }
-//    if (this.kdTree == null) {
-//      throw new RuntimeException("ERROR: Can't query! There is no data in the KDTree");
-//    }
-//    try {
-//      kdTree.cleanDataStructures();
-//      List<Integer> retList = this.kdTree.findKSN(Integer.parseInt(argv[1]),
-//          Integer.parseInt(argv[2]), this.kdTree.getRoot(), new EuclideanDistance());
-//      for (Integer id : retList) {
-//        System.out.println(id);
-//      }
-//    } catch (NumberFormatException e) {
-//      System.err.println("ERROR: Number format exception " + e.getMessage());
-//    } catch (IllegalArgumentException e) {
-//      System.err.println(e.getMessage());
-//    } catch (KIsNegativeException e) {
-//      System.err.println(e.getMessage());
-//    } catch (KeyNotFoundException e) {
-//      System.err.println(e.getMessage());
-//    }
-//  }
-
+  /**
+   * Executes the "find_same_interests" command which queries off the Students Database
+   * for students with the same interests as a target interest. If successful,
+   * the ids, names, and interests of all the students should be printed.
+   * Prints informative error message upon failure.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   */
+  private void findSameInterestsCmd(String[] argv, int argc)
+      throws IllegalArgumentException {
+    // check correct number of args
+    if (argc != 1) {
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
+          + "Expected 1 argument but got " + argc);
+    }
+    // check if connection to database has been made
+    if (conn == null) {
+      throw new RuntimeException("ERROR: Database has not been connected!");
+    }
+    try {
+      String sqlQuery = "SELECT name, email, interest FROM names as n JOIN interests as i"
+          + " on n.id = i.id WHERE i.interest = \'music\' ORDER BY name;";
+      // clear commandToTable and add to it
+      commandToTable.clear();
+      commandToTable.put("SELECT", "names");
+      commandToTable.put("JOIN", "interests");
+      if (proxy.validateQuery(commandToTable)) {
+        // valid query
+        System.out.println("Valid query!");
+        ResultSet rs = proxy.execQuery(sqlQuery);
+        List<DatabaseStudent> dbStud = new ArrayList<>();
+        while (rs.next()) {
+          DatabaseStudent student = new DatabaseStudent();
+          String name = rs.getString(1);
+          String email = rs.getString(2);
+          String interest = rs.getString(3);
+          student.setName(name);
+          student.setEmail(email);
+          student.setInterest(interest);
+          dbStud.add(student);
+          System.out.println(name + " " + email + " " + interest);
+        }
+      } else {
+        // error: sql table does not have this level of permission
+        System.out.println("ERROR: SQL Table does not have the level of permission");
+      }
+    } catch (SQLException e) {
+      System.err.println("ERROR: " + e.getMessage());
+    }
+  }
   @Override
   public List<String> getCommandsList() {
     return this.commands;
