@@ -2,6 +2,10 @@ package edu.brown.cs.student.main.DBParsing;
 
 import edu.brown.cs.student.main.Commands.REPLCommands;
 import edu.brown.cs.student.main.DBParsing.DBItems.DatabaseStudent;
+import edu.brown.cs.student.main.DBParsing.DBTables.DatabaseHoroscopesTables;
+import edu.brown.cs.student.main.DBParsing.DBTables.DatabaseStudentTables;
+import edu.brown.cs.student.main.DBParsing.DBTables.DatabaseTables;
+import edu.brown.cs.student.main.DBParsing.DBTables.DatabaseZooTables;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -22,13 +26,12 @@ public class SQLCommands implements REPLCommands {
   private final List<String> commands =
       List.of("connect_db", "select_names", "get_people_interests");
   /**
-   * HashMap mapping from the database filepath supported by this class to the
-   * number of tables it contains.
+   * HashMap mapping from the database filepath supported by this class to an index.
    */
-  private final Map<String, Integer> dbTableCount = new HashMap<>() {{
-      put("data/recommendation/sql/data.sqlite3", 4);
-      put("data/recommendation/sql/horoscopes.sqlite3", 4);
-      put("data/recommendation/sql/zoo.sqlite3", 1);
+  private final Map<String, Integer> dbIndex = new HashMap<>() {{
+      put("data/recommendation/sql/data.sqlite3", 0);
+      put("data/recommendation/sql/horoscopes.sqlite3", 1);
+      put("data/recommendation/sql/zoo.sqlite3", 2);
     }};
   /** Connection used to establish a connection to the database through a filepath. */
   private static Connection conn = null;
@@ -64,6 +67,28 @@ public class SQLCommands implements REPLCommands {
   }
 
   /**
+   * Method to make the DatabaseTables corresponding to the filepath of the database in
+   * order to retrieve the Map of the index to the corresponding table name. This information
+   * is then used for the "connect_db" command.
+   * @param filepath String representing the filepath of the database to establish a
+   *                 connection with
+   * @return the DatabaseTables corresponding to the filepath of the database
+   */
+  public DatabaseTables getDBTables(String filepath) {
+    int index = dbIndex.get(filepath);
+    switch (index) {
+      case 0:
+        return new DatabaseStudentTables();
+      case 1:
+        return new DatabaseHoroscopesTables();
+      case 2:
+        return new DatabaseZooTables();
+      default:
+        throw new RuntimeException("ERROR: Connection to this DB is not supported.");
+    }
+  }
+
+  /**
    * Executes the "connect_db" command by creating a new Proxy that will be used to
    * connect to the database when given the database filepath. If successful, updates
    * the Connection and Proxy fields and prints the connection made to the database.
@@ -81,27 +106,23 @@ public class SQLCommands implements REPLCommands {
     try {
       String filepath = argv[1];
       // check correct number of args
-      if (!dbTableCount.containsKey(argv[1])) {
+      if (!dbIndex.containsKey(argv[1])) {
         System.out.println("ERROR: Database Proxy does not support commands for this database");
         return;
       }
-      if (dbTableCount.get(argv[1]) != argc - 2) {
+      DatabaseTables dbTables = this.getDBTables(argv[1]);
+      Map<Integer, String> dbIndexTables = dbTables.getIndexTables();
+      if (dbIndexTables.size() != argc - 2) {
         throw new IllegalArgumentException("ERROR: Incorrect number of arguments");
       }
 
       Map<String, String> tablePermissions = new HashMap<>();
 
-      Map<Integer, String> indexTables = new HashMap<>();
-      indexTables.put(0, "names");
-      indexTables.put(1, "traits");
-      indexTables.put(2, "skills");
-      indexTables.put(3, "interests");
-
       for (int i = 2; i < argv.length; i++) {
         if (!argv[i].equals("R") && !argv[i].equals("W") && !argv[i].equals("RW")) {
           throw new RuntimeException("ERROR: permission is not <R> or <W> or <RW>");
         }
-        tablePermissions.put(indexTables.get(i - 2), argv[i]);
+        tablePermissions.put(dbIndexTables.get(i - 2), argv[i]);
       }
       proxy = new Proxy(filepath, tablePermissions);
       proxy.connectDB();
