@@ -1,7 +1,6 @@
 package edu.brown.cs.student.main.CSVParse.Builder;
 
 import edu.brown.cs.student.main.Header;
-import edu.brown.cs.student.main.Onboarding.Star;
 
 import java.util.List;
 

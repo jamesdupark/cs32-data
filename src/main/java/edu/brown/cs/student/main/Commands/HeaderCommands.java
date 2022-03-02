@@ -59,4 +59,13 @@ public class HeaderCommands implements REPLCommands {
   public List<String> getCommandsList() {
     return this.commands;
   }
+
+  /**
+   * Getter for a field type in typeMap. (For testing)
+   * @param field - the field name that is the key to typeMap.
+   * @return - the value, type of the field.
+   */
+  public String getType(String field) {
+    return typeMap.get(field);
+  }
 }
