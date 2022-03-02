@@ -2,14 +2,17 @@ package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.Commands.APICommands;
 import edu.brown.cs.student.main.Commands.BloomCommands;
+import edu.brown.cs.student.main.Commands.HeaderCommands;
 import edu.brown.cs.student.main.Commands.KDCommands;
 import edu.brown.cs.student.main.Commands.NightSkyCommands;
 import edu.brown.cs.student.main.Commands.REPLCommands;
 import edu.brown.cs.student.main.Commands.SQLCommands;
+import edu.brown.cs.student.main.Commands.RecommenderCommands;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -52,15 +55,19 @@ public final class Main {
     if (options.has("gui")) {
       runSparkServer((int) options.valueOf("port"));
     }
+    //map from field to data type
+    HashMap<String, String> typeMap = new HashMap<>();
 
     // adding REPLCommands packages
-    BloomCommands blooms = new BloomCommands();
-    NightSkyCommands stars = new NightSkyCommands();
-    KDCommands kdtree = new KDCommands();
+    BloomCommands blooms = new BloomCommands(typeMap);
+    NightSkyCommands stars = new NightSkyCommands(typeMap);
+    KDCommands kdTree = new KDCommands(typeMap);
+    HeaderCommands header = new HeaderCommands(typeMap);
+    RecommenderCommands recommender = new RecommenderCommands(typeMap);
     APICommands api = new APICommands();
     SQLCommands sql = new SQLCommands();
     // creating list
-    List<REPLCommands> commandsList = List.of(blooms, stars, kdtree, api, sql);
+    List<REPLCommands> commandsList = List.of(blooms, stars, kdTree, api, sql, header, recommender);
     Repl myRepl = new Repl(commandsList);
     myRepl.run();
   }

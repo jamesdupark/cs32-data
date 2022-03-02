@@ -39,6 +39,19 @@ public class BloomCommands implements REPLCommands {
    */
   private int maxInsert = 0;
 
+  /**
+   * Map of CSV column to data type.
+   */
+  private Map<String, String> typeMap;
+
+  /**
+   * Constructor for new BloomCommands class.
+   * @param map - the type map from field name to field data type.
+   */
+  public BloomCommands(HashMap<String, String> map) {
+    this.typeMap = map;
+  }
+
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
     // verifying that command is a supported one; should never fail

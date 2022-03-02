@@ -4,6 +4,7 @@ import edu.brown.cs.student.main.Onboarding.Coordinate;
 import edu.brown.cs.student.main.Onboarding.NightSky;
 import edu.brown.cs.student.main.Onboarding.Star;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,6 +20,18 @@ public class NightSkyCommands implements REPLCommands {
    * List of strings representing the commands supported by this class.
    */
   private List<String> commands = List.of("stars", "naive_neighbors");
+  /**
+   * Map from characteristic name to characteristic type (qualitative or quantitative).
+   */
+  private final HashMap<String, String> typeMap;
+
+  /**
+   * Constructor for a new NightSkyCommands.
+   * @param map - Hashmap from column name to data type.
+   */
+  public NightSkyCommands(HashMap<String, String> map) {
+    this.typeMap = map;
+  }
 
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {

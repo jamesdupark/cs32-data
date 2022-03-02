@@ -36,7 +36,7 @@ public class APIRequestHandlerTest {
     matchBuilder = new APIRequestBuilder(matchUrl);
     // retrieve api key and auth token
     apiKey = ClientAuth.getApiKey();
-    auth = "jpark236";
+    auth = ClientAuth.getAuth();
     // prep authentication
     urlAuth = new String[]{"auth", auth, "key", apiKey};
     badUrlAuth = new String[]{"auth", "username", "key", "password"};
