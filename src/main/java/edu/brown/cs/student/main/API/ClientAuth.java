@@ -29,4 +29,18 @@ public final class ClientAuth {
       return null;
     }
   }
+  /**
+   * Reads the API Key from the secret text file where we have stored it.
+   *
+   * @return a String of the api key.
+   */
+  public static String getAuth() {
+    try {
+      FileParser parser = new FileParser("config/secret/auth.txt");
+      return parser.readNewLine();
+    } catch (FileNotFoundException fe) {
+      System.err.println("ERROR: file not found.");
+      return null;
+    }
+  }
 }
