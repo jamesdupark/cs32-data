@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.DBParsing.DBTables;
+package edu.brown.cs.student.main.DBProxy.DBTables;
 
 import java.util.Map;
 

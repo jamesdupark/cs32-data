@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.DBParsing.DBItems;
+package edu.brown.cs.student.main.DBProxy.DBItems;
 
 /**
  * Class to represent an individual animals in the Zoo Database. Upon instantiation,

@@ -4,4 +4,4 @@
  * be used to instantiate fields of the classes corresponding to the columns obtained
  * from a SQL Query.
  */
-package edu.brown.cs.student.main.DBParsing.DBItems;
+package edu.brown.cs.student.main.DBProxy.DBItems;

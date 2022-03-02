@@ -1,11 +1,11 @@
-package edu.brown.cs.student.main.DBParsing;
+package edu.brown.cs.student.main.Commands;
 
-import edu.brown.cs.student.main.Commands.REPLCommands;
-import edu.brown.cs.student.main.DBParsing.DBItems.DatabaseStudent;
-import edu.brown.cs.student.main.DBParsing.DBTables.DatabaseHoroscopesTables;
-import edu.brown.cs.student.main.DBParsing.DBTables.DatabaseStudentTables;
-import edu.brown.cs.student.main.DBParsing.DBTables.DatabaseTables;
-import edu.brown.cs.student.main.DBParsing.DBTables.DatabaseZooTables;
+import edu.brown.cs.student.main.DBProxy.DBItems.DatabaseStudent;
+import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseHoroscopesTables;
+import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseStudentTables;
+import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseTables;
+import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseZooTables;
+import edu.brown.cs.student.main.DBProxy.Proxy;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -171,7 +171,6 @@ public class SQLCommands implements REPLCommands {
       commandToTable.put("SELECT", "names");
       if (proxy.validateQuery(commandToTable)) {
         // valid query
-        System.out.println("Valid query! Selecting names!");
         ResultSet rs = proxy.execQuery(sqlQuery);
         List<DatabaseStudent> dbStud = new ArrayList<>();
         while (rs.next()) {
@@ -219,7 +218,6 @@ public class SQLCommands implements REPLCommands {
       commandToTable.put("JOIN", "interests");
       if (proxy.validateQuery(commandToTable)) {
         // valid query
-        System.out.println("Valid query!");
         ResultSet rs = proxy.execQuery(sqlQuery);
         List<DatabaseStudent> dbStud = new ArrayList<>();
         while (rs.next()) {

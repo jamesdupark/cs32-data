@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.DBParsing;
+package edu.brown.cs.student.main.DBProxy;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -69,7 +69,6 @@ public class Proxy {
    */
   public void connectDB() throws ClassNotFoundException, SQLException, FileNotFoundException {
     new FileReader(filepath);
-    System.out.println("Inside connect DB Proxy!");
     Class.forName("org.sqlite.JDBC");
     String urlToDB = "jdbc:sqlite:" + filepath;
     conn = DriverManager.getConnection(urlToDB);
