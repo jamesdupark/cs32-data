@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.DBParsing;
 
 import edu.brown.cs.student.main.Commands.REPLCommands;
+import edu.brown.cs.student.main.DBParsing.DBItems.DatabaseStudent;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
