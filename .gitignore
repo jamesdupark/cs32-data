@@ -7,3 +7,4 @@ target/
 *.prefs
 sprint-1.iml
 config/secret/*
+/data/test.sql
