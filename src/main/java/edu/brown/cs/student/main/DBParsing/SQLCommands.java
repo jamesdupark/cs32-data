@@ -202,9 +202,9 @@ public class SQLCommands implements REPLCommands {
   private void findSameInterestsCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     // check correct number of args
-    if (argc != 1) {
+    if (argc != 2) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
-          + "Expected 1 argument but got " + argc);
+          + "Expected 2 argument but got " + argc);
     }
     // check if connection to database has been made
     if (conn == null) {
@@ -212,7 +212,7 @@ public class SQLCommands implements REPLCommands {
     }
     try {
       String sqlQuery = "SELECT name, email, interest FROM names as n JOIN interests as i"
-          + " on n.id = i.id WHERE i.interest = \'music\' ORDER BY name;";
+          + " on n.id = i.id WHERE i.interest = \'" + argv[1] + "\' ORDER BY name;";
       // clear commandToTable and add to it
       commandToTable.clear();
       commandToTable.put("SELECT", "names");
