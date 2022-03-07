@@ -7,6 +7,9 @@ import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseTables;
 import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseZooTables;
 import edu.brown.cs.student.main.DBProxy.Proxy;
 
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetFactory;
+import javax.sql.rowset.RowSetProvider;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 
 /**
  * REPLCommands class that packages commands related to SQL queries.
@@ -160,6 +165,7 @@ public class SQLCommands implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
           + "Expected 1 argument but got " + argc);
     }
+
     // check if connection to database has been made
     if (conn == null) {
       throw new RuntimeException("ERROR: Database has not been connected!");
@@ -171,21 +177,51 @@ public class SQLCommands implements REPLCommands {
       commandToTable.put("SELECT", "names");
       if (proxy.validateQuery(commandToTable)) {
         // valid query
-        ResultSet rs = proxy.execQuery(sqlQuery);
+        System.out.println("ABOVE RS");
+//        ResultSet rs = proxy.execQuery(sqlQuery);
+        ResultSet rs = proxy.cacheExec(sqlQuery);
+        RowSetFactory factory = RowSetProvider.newFactory();
+        CachedRowSet rowset = factory.createCachedRowSet();
+        rowset.populate(rs);
+        ResultSet rsForPrinting = rowset.createCopy();
+        System.out.println(rs);
+        System.out.println(rsForPrinting);
+        System.out.println("BELOW RS");
         List<DatabaseStudent> dbStud = new ArrayList<>();
-        while (rs.next()) {
+//        System.out.println("LAST" + rs.last());
+        while (rsForPrinting.next()) {
+          System.out.println("inside while");
           DatabaseStudent student = new DatabaseStudent();
-          String name = rs.getString(1);
+          String name = rsForPrinting.getString(1);
           student.setName(name);
           dbStud.add(student);
           System.out.println(name);
         }
+        rsForPrinting.beforeFirst();
+        System.out.println("Before put " + proxy.getCache().size());
+        proxy.getCache().put(sqlQuery, Optional.of(rsForPrinting));
+        System.out.println("After put " + proxy.getCache().size());
+//        proxy.getCache().refresh(sqlQuery);
+//        while (rsForPrinting.next()) {
+//          System.out.println("inside while 2");
+//          DatabaseStudent student = new DatabaseStudent();
+//          String name = rsForPrinting.getString(1);
+//          student.setName(name);
+//          dbStud.add(student);
+//          System.out.println(name);
+//        }
+
+//        connect_db data/recommendation/sql/data.sqlite3 RW RW RW RW
+//        System.out.println("LAST" + rs.last());
+        System.out.println("reached end");
       } else {
         // error: sql table does not have this level of permission
         System.out.println("ERROR: SQL Table does not have the level of permission");
       }
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
+    } catch (ExecutionException e) {
+      e.printStackTrace();
     }
   }
 
@@ -218,7 +254,10 @@ public class SQLCommands implements REPLCommands {
       commandToTable.put("JOIN", "interests");
       if (proxy.validateQuery(commandToTable)) {
         // valid query
+        System.out.println("ABOVE RS");
         ResultSet rs = proxy.execQuery(sqlQuery);
+        System.out.println("BELOW RS");
+//        System.out.println(rs);
         List<DatabaseStudent> dbStud = new ArrayList<>();
         while (rs.next()) {
           DatabaseStudent student = new DatabaseStudent();
@@ -237,6 +276,8 @@ public class SQLCommands implements REPLCommands {
       }
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
+    } catch (ExecutionException e) {
+      e.printStackTrace();
     }
   }
   @Override

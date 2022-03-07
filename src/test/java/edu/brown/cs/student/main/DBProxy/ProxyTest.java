@@ -59,6 +59,6 @@ public class ProxyTest {
         studentTablePermissions);
     assertEquals(proxy.getConn(), null);
     proxy.connectDB();
-    assertEquals(proxy.getConn().toString(), "org.sqlite.jdbc4.JDBC4Connection@3ef41c66");
+//    assertEquals(proxy.getConn().toString(), "org.sqlite.jdbc4.JDBC4Connection@3ef41c66");
   }
 }
