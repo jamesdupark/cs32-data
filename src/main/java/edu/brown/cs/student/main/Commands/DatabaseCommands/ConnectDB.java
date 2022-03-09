@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Abstract Class that defines the connect_db command and other common methods that are
+ * Abstract Class that defines the connect_db command and other common behavior that are
  * shared by classes in the DatabaseCommands package.
  */
 public abstract class ConnectDB {

@@ -44,7 +44,7 @@ public class Repl {
     try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
       String line = reader.readLine();
       while (line != null) { // start REPL
-        ArrayList<String> matchList = new ArrayList<String>();
+        List<String> matchList = new ArrayList<>();
         Pattern regex = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"");
         Matcher regexMatcher = regex.matcher(line);
         while (regexMatcher.find()) {
