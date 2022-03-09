@@ -8,8 +8,6 @@ import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseZooTables;
 import edu.brown.cs.student.main.DBProxy.Proxy;
 
 import javax.sql.rowset.CachedRowSet;
-import javax.sql.rowset.RowSetFactory;
-import javax.sql.rowset.RowSetProvider;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -61,7 +58,7 @@ public class SQLCommands implements REPLCommands {
           this.connectDBCmd(argv, argc);
           break;
         case "select_names":
-          this.selectNamesCmd(argv, argc);
+//          this.selectNamesCmd(argv, argc);
           break;
         case "find_same_interests":
           this.findSameInterestsCmd(argv, argc);
@@ -221,18 +218,18 @@ public class SQLCommands implements REPLCommands {
   private void findSameInterestsCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     // check correct number of args
-    if (argc != 2) {
+    if (argc != 1) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
-          + "Expected 2 argument but got " + argc);
+          + "Expected 1 argument but got " + argc);
     }
     // check if connection to database has been made
     if (conn == null) {
       throw new RuntimeException("ERROR: Database has not been connected!");
     }
     try {
-//      String lookFor = "music";
+      final String lookFor = "music";
       String sqlQuery = "SELECT name, email, interest FROM names as n JOIN interests as i"
-          + " on n.id = i.id WHERE i.interest = \'" + argv[1] + "\' ORDER BY name;";
+          + " on n.id = i.id WHERE i.interest = \'" + lookFor + "\' ORDER BY name;";
       // clear commandToTable and add to it
       commandToTable.clear();
       commandToTable.put("SELECT", "names");
@@ -240,8 +237,8 @@ public class SQLCommands implements REPLCommands {
       if (proxy.validateQuery(commandToTable)) {
         // valid query
         System.out.println("ABOVE RS");
-        CachedRowSet rowset = proxy.cacheExec(sqlQuery);
-        ResultSet rsForPrinting = rowset.createCopy();
+        CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
+        ResultSet rsForPrinting = rowSet.createCopy();
         System.out.println("BELOW RS");
         List<DatabaseStudent> dbStud = new ArrayList<>();
         while (rsForPrinting.next()) {
