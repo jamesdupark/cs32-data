@@ -1,7 +1,9 @@
 package edu.brown.cs.student.main.API.json;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
+import com.google.gson.JsonSyntaxException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,32 +59,44 @@ public class JSONParserTest {
   @Test
   public void testGetMessage() {
     assertEquals(message.getMessage(), JSONParser.getMessage(jsonMessage));
+    assertThrows(JsonSyntaxException.class, () -> JSONParser.getMessage("[yes: ]"));
   }
 
   @Test
   public void testToStringList() {
     assertEquals(activeList, JSONParser.toStringList(jsonActiveList));
+    assertThrows(JsonSyntaxException.class, () -> JSONParser.toStringList("[yes: ]"));
   }
 
   @Test
   public void testGetJsonObject() {
     assertEquals(info, JSONParser.getJsonObject(jsonStudentInfo, StudentInfo.class));
     assertEquals(match, JSONParser.getJsonObject(jsonStudentMatch, StudentMatch.class));
-    System.out.println(match);
+    assertThrows(JsonSyntaxException.class,
+        () -> JSONParser.getJsonObject("asdf", Message.class));
+    assertThrows(JsonSyntaxException.class,
+        () -> JSONParser.getJsonObject("[]", StudentMatch.class));
   }
 
   @Test
   public void testGetJsonObjectList() {
+    List<StudentInfo> testList = JSONParser.getJsonObjectList(jsonStudentInfoList, StudentInfo.class);
+    List<StudentMatch> testList2 = JSONParser.getJsonObjectList(jsonStudentInfoList, StudentMatch.class);
+    List<Message> testList3 = JSONParser.getJsonObjectList(jsonStudentInfoList, Message.class);
     assertEquals(infos, JSONParser.getJsonObjectList(jsonStudentInfoList, StudentInfo.class));
     assertEquals(matches, JSONParser.getJsonObjectList(jsonStudentMatchList, StudentMatch.class));
+    assertThrows(JsonSyntaxException.class,
+        () -> JSONParser.getJsonObjectList("[yes]", Message.class));
   }
 
   @Test
   public void testReadJsonFile() throws IOException {
     String infoFilePath = "data/recommendation/json/studentInfoTest.json";
     String matchFilePath = "data/recommendation/json/studentMatchTest.json";
+    String csvFilePath = "data/stars/ten-star.csv";
     assertEquals(infos, JSONParser.readJsonFile(infoFilePath, StudentInfo.class));
     assertEquals(matches, JSONParser.readJsonFile(matchFilePath, StudentMatch.class));
-    // TODO: add tests for errors
+    assertThrows(IOException.class, () -> JSONParser.readJsonFile("", StudentInfo.class));
+    assertThrows(IOException.class, () -> JSONParser.readJsonFile(csvFilePath, StudentInfo.class));
   }
 }

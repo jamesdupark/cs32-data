@@ -190,7 +190,9 @@ public class APICommands implements REPLCommands {
   }
 
   /**
-   * Reads in info from a local json file and displays the result. DEMO ONLY
+   * Executes the "load_json" command which takes in a type and a filepath and reads + prints a
+   * corresponding list of PartialStudents into memory. Arguments in argv should be in the order
+   * "load_json" [type] [filepath]
    * @param argc number of args in argv
    * @param argv string array of parsed user input.
    */
@@ -199,10 +201,21 @@ public class APICommands implements REPLCommands {
       throw new IllegalArgumentException("ERROR: incorrect number of args.");
     }
     // load file
-    String filepath = argv[1];
+    String type = argv[1];
+    String filepath = argv[2];
     try {
-      List<StudentMatch> list = JSONParser.readJsonFile(filepath, StudentMatch.class);
-      System.out.println(list);
+      switch (type) {
+        case "info":
+          List<StudentInfo> infoList = JSONParser.readJsonFile(filepath, StudentInfo.class);
+          System.out.println(infoList);
+          break;
+        case "match":
+          List<StudentMatch> matchList = JSONParser.readJsonFile(filepath, StudentMatch.class);
+          System.out.println(matchList);
+          break;
+        default:
+          throw new IllegalArgumentException("ERROR: Type must be either \"info\" or \"match\"");
+      }
     } catch (IOException iox) {
       System.err.println(iox.getMessage());
     }

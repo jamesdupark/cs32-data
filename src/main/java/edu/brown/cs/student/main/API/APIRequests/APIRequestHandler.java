@@ -59,8 +59,8 @@ public class APIRequestHandler {
           throw new BadStatusException(
               "status " + status + " code received: " + statusMessage, status);
         } catch (JsonSyntaxException jse) {
-          throw new BadStatusException("couldn't parse status response as message json. "
-          + "Status " + status + ": " + apiResponse.body(), status);
+          throw new BadStatusException("Status " + status + ": "
+              + apiResponse.body(), status);
         }
       }
     } catch (IOException ioe) {

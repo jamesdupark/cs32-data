@@ -130,6 +130,7 @@ public class APIAggregator {
   public <T extends PartialStudent> List<T> aggregate(Class<T> tClass) throws BadStatusException {
     boolean dataComplete = false;
     List<T> dataset = new ArrayList<>();
+    int retries = 0;
     while (!dataComplete) {
       List<String> active;
       try {
@@ -163,6 +164,11 @@ public class APIAggregator {
         assert dataset.size() == EXPECT_SIZE : "Missing student data!";
       } else {
         dataset = new ArrayList<>(); // clear dataset and query again
+        retries++;
+        // more than 3 instances of 6 consecutive failures - probably a network problem
+        if (retries > 3) {
+          throw new BadStatusException("ERROR: endpoints unresponsive - check network.", 404);
+        }
       }
     }
 

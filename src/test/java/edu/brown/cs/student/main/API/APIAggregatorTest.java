@@ -68,4 +68,12 @@ public class APIAggregatorTest {
     assertEquals(matchExpect, matchSet);
 
   }
+
+  @Test
+  public void testAggregateReliability() throws BadStatusException {
+    for (int i = 0; i < 60; i++) {
+      infoAggregator.aggregate(StudentInfo.class);
+      matchAggregator.aggregate(StudentMatch.class);
+    }
+  }
 }
