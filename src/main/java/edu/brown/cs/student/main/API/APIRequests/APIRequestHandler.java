@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpTimeoutException;
 import java.time.Duration;
 
 /**
@@ -21,7 +22,7 @@ public class APIRequestHandler {
   /**
    * max duration in seconds to wait before a request expires.
    */
-  private static final int TIMEOUT = 60;
+  private static final int TIMEOUT = 5;
 
   /**
    * Constructor for APIRequestHandlers.
@@ -41,9 +42,10 @@ public class APIRequestHandler {
    * @return HttpResponse object for the API's response
    * @throws IllegalArgumentException when the request fails to be made for some reason
    * @throws BadStatusException when the request receives a non-200 level status code.
+   * @throws HttpTimeoutException if the request times out before completing.
    */
   public HttpResponse<String> makeRequest(HttpRequest req)
-      throws IllegalArgumentException, BadStatusException {
+      throws IllegalArgumentException, BadStatusException, HttpTimeoutException {
     try {
       HttpResponse<String> apiResponse = client.send(req, HttpResponse.BodyHandlers.ofString());
       int status = apiResponse.statusCode();
@@ -54,10 +56,11 @@ public class APIRequestHandler {
       } else {
         try {
           String statusMessage = JSONParser.getMessage(apiResponse.body());
-          throw new BadStatusException("status " + status + " code received: " + statusMessage);
+          throw new BadStatusException(
+              "status " + status + " code received: " + statusMessage, status);
         } catch (JsonSyntaxException jse) {
-          throw new BadStatusException("couldn't parse status response as message json."
-          + "status " + status + ": " + apiResponse.body());
+          throw new BadStatusException("couldn't parse status response as message json. "
+          + "Status " + status + ": " + apiResponse.body(), status);
         }
       }
     } catch (IOException ioe) {

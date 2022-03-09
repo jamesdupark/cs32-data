@@ -4,17 +4,29 @@ import edu.brown.cs.student.main.API.APIRequests.APIRequestBuilder;
 import edu.brown.cs.student.main.API.APIRequests.APIRequestHandler;
 import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.JSONParser;
+import edu.brown.cs.student.main.API.json.PartialStudent;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Comparator;
+import java.net.http.HttpTimeoutException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class for API aggregator objects which serve as a proxy and aggregator for
  * API requests.
  */
 public class APIAggregator {
+  /**
+   * expected size of a complete aggregated dataset.
+   */
+  private static final int EXPECT_SIZE = 60;
+  /**
+   * type of the API aggregator (info or match) indicating which type of endpoint is being queried.
+   */
+  private final String type;
   /**
    * base URL of the APIAggregator class, used to create URLs for future API
    * requests.
@@ -28,6 +40,10 @@ public class APIAggregator {
    * builds GET requests to find active APIs.
    */
   private final APIRequestBuilder activeBuilder;
+  /**
+   * map of endpoint names to HttpRequests. Requests are added as needed.
+   */
+  private final Map<String, HttpRequest> reqMap = new HashMap<>();
 
   /**
    * Constructor for the APIAggregator class.
@@ -39,6 +55,7 @@ public class APIAggregator {
     try {
       assert type.equals("info") || type.equals("match")
           : "Type not supported.";
+      this.type = type;
       baseUrl = "https://student" + type + "api.herokuapp.com";
       activeBuilder = new APIRequestBuilder(baseUrl + "/get-active");
     } catch (AssertionError ase) {
@@ -55,16 +72,100 @@ public class APIAggregator {
    */
   public List<String> getActiveClients() throws BadStatusException {
     HttpRequest activeRequest = activeBuilder.get(null, null);
-    HttpResponse<String> response = handler.makeRequest(activeRequest);
+    HttpResponse<String> response;
+    try {
+      response = handler.makeRequest(activeRequest);
+    } catch (HttpTimeoutException htte) {
+      final int status = 408;
+      throw new BadStatusException("connection timed out.", status);
+    }
 
     return JSONParser.toStringList(response.body());
   }
 
   /**
-   * Aggregates APIs by cycling through them based on the given ranking algorithm.
-   * @param apiRanker a comparator for APIRequestBuilders that
+   * Initializes map of HTTPRequests by adding requests for currently active endpoints
+   * if they are not in the map already.
+   * @param active list of active endpoints
    */
-  public void aggregate(Comparator<APIRequestBuilder> apiRanker) {
+  public void initReqMap(List<String> active) {
+    String apiKey = ClientAuth.getApiKey();
+    String auth = ClientAuth.getAuth();
+    String[] urlAuth = new String[]{"auth", auth, "key", apiKey};
+    String[] apiAuth = new String[]{"x-api-key", apiKey};
+    String[] bodyAuth = new String[]{"auth", auth};
 
+    for (String endpoint: active) {
+      if (!reqMap.containsKey(endpoint)) {
+        String endpointUrl = baseUrl + endpoint;
+        APIRequestBuilder requestBuilder = new APIRequestBuilder(endpointUrl);
+        HttpRequest req = null;
+
+        // make the appropriate request
+        switch (type) {
+          case "info":
+            req = requestBuilder.get(urlAuth, null);
+            break;
+          case "match":
+            req = requestBuilder.post(apiAuth, bodyAuth);
+            break;
+          default:
+            break;
+        }
+
+        reqMap.put(endpoint, req);
+      }
+    }
+  }
+
+  /**
+   * Aggregates data from multiple API endpoints to create a complete data list. Cycles through
+   * each endpoint until either a successful request or three consecutive failed requests, at which
+   * point the active endpoints are updated.
+   * @return list of type T
+   * @param tClass class of the list to be returned. Must implement JSONable
+   * @param <T> either studentMatch or studentInfo
+   * @throws BadStatusException when active endpoints cannot be queried
+   */
+  public <T extends PartialStudent> List<T> aggregate(Class<T> tClass) throws BadStatusException {
+    boolean dataComplete = false;
+    List<T> dataset = new ArrayList<>();
+    while (!dataComplete) {
+      List<String> active;
+      try {
+        active = getActiveClients();
+        this.initReqMap(active);
+      } catch (BadStatusException bse) { // cannot get active clients
+        throw new BadStatusException("could not get active clients.", 404);
+      }
+
+      String currEndpoint = "";
+      int consecutiveFails = 0;
+      // continue until all endpoints have been successfully queried
+      // if six queries fail consecutively, re-query active endpoints
+      while (!active.isEmpty() && consecutiveFails < 6) {
+        try {
+          currEndpoint = active.remove(0);
+          HttpRequest req = reqMap.get(currEndpoint);
+          HttpResponse<String> response = handler.makeRequest(req);
+          List<T> subset = JSONParser.getJsonObjectList(response.body(), tClass);
+          dataset.addAll(subset);
+          consecutiveFails = 0;
+          // if the connection times out or fails, add endpoint to end of list to query again later
+        } catch (BadStatusException | HttpTimeoutException ex) {
+          active.add(currEndpoint);
+          consecutiveFails++;
+        }
+      }
+
+      if (consecutiveFails < 3) { // exit loop and return
+        dataComplete = true;
+        assert dataset.size() == EXPECT_SIZE : "Missing student data!";
+      } else {
+        dataset = new ArrayList<>(); // clear dataset and query again
+      }
+    }
+
+    return dataset;
   }
 }

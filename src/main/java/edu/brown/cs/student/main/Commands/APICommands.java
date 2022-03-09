@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.Commands;
 
-import com.google.gson.JsonSyntaxException;
 import edu.brown.cs.student.main.API.APIAggregator;
 import edu.brown.cs.student.main.API.APIRequests.APIRequestBuilder;
 import edu.brown.cs.student.main.API.APIRequests.APIRequestHandler;
@@ -12,6 +11,7 @@ import edu.brown.cs.student.main.API.json.StudentMatch;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +26,7 @@ public class APICommands implements REPLCommands {
    * List of commands supported by APICommands, to be retrieved by the
    * getCommandsList() method.
    */
-  private final List<String> commands = List.of("active", "api", "load_json");
+  private final List<String> commands = List.of("active", "api", "api_aggregate", "load_json");
   /**
    * APIRequestHandler for executing single API requests.
    */
@@ -50,6 +50,9 @@ public class APICommands implements REPLCommands {
           break;
         case "api":
           this.apiCmd(argc, argv);
+          break;
+        case "api_aggregate":
+          this.aggregateCmd(argc, argv);
           break;
         case "load_json":
           this.loadJsonCmd(argc, argv);
@@ -147,34 +150,42 @@ public class APICommands implements REPLCommands {
     HttpResponse<String> response;
     try {
       response = handler.makeRequest(request); // will abort if request fails
-    } catch (BadStatusException bse) {
-      System.err.println("ERROR: " + bse.getMessage());
+    } catch (BadStatusException | HttpTimeoutException ex) {
+      System.err.println("ERROR: " + ex.getMessage());
       return;
     }
+    System.out.println(response.body());
+  }
 
+  /**
+   * Executes the "api_aggregate" command to make a request of the given type to all active
+   * endpoints of that type and prints resulting set of 60 partial students. Prints informative
+   * error message upon failure to make request.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   */
+  private void aggregateCmd(int argc, String[] argv) throws IllegalArgumentException {
+    if (argc != 2) {
+      throw new IllegalArgumentException("ERROR: incorrect number of args.");
+    }
+
+    String type = argv[1];
     try {
-      switch (type) { // attempt to convert to list of studentInfos
-        case "GET":
-          List<StudentInfo> studentInfos =
-              JSONParser.getJsonObjectList(response.body(), StudentInfo.class);
-          System.out.println("Status " + response.statusCode() + ": Received information about "
-              + studentInfos.size() + " students.");
-          System.out.println(studentInfos);
+      switch (type) {
+        case "info":
+          List<StudentInfo> studentInfoData = infoAggregator.aggregate(StudentInfo.class);
+          System.out.println(studentInfoData);
           break;
-        case "POST":
-          List<StudentMatch> studentMatches =
-              JSONParser.getJsonObjectList(response.body(), StudentMatch.class);
-          System.out.println("Status " + response.statusCode() + ": Received information about "
-              + studentMatches.size() + " students.");
-          System.out.println(studentMatches);
+        case "match":
+          List<StudentMatch> studentMatchData = matchAggregator.aggregate(StudentMatch.class);
+          System.out.println(studentMatchData);
           break;
-        default: // should never get here since we already checked for other types
-          assert false : "reached impossible branch.";
-          break;
+        default:
+          throw new IllegalArgumentException("ERROR: Type must be either \"info\" or \"match\"");
       }
-    } catch (JsonSyntaxException jse) {
-      System.err.println("ERROR: received json format did not match student"
-          + " format. Response: " + response.body());
+    } catch (BadStatusException bse) {
+      System.err.println("ERROR: " + bse.getMessage());
     }
   }
 

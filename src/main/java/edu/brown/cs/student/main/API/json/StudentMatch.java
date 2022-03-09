@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * StudentMatch class for storing json information from student match API endpoints.
  */
-public class StudentMatch implements JSONable {
+public class StudentMatch implements PartialStudent {
   /**
    * integer parameters for student match - unique id and software engineering
    * confidence.

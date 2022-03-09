@@ -83,5 +83,6 @@ public class JSONParserTest {
     String matchFilePath = "data/recommendation/json/studentMatchTest.json";
     assertEquals(infos, JSONParser.readJsonFile(infoFilePath, StudentInfo.class));
     assertEquals(matches, JSONParser.readJsonFile(matchFilePath, StudentMatch.class));
+    // TODO: add tests for errors
   }
 }
