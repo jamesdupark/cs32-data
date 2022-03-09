@@ -185,8 +185,10 @@ public class RecommenderCommands implements REPLCommands {
               idToNormalizedDist.get(studentID) + normalizedDistance);
         }
       }
+      // set and hashmap of lists method to randomize ties
       Map<Double, List<Integer>> distToIDs = new HashMap<>();
       Set<Double> distanceSet = new HashSet<>();
+      // adding each id and distance into distance set and hashmap.
       idToNormalizedDist.forEach((studentID, normedDist) -> {
         if (!distanceSet.add(normedDist)) {
           distToIDs.get(normedDist).add(studentID);
@@ -209,7 +211,7 @@ public class RecommenderCommands implements REPLCommands {
         // shuffle list to randomize ties
         Collections.shuffle(distToIDs.get(nextNearest));
         for (int j = 0; j < distToIDs.get(nextNearest).size(); j++) {
-          // iterate through list value of map and print the starIDs
+          // iterate through list value of map and print the Student ids
           if ((p + j) < k) {
             if (idPrinted < numStudents) {
               System.out.println(distToIDs.get(nextNearest).get(j));
