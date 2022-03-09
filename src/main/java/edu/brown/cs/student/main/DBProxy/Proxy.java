@@ -59,6 +59,9 @@ public class Proxy {
       @Override
       public Optional<CachedRowSet> load(String key) throws SQLException, ExecutionException {
         ResultSet result = execQuery(key);
+        if (result == null) {
+          return null;
+        }
         RowSetFactory factory = RowSetProvider.newFactory();
         CachedRowSet rowSet = factory.createCachedRowSet();
         rowSet.populate(result);
@@ -188,17 +191,18 @@ public class Proxy {
    * @throws ExecutionException if getUnchecked results in an exception
    */
   public CachedRowSet cacheExec(String sqlQuery) throws SQLException, ExecutionException {
-    /*
-    if writeCommand(sqlQuery)
-      returns null
-     */
-    Optional<CachedRowSet> rs = this.cache.getUnchecked(sqlQuery);
-    System.out.println(rs);
-    System.out.println(cache.asMap());
+    // check if sql query has a Write command
     if (hasWriteCommand(sqlQuery)) {
-      this.cache.invalidateAll();
+      // clear cache and execute query
+      cache.invalidateAll();
+      execQuery(sqlQuery);
+      return null;
+    } else {
+      // store query in cache
+      Optional<CachedRowSet> rs = this.cache.getUnchecked(sqlQuery);
+      System.out.println(cache.asMap());
+      return rs.orElse(null);
     }
-    return rs.orElse(null);
   }
 
   /**
