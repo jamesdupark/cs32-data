@@ -60,9 +60,9 @@ public class Proxy {
       public Optional<CachedRowSet> load(String key) throws SQLException, ExecutionException {
         ResultSet result = execQuery(key);
         RowSetFactory factory = RowSetProvider.newFactory();
-        CachedRowSet rowset = factory.createCachedRowSet();
-        rowset.populate(result);
-        return Optional.ofNullable(rowset);
+        CachedRowSet rowSet = factory.createCachedRowSet();
+        rowSet.populate(result);
+        return Optional.ofNullable(rowSet);
       }
     };
     this.cache = CacheBuilder.newBuilder()
@@ -91,7 +91,7 @@ public class Proxy {
    */
   private void setupCommandPermissions() {
     sqlPermissions.put("SELECT", "R");
-    sqlPermissions.put("INSERT", "R");
+    sqlPermissions.put("INSERT", "W");
     sqlPermissions.put("DROP", "RW");
     sqlPermissions.put("UPDATE", "RW");
     sqlPermissions.put("DELETE", "RW");
@@ -140,14 +140,30 @@ public class Proxy {
   }
 
   /**
+   * Method to check whether a SQL Query needs Write (W) permission access.
+   * @param sqlQuery string representing the SQL query that we are checking for write access
+   * @return whether the string contains a command that needs Write (W) access
+   */
+  private boolean hasWriteCommand(String sqlQuery) {
+    for (String key : sqlPermissions.keySet()) {
+      String val = sqlPermissions.get(key);
+      if (val.contains("W") && sqlQuery.contains(key)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Method to execute a SQL query after checking that the user has the necessary
-   * permission to execute a query.
+   * permission to execute a query. This method is called from the GuavaCache load function,
+   * which caches the ResultSet returned from this method for the String SQL query.
    * @param sqlQuery String representing the query to be executed
    * @return the table of data representing a database result set, which is generated
    * by executing the input sqlQuery from the connected database
    * @throws SQLException if it is an invalid query or if a database error occurs
    */
-  public ResultSet execQuery(String sqlQuery) throws SQLException, ExecutionException {
+  public ResultSet execQuery(String sqlQuery) throws SQLException {
     PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
     boolean hasResultSet = preparedStatement.execute();
     if (hasResultSet) {
@@ -157,9 +173,30 @@ public class Proxy {
     }
   }
 
+  /**
+   * Method to execute a SQL query after checking that the user has the necessary
+   * permission to execute a query. This method is called from the SQLCommands Class,
+   * which will check the cache for the existing sql query as the key. If this is the case,
+   * the value is retrieved; if not, the value is computed using the execQuery method called
+   * from load. This method also checks if the input SQL Query contains any commands that
+   * has write (W) level access — clearing the cache if so since the past cached items
+   * could be out of date.
+   * @param sqlQuery String representing the query to be executed
+   * @return the table of data representing a database result set, which is generated
+   * by executing the input sqlQuery from the connected database
+   * @throws SQLException if it is an invalid query or if a database error occurs
+   * @throws ExecutionException if getUnchecked results in an exception
+   */
   public CachedRowSet cacheExec(String sqlQuery) throws SQLException, ExecutionException {
+    /*
+    if writeCommand(sqlQuery)
+      returns null
+     */
     Optional<CachedRowSet> rs = this.cache.getUnchecked(sqlQuery);
     System.out.println(cache.asMap());
+    if (hasWriteCommand(sqlQuery)) {
+      this.cache.invalidateAll();
+    }
     return rs.orElse(null);
   }
 
@@ -179,6 +216,10 @@ public class Proxy {
     return sqlPermissions;
   }
 
+  /**
+   * Accessor method for the Guava cache.
+   * @return the Guava cache that maps a String SQL query to a CachedRowSet.
+   */
   public LoadingCache<String, Optional<CachedRowSet>> getCache() {
     return cache;
   }

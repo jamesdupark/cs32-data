@@ -40,7 +40,7 @@ public class ProxyTest {
     Map<String, String> sqlPermissions = proxy.getSqlPermissions();
     assertEquals(sqlPermissions.size(), 8);
     assertEquals(sqlPermissions.get("SELECT"), "R");
-    assertEquals(sqlPermissions.get("INSERT"), "R");
+    assertEquals(sqlPermissions.get("INSERT"), "W");
     assertEquals(sqlPermissions.get("DROP"), "RW");
     assertEquals(sqlPermissions.get("UPDATE"), "RW");
     assertEquals(sqlPermissions.get("DELETE"), "RW");
