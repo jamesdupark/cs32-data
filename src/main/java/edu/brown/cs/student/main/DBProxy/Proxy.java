@@ -111,7 +111,7 @@ public class Proxy {
     Class.forName("org.sqlite.JDBC");
     String urlToDB = "jdbc:sqlite:" + filepath;
     conn = DriverManager.getConnection(urlToDB);
-    // tell the database to enforce foreign keys during operations and should be present
+    // instruct database to enforce foreign keys during operations and should be present
     Statement stat = conn.createStatement();
     stat.executeUpdate("PRAGMA foreign_keys=ON;");
     makeCache();
@@ -193,6 +193,7 @@ public class Proxy {
       returns null
      */
     Optional<CachedRowSet> rs = this.cache.getUnchecked(sqlQuery);
+    System.out.println(rs);
     System.out.println(cache.asMap());
     if (hasWriteCommand(sqlQuery)) {
       this.cache.invalidateAll();
