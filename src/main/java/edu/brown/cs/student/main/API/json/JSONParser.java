@@ -123,7 +123,7 @@ public final class JSONParser {
     } catch (JsonSyntaxException jse) {
       throw new IOException("ERROR: invalid json syntax.");
     } catch (AssertionError ase) {
-      throw new IOException("ERROR" + ase.getMessage());
+      throw new IOException("ERROR: " + ase.getMessage());
     }
   }
 }

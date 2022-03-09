@@ -1,0 +1,29 @@
+INPUT
+api
+create_bf 0.9 1
+api GET
+create_bf 0.9 1
+api POST google
+create_bf 0.9 1
+api GET https://studentinfoapi.herokuapp.com/info-one url:auth
+create_bf 0.9 1
+api POST https://studentmatchapi.herokuapp.com/match-one header:x-api-key:yes;body:auth:yes
+create_bf 0.9 1
+api GET https://studentinfoapi.herokuapp.com/info-four url:auth:yes:key:yes
+create_bf 0.9 1
+api 1 2 3 4 5
+OUTPUT
+ERROR:
+00
+ERROR:
+00
+ERROR:
+00
+ERROR:
+00
+ERROR:
+00
+ERROR:
+00
+ERROR:
+END

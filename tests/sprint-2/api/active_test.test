@@ -1,0 +1,13 @@
+INPUT
+active
+create_bf 0.9 1
+active infos
+create_bf 0.9 1
+active info three
+OUTPUT
+ERROR:
+00
+ERROR:
+00
+ERROR:
+END

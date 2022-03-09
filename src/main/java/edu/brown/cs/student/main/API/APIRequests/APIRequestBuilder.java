@@ -51,7 +51,7 @@ public class APIRequestBuilder {
     } catch (IllegalArgumentException iex) {
       throw new IllegalArgumentException("ERROR: invalid URL");
     } catch (AssertionError ae) {
-      throw new IllegalArgumentException("ERROR:" + ae.getMessage());
+      throw new IllegalArgumentException("ERROR: " + ae.getMessage());
     }
   }
 

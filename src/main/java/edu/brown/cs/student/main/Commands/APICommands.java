@@ -7,12 +7,14 @@ import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.JSONParser;
 import edu.brown.cs.student.main.API.json.StudentInfo;
 import edu.brown.cs.student.main.API.json.StudentMatch;
+import edu.brown.cs.student.main.Student;
 
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpTimeoutException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +28,8 @@ public class APICommands implements REPLCommands {
    * List of commands supported by APICommands, to be retrieved by the
    * getCommandsList() method.
    */
-  private final List<String> commands = List.of("active", "api", "api_aggregate", "load_json");
+  private final List<String> commands = List.of("active", "api", "api_aggregate", "load_json",
+      "aggregate_all");
   /**
    * APIRequestHandler for executing single API requests.
    */
@@ -56,6 +59,9 @@ public class APICommands implements REPLCommands {
           break;
         case "load_json":
           this.loadJsonCmd(argc, argv);
+          break;
+        case "aggregate_all":
+          this.aggregateAllCmd(argc, argv);
           break;
         default:
           System.err.println("ERROR: Command not recognized.");
@@ -197,7 +203,7 @@ public class APICommands implements REPLCommands {
    * @param argv string array of parsed user input.
    */
   private void loadJsonCmd(int argc, String[] argv) {
-    if (argc != 2) {
+    if (argc != 3) {
       throw new IllegalArgumentException("ERROR: incorrect number of args.");
     }
     // load file
@@ -219,6 +225,47 @@ public class APICommands implements REPLCommands {
     } catch (IOException iox) {
       System.err.println(iox.getMessage());
     }
+  }
+
+  /**
+   * Executes the "aggregate_all" command to aggregate data from both info and matches endpoints,
+   * resulting in a full list of students.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   */
+  private void aggregateAllCmd(int argc, String[] argv)
+      throws IllegalArgumentException {
+    if (argc != 1) {
+      throw new IllegalArgumentException("ERROR: incorrect number of arguments.");
+    }
+
+    List<StudentInfo> infoList;
+    List<StudentMatch> matchList;
+    try { // get dataset halves
+      infoList = infoAggregator.aggregate(StudentInfo.class);
+      matchList = infoAggregator.aggregate(StudentMatch.class);
+      // sort by id
+      Collections.sort(infoList);
+      Collections.sort(matchList);
+      final int expectSize = 60;
+      assert infoList.size() == expectSize && matchList.size() == expectSize
+          : "Datasets incomplete or different sizes.";
+    } catch (BadStatusException | AssertionError ex) {
+      System.err.println("ERROR: " + ex.getMessage());
+      return;
+    }
+    // combine into students
+    List<Student> dataset = new ArrayList<>();
+    for (int i = 0; i < infoList.size(); i++) {
+      Student toAdd = new Student();
+      StudentInfo info = infoList.get(i);
+      StudentMatch match = matchList.get(i);
+      // throws IllegalArgumentException if args do not correspond
+      toAdd.buildFromPartial(info, match);
+      dataset.add(toAdd);
+    }
+    System.out.println(dataset);
   }
 
   /**

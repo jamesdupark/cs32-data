@@ -1,0 +1,13 @@
+INPUT
+api_aggregate
+create_bf 0.9 1
+api_aggregate infos
+create_bf 0.9 1
+api_aggregate match yes
+OUTPUT
+ERROR:
+00
+ERROR:
+00
+ERROR:
+END
