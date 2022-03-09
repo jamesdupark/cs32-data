@@ -120,9 +120,7 @@ public class DataCommands extends ConnectDB implements REPLCommands {
           + "Expected 1 argument but got " + argc);
     }
     // check if connection to database has been made
-    if (conn == null || !database.equals("data/recommendation/sql/data.sqlite3")) {
-      throw new RuntimeException("ERROR: Student database has not been connected!");
-    }
+    checkDatabaseConnected();
     try {
       String sqlQuery = "SELECT name FROM names";
       // clear commandToTable and add to it
@@ -173,9 +171,7 @@ public class DataCommands extends ConnectDB implements REPLCommands {
           + "Expected 1 argument but got " + argc);
     }
     // check if connection to database has been made
-    if (conn == null || !database.equals("data/recommendation/sql/data.sqlite3")) {
-      throw new RuntimeException("ERROR: Student database has not been connected!");
-    }
+    checkDatabaseConnected();
     try {
       final String lookFor = "music";
       String sqlQuery = "SELECT name, email, interest FROM names as n JOIN interests as i"
@@ -273,6 +269,12 @@ public class DataCommands extends ConnectDB implements REPLCommands {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
       e.printStackTrace();
+    }
+  }
+
+  public void checkDatabaseConnected() {
+    if (conn == null || !database.equals("data/recommendation/sql/data.sqlite3")) {
+      throw new RuntimeException("ERROR: Student database has not been connected!");
     }
   }
   @Override

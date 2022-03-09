@@ -65,6 +65,7 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
     }
   }
 
+  @Override
   public void connectDBCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     // check correct number of args
@@ -182,7 +183,7 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
     }
   }
 
-  private void checkDatabaseConnected() {
+  protected void checkDatabaseConnected() {
     if (conn == null || !database.equals("data/recommendation/sql/horoscopes.sqlite3")) {
       throw new RuntimeException("ERROR: Horoscopes database has not been connected!");
     }

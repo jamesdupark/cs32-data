@@ -181,7 +181,7 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
     }
   }
 
-  private void checkDatabaseConnected() {
+  public void checkDatabaseConnected() {
     if (conn == null || !database.equals("data/recommendation/sql/zoo.sqlite3")) {
       throw new RuntimeException("ERROR: Zoo database has not been connected!");
     }
