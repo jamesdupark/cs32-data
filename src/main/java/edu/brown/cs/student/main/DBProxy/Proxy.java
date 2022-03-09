@@ -3,7 +3,6 @@ package edu.brown.cs.student.main.DBProxy;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import edu.brown.cs.student.main.DBProxy.DBItems.DatabaseStudent;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
@@ -42,16 +41,28 @@ public class Proxy {
    * <R>, <W>, or <RW>.
    */
   private final Map<String, String> sqlPermissions;
+  /**
+   * Guava Cache that maps a String SQL Query to an Optional CachedRowSet.
+   */
+  private LoadingCache<String, Optional<CachedRowSet>> cache;
 
-
-  private LoadingCache<String, Optional<ResultSet>> cache;
-
+  /**
+   * Void method to instantiate the Guava Cache. When getUnchecked is called in cacheExec,
+   * load() will call execQuery and obtain the resulting ResultSet pertaining to the SQL query.
+   * From then, a copy of the ResultSet will be made using RowSetFactory and CachedRowSet,
+   * and then cached.
+   */
   public void makeCache() {
+    // max size used for eviction
     final int maxCacheSize = 10;
-    CacheLoader<String, Optional<ResultSet>> loader = new CacheLoader<>() {
+    CacheLoader<String, Optional<CachedRowSet>> loader = new CacheLoader<>() {
       @Override
-      public Optional<ResultSet> load(String key) throws SQLException, ExecutionException {
-        return Optional.ofNullable(execQuery(key));
+      public Optional<CachedRowSet> load(String key) throws SQLException, ExecutionException {
+        ResultSet result = execQuery(key);
+        RowSetFactory factory = RowSetProvider.newFactory();
+        CachedRowSet rowset = factory.createCachedRowSet();
+        rowset.populate(result);
+        return Optional.ofNullable(rowset);
       }
     };
     this.cache = CacheBuilder.newBuilder()
@@ -140,87 +151,16 @@ public class Proxy {
     PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
     boolean hasResultSet = preparedStatement.execute();
     if (hasResultSet) {
-//      ResultSet rs = preparedStatement.getResultSet();
-//      RowSetFactory factory = RowSetProvider.newFactory();
-//      CachedRowSet rowset = factory.createCachedRowSet();
-//      rowset.populate(rs);
-//      ResultSet rsForPrinting = rowset.createCopy();
-//      return rsForPrinting;
       return preparedStatement.getResultSet();
     } else {
       return null;
     }
-//    ResultSet rs = rolefinder.executeQuery();
-//    while (rs.next()) {
-//      System.out.println("YE");
-//    }
-//    return rs;
-    // check if sql query is in my cache
-//    if (cache.getIfPresent(sqlQuery) != null) {
-//      System.out.println("I got my sql Query from cache!");
-//      System.out.println(cache.size());
-//      cache.get(sqlQuery);
-//      System.out.println(cache.size());
-//      cache.get(sqlQuery);
-//      System.out.println(cache.size());
-////      System.out.println(cache.get(sqlQuery).getString(1));
-//      System.out.println("before");
-//      ResultSet rs = this.cache.getUnchecked(sqlQuery).get()  ;
-//      System.out.println("after");
-//      while (rs.next()) {
-//        System.out.println("Inside while loop");
-//        String name = rs.getString(1);
-//        System.out.println(name);
-//      }
-//      return rs;
-//    } else {
-//      PreparedStatement rolefinder = conn.prepareStatement(sqlQuery);
-//      ResultSet rs = rolefinder.executeQuery();
-//      cache.put(sqlQuery, rs);
-////      cache.getUnchecked(sqlQuery);
-//      return rs;
-//    }
-//    System.out.println(cache.size());
-//    System.out.println(cache.get(sqlQuery));
   }
 
-  public ResultSet cacheExec(String sqlQuery) throws SQLException, ExecutionException {
-//    if (cache.getIfPresent(sqlQuery) != null) {
-//      System.out.println(cache.size());
-//      return this.cache.getUnchecked(sqlQuery);
-//    } else {
-//      return null;
-//    }
-//    connect_db data/recommendation/sql/data.sqlite3 RW RW RW RW
-//    if (cache.getIfPresent(sqlQuery) != null) {
-//      return cache.get(sqlQuery).get();
-//    } else {
-//      return cache.getUnchecked(sqlQuery).get();
-//    }
-//    System.out.println(cache.size());
-//    Optional<ResultSet> t = cache.getIfPresent(sqlQuery);
-//    if (t == null) {
-//      System.out.println("NULL CASE!");
-//    } else {
-//      System.out.println("NOT NULL!");
-//      return t.get();
-//    }
-//
-    System.out.println("cache: " + cache.asMap());
-    Optional<ResultSet> rs = this.cache.getUnchecked(sqlQuery);
-
-    System.out.println(rs.orElse(null).next());
-    System.out.println("cache: " + cache.asMap());
+  public CachedRowSet cacheExec(String sqlQuery) throws SQLException, ExecutionException {
+    Optional<CachedRowSet> rs = this.cache.getUnchecked(sqlQuery);
+    System.out.println(cache.asMap());
     return rs.orElse(null);
-
-
-//    ResultSet rs2 = rs.get();
-////
-//    RowSetFactory factory = RowSetProvider.newFactory();
-//    CachedRowSet rowset = factory.createCachedRowSet();
-//    rowset.populate(rs2);
-//    ResultSet rsForPrinting = rowset.createCopy();
-//    return rsForPrinting;
   }
 
   /**
@@ -239,7 +179,7 @@ public class Proxy {
     return sqlPermissions;
   }
 
-  public LoadingCache<String, Optional<ResultSet>> getCache() {
+  public LoadingCache<String, Optional<CachedRowSet>> getCache() {
     return cache;
   }
 }

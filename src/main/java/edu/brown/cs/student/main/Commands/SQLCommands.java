@@ -178,17 +178,16 @@ public class SQLCommands implements REPLCommands {
       if (proxy.validateQuery(commandToTable)) {
         // valid query
         System.out.println("ABOVE RS");
-//        ResultSet rs = proxy.execQuery(sqlQuery);
-        ResultSet rs = proxy.cacheExec(sqlQuery);
-        RowSetFactory factory = RowSetProvider.newFactory();
-        CachedRowSet rowset = factory.createCachedRowSet();
-        rowset.populate(rs);
+        CachedRowSet rowset = proxy.cacheExec(sqlQuery);
+        if (rowset == null) {
+          System.out.println("Caller rowset null");
+          return;
+        }
         ResultSet rsForPrinting = rowset.createCopy();
-        System.out.println(rs);
+        System.out.println("Get here?!!!!");
         System.out.println(rsForPrinting);
         System.out.println("BELOW RS");
         List<DatabaseStudent> dbStud = new ArrayList<>();
-//        System.out.println("LAST" + rs.last());
         while (rsForPrinting.next()) {
           System.out.println("inside while");
           DatabaseStudent student = new DatabaseStudent();
@@ -197,22 +196,7 @@ public class SQLCommands implements REPLCommands {
           dbStud.add(student);
           System.out.println(name);
         }
-        rsForPrinting.beforeFirst();
         System.out.println("Before put " + proxy.getCache().size());
-        proxy.getCache().put(sqlQuery, Optional.of(rsForPrinting));
-        System.out.println("After put " + proxy.getCache().size());
-//        proxy.getCache().refresh(sqlQuery);
-//        while (rsForPrinting.next()) {
-//          System.out.println("inside while 2");
-//          DatabaseStudent student = new DatabaseStudent();
-//          String name = rsForPrinting.getString(1);
-//          student.setName(name);
-//          dbStud.add(student);
-//          System.out.println(name);
-//        }
-
-//        connect_db data/recommendation/sql/data.sqlite3 RW RW RW RW
-//        System.out.println("LAST" + rs.last());
         System.out.println("reached end");
       } else {
         // error: sql table does not have this level of permission
@@ -246,6 +230,7 @@ public class SQLCommands implements REPLCommands {
       throw new RuntimeException("ERROR: Database has not been connected!");
     }
     try {
+//      String lookFor = "music";
       String sqlQuery = "SELECT name, email, interest FROM names as n JOIN interests as i"
           + " on n.id = i.id WHERE i.interest = \'" + argv[1] + "\' ORDER BY name;";
       // clear commandToTable and add to it
@@ -255,21 +240,22 @@ public class SQLCommands implements REPLCommands {
       if (proxy.validateQuery(commandToTable)) {
         // valid query
         System.out.println("ABOVE RS");
-        ResultSet rs = proxy.execQuery(sqlQuery);
+        CachedRowSet rowset = proxy.cacheExec(sqlQuery);
+        ResultSet rsForPrinting = rowset.createCopy();
         System.out.println("BELOW RS");
-//        System.out.println(rs);
         List<DatabaseStudent> dbStud = new ArrayList<>();
-        while (rs.next()) {
+        while (rsForPrinting.next()) {
           DatabaseStudent student = new DatabaseStudent();
-          String name = rs.getString(1);
-          String email = rs.getString(2);
-          String interest = rs.getString(3);
+          String name = rsForPrinting.getString(1);
+          String email = rsForPrinting.getString(2);
+          String interest = rsForPrinting.getString(3);
           student.setName(name);
           student.setEmail(email);
           student.setInterest(interest);
           dbStud.add(student);
           System.out.println(name + " " + email + " " + interest);
         }
+        System.out.println(proxy.getCache().size());
       } else {
         // error: sql table does not have this level of permission
         System.out.println("ERROR: SQL Table does not have the level of permission");
