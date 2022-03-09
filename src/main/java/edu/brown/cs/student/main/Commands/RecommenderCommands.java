@@ -1,25 +1,33 @@
 package edu.brown.cs.student.main.Commands;
 
 import edu.brown.cs.student.main.Blooms.BloomFilter;
+import edu.brown.cs.student.main.Blooms.SimilarityMetrics.BloomComparator;
+import edu.brown.cs.student.main.Blooms.SimilarityMetrics.XNORSimilarity;
 import edu.brown.cs.student.main.Blooms.StudentBloom;
 import edu.brown.cs.student.main.CSVParse.Builder.StudentBuilder;
 import edu.brown.cs.student.main.CSVParse.CSVParser;
 import edu.brown.cs.student.main.CSVParse.DirectStudentBloomListMaker;
 import edu.brown.cs.student.main.CSVParse.DirectStudentNodeMaker;
+import edu.brown.cs.student.main.Distances.EuclideanDistance;
 import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDimTree.KDTree;
+import edu.brown.cs.student.main.KDimTree.KIsNegativeException;
+import edu.brown.cs.student.main.KDimTree.KeyNotFoundException;
+import edu.brown.cs.student.main.KNNCalculator.BloomKNNCalculator;
 import edu.brown.cs.student.main.Student;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class RecommenderCommands implements REPLCommands {
   /**
    * List of strings representing the command keywords supported by this class.
    */
-  private final List<String> commands = List.of("recsys_load");
+  private final List<String> commands = List.of("recsys_load", "recommend");
   /**
    * Map from characteristic name to characteristic type (qualitative or quantitative).
    */
@@ -33,7 +41,10 @@ public class RecommenderCommands implements REPLCommands {
    * the most recently created KDTree, able to be inserted into and queried.
    * */
   private KDTree<KDNode> kdTree;
-
+  /**
+   * the number of students loaded from CSV file.
+   */
+  private int numStudents;
   /**
    * Constructor for a new HeaderCommands.
    * @param map - Hashmap from column name to data type.
@@ -47,6 +58,8 @@ public class RecommenderCommands implements REPLCommands {
     try {
       if (cmd.equals("recsys_load")) {
         this.load(argv, argc);
+      } else if (cmd.equals("recommend")) {
+        this.recommend(argc, argv);
       } else {
         System.err.println("ERROR: Command not recognized.");
       }
@@ -110,9 +123,193 @@ public class RecommenderCommands implements REPLCommands {
     this.kdTree = new KDTree<>();
     this.kdTree.insertList(nodesList, 0);
 
-    int size = studentList.size();
-    System.out.println("Loaded Recommender with " + size + " student(s)");
+    numStudents = studentList.size();
+    System.out.println("Loaded Recommender with " + numStudents + " student(s)");
     allFilters = newFilters;
+  }
 
+  private void recommend(int argc, String[] argv) {
+
+    int k = Integer.parseInt(argv[1]); // assert that this exists
+    int id = Integer.parseInt(argv[2]); // assert that this exists
+    BloomFilter base = allFilters.get(id);
+
+    double bloomMin = Integer.MAX_VALUE;
+    double bloomMax = Integer.MIN_VALUE;
+    // get local copy of all students
+    Map<Integer, BloomFilter> otherStudents = new HashMap<>(allFilters);
+    // remove target students from potential recommendations
+    otherStudents.remove(id);
+    // assert that id not in otherFilters?
+    BloomComparator studentComparator = new XNORSimilarity(base);
+    Map<Integer, Integer> idToBloomDists = new HashMap<>();
+    for (int studentID : otherStudents.keySet()) {
+      BloomFilter filter = otherStudents.get(studentID);
+      int dist = studentComparator.similarity(filter);
+      idToBloomDists.put(studentID, dist);
+      if (dist < bloomMin) {
+        bloomMin = dist;
+      }
+      if (dist > bloomMax) {
+        bloomMax = dist;
+      }
+    }
+    Map<Integer, Double> idToNormalizedDist = new HashMap<>();
+    for (int studentID : otherStudents.keySet()) {
+      double distanceInDouble = idToBloomDists.get(studentID);
+      double normalized = (distanceInDouble - bloomMin) / (bloomMax - bloomMin);
+      idToNormalizedDist.put(studentID, normalized);
+    }
+    kdTree.cleanDataStructures();
+    try {
+      // loads DistanceQueue field with k length Queue from target student
+      this.kdTree.findKSN(numStudents, id, this.kdTree.getRoot(), new EuclideanDistance());
+      // find the min and max for normalization
+      double kdMax = Double.MIN_VALUE;
+      double kdMin = Double.MAX_VALUE;
+      for (Double distance : this.kdTree.getDistanceQueue()) {
+        if (distance > kdMax) {
+          kdMax = distance;
+        }
+        if (distance < kdMin) {
+          kdMin = distance;
+        }
+      }
+      // loop through DistanceQueue to find normalized Distance for each node.
+      for (Double distance : this.kdTree.getDistanceQueue()) {
+        double normalizedDistance = (distance - kdMin) / (kdMax - kdMin);
+        // loop through list of students with the same normalized distance to
+        // combine their distance with bloom filter.
+        for (Integer studentID : this.kdTree.getDistToUserID().get(distance)) {
+          idToNormalizedDist.replace(studentID,
+              idToNormalizedDist.get(studentID) + normalizedDistance);
+        }
+      }
+      Map<Double, List<Integer>> distToIDs = new HashMap<>();
+      Set<Double> distanceSet = new HashSet<>();
+      idToNormalizedDist.forEach((studentID, normedDist) -> {
+        if (!distanceSet.add(normedDist)) {
+          distToIDs.get(normedDist).add(studentID);
+        } else {
+          List<Integer> lst = new ArrayList<>();
+          lst.add(studentID);
+          distToIDs.put(normedDist, lst);
+        }
+      });
+
+      List<Double> sortedList = new ArrayList<>(distanceSet);
+      Collections.sort(sortedList);
+      // iterate through sorted list
+      int idPrinted = 0;
+      for (int p = 0; p < k; p++) {
+        if (idPrinted >= numStudents) {
+          break;
+        }
+        Double nextNearest = sortedList.get(p);
+        // shuffle list to randomize ties
+        Collections.shuffle(distToIDs.get(nextNearest));
+        for (int j = 0; j < distToIDs.get(nextNearest).size(); j++) {
+          // iterate through list value of map and print the starIDs
+          if ((p + j) < k) {
+            if (idPrinted < numStudents) {
+              System.out.println(distToIDs.get(nextNearest).get(j));
+              idPrinted++;
+            }
+          }
+        }
+      }
+    } catch (KIsNegativeException ex) {
+      System.err.println(ex.getMessage());
+    } catch (KeyNotFoundException e) {
+      System.err.println("ERROR: Key not found");
+    }
+
+  }
+
+  /**
+   * Executes the "similar_bf" command by attempting to query the studentFilters
+   * database for the k most similar filters in the database, based on the given
+   * BloomComparator metric.
+   *
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of args is incorrect
+   */
+  private void similarBfCmd(int argc, String[] argv)
+      throws IllegalArgumentException {
+    if (argc != 3) {
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
+          + " Expected 3 arguments but got " + argc);
+    } else if (allFilters == null) {
+      System.err.println("ERROR: please read in a dataset using the load_bf"
+          + " command before querying similar_bf.");
+      return;
+    }
+
+    int k, id;
+    try { // attempt to parse
+      k = Integer.parseInt(argv[1]);
+      id = Integer.parseInt(argv[2]);
+    } catch (NumberFormatException ex) {
+      throw new IllegalArgumentException("ERROR: k and student id must be "
+          + "integer values");
+    }
+
+    if (k < 0) {
+      throw new IllegalArgumentException("ERROR: k cannot be negative.");
+    } else if (k == 0) {
+      return;
+    } else {
+      BloomFilter base = allFilters.get(id);
+      if (base == null) {
+        System.err.println("ERROR: given id not in database.");
+        return;
+      }
+      BloomComparator defaultComparator = new XNORSimilarity(base);
+      BloomKNNCalculator knnCalc =
+          new BloomKNNCalculator(base, allFilters, defaultComparator);
+      List<Integer> knnList = knnCalc.knn(k);
+      for (int neighborID : knnList) {
+        System.out.println(neighborID);
+      }
+    }
+  }
+
+  /**
+   * Executes the "similar_kd" command by querying for the k most similar
+   * values on the tree by some defined distance criteria that implements Distances
+   * interface. If successful, prints out the IDs of the k most similar values to stdout.
+   * Prints informative error message upon failure.
+   * @param argv array of strings representing tokenized user input
+   * @param argc length of argv
+   * @throws IllegalArgumentException if number of arguments is incorrect
+   * @throws RuntimeException if the KDTree is empty
+   */
+  private void similarKDCmd(String[] argv, int argc)
+      throws IllegalArgumentException, RuntimeException {
+    // check correct number of args
+    if (argc != 3) {
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
+          + "Expected 3 arguments but got " + argc);
+    }
+    if (this.kdTree == null) {
+      throw new RuntimeException("ERROR: Can't query! There is no data in the KDTree");
+    }
+    try {
+      kdTree.cleanDataStructures();
+      List<Integer> retList = this.kdTree.findKSN(Integer.parseInt(argv[1]),
+          Integer.parseInt(argv[2]), this.kdTree.getRoot(), new EuclideanDistance());
+      for (Integer id : retList) {
+        System.out.println(id);
+      }
+    } catch (NumberFormatException e) {
+      System.err.println("ERROR: Number format exception " + e.getMessage());
+    } catch (IllegalArgumentException e) {
+      System.err.println(e.getMessage());
+    } catch (KIsNegativeException e) {
+      System.err.println(e.getMessage());
+    } catch (KeyNotFoundException e) {
+      System.err.println(e.getMessage());
+    }
   }
 }

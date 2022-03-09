@@ -1,0 +1,26 @@
+INPUT
+load_bf data/project1/proj1_small.csv
+load_kd data/project1/proj1_small.csv
+similar_bf 3 1
+similar_kd 3 1
+headers_load data/recommendation/csv/header_types.csv
+recsys_load data/project1/proj1_small.csv
+recommend 3 1
+OUTPUT
+Read 20 students from data/project1/proj1_small.csv
+Read 20 students from data/project1/proj1_small.csv
+6
+16
+8
+15
+10
+14
+Loaded header types.
+Loaded Recommender with 20 student(s)
+6
+16
+8
+15
+10
+14
+END
