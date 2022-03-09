@@ -2,11 +2,16 @@ package edu.brown.cs.student.main.API.APIRequests;
 
 import java.net.URI;
 import java.net.http.HttpRequest;
+import java.time.Duration;
 
 /**
  * Class that builds HTTPRequest objects with the given parameters.
  */
 public class APIRequestBuilder {
+  /**
+   * Timeout in seconds for each request.
+   */
+  private static final int TIMEOUT = 2;
   /**
    * URL of the endpoint to make the request for.
    */
@@ -36,7 +41,8 @@ public class APIRequestBuilder {
         getUrl = addUrlParams(urlParams); // add url params to the request url
       }
 
-      HttpRequest.Builder builder = HttpRequest.newBuilder(getUrl);
+      HttpRequest.Builder builder = HttpRequest.newBuilder(getUrl)
+          .timeout(Duration.ofSeconds(TIMEOUT));
       if (headers != null) { // no header provided
         assert headers.length % 2 == 0 : "Length of headers must be even.";
         builder = addHeaders(headers, builder);
@@ -65,7 +71,8 @@ public class APIRequestBuilder {
         bodyString = buildBodyString(body);
       }
       HttpRequest.Builder builder = HttpRequest.newBuilder(URI.create(url))
-          .POST(HttpRequest.BodyPublishers.ofString(bodyString));
+          .POST(HttpRequest.BodyPublishers.ofString(bodyString))
+          .timeout(Duration.ofSeconds(TIMEOUT));
       if (headers != null) { // no headers provided
         assert headers.length % 2 == 0 : "Length of headers must be even.";
         builder = addHeaders(headers, builder);

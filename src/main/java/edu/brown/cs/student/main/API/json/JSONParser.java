@@ -121,9 +121,10 @@ public final class JSONParser {
     } catch (FileNotFoundException fe) {
       throw new IOException("ERROR: file " + filepath + " not found.");
     } catch (JsonSyntaxException jse) {
-      throw new IOException("ERROR: json fields do not match the fields of " + tClass.getName());
+      throw new IOException("ERROR: invalid json syntax.");
     } catch (AssertionError ase) {
       throw new IOException("ERROR" + ase.getMessage());
     }
   }
 }
+

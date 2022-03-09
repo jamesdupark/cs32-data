@@ -7,7 +7,7 @@ import java.util.Objects;
  * API lab.
  *
  */
-public class Message {
+public class Message implements JSONable {
   /**
    * Message stored by the json object.
    */

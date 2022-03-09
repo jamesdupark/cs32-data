@@ -13,6 +13,7 @@ import org.junit.Test;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpTimeoutException;
 import java.util.List;
 
 public class APIRequestHandlerTest {
@@ -47,7 +48,7 @@ public class APIRequestHandlerTest {
   }
 
   @Test
-  public void testBasicGet() throws BadStatusException {
+  public void testBasicGet() throws BadStatusException, HttpTimeoutException {
     // basic get request with no additional params
     HttpRequest basicGet = activeBuilder.get(null, null);
     HttpResponse<String> getResponse = handler.makeRequest(basicGet);
@@ -71,7 +72,7 @@ public class APIRequestHandlerTest {
         assertEquals(200, authResponse.statusCode());
         // TODO: convert to students
         done = true;
-      } catch (BadStatusException ignored) {
+      } catch (BadStatusException | HttpTimeoutException ignored) {
       }
     } while (!done);
     assertThrows(BadStatusException.class, () -> handler.makeRequest(failedAuthGet));
@@ -91,7 +92,7 @@ public class APIRequestHandlerTest {
         assertEquals(200, authResponse.statusCode());
         // TODO: convert to students
         postDone = true;
-      } catch (BadStatusException ignored) {
+      } catch (BadStatusException | HttpTimeoutException ignored) {
       }
     } while (!postDone);
     assertThrows(BadStatusException.class, () -> handler.makeRequest(failedAuth));
