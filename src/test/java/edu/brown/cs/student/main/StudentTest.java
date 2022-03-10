@@ -3,6 +3,7 @@ package edu.brown.cs.student.main;
 import edu.brown.cs.student.main.API.json.JSONParser;
 import edu.brown.cs.student.main.API.json.StudentInfo;
 import edu.brown.cs.student.main.API.json.StudentMatch;
+import edu.brown.cs.student.main.Recommender.Student;
 import org.junit.Before;
 import org.junit.Test;
 

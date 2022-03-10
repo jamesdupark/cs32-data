@@ -7,7 +7,7 @@ import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.JSONParser;
 import edu.brown.cs.student.main.API.json.StudentInfo;
 import edu.brown.cs.student.main.API.json.StudentMatch;
-import edu.brown.cs.student.main.Student;
+import edu.brown.cs.student.main.Recommender.Student;
 
 import java.io.IOException;
 import java.net.http.HttpRequest;

@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.CSVParse.Builder;
 
-import edu.brown.cs.student.main.Student;
+import edu.brown.cs.student.main.Recommender.Student;
 
 import java.util.HashMap;
 import java.util.List;
