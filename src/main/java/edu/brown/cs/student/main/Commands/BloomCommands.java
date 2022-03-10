@@ -68,10 +68,10 @@ public class BloomCommands implements REPLCommands {
           this.queryBfCmd(argv, argc);
           break;
         case "load_bf":
-          this.loadBfCmd(argc, argv);
+          this.loadBfCmd(argv, argc);
           break;
         case "similar_bf":
-          this.similarBfCmd(argc, argv);
+          this.similarBfCmd(argv, argc);
           break;
         default:
           System.err.println("ERROR: Command not recognized.");
@@ -174,7 +174,7 @@ public class BloomCommands implements REPLCommands {
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void loadBfCmd(int argc, String[] argv)
+  private void loadBfCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     if (argc != 2) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."
@@ -220,7 +220,7 @@ public class BloomCommands implements REPLCommands {
    * @param argc length of argv
    * @throws IllegalArgumentException if number of args is incorrect
    */
-  private void similarBfCmd(int argc, String[] argv)
+  private void similarBfCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     if (argc != 3) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments."

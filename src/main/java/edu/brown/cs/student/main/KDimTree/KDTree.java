@@ -17,7 +17,7 @@ import java.util.Random;
  * Class representing a single KDTree of type KDNode. The KDTree will be
  * balanced according to the type's contract. This Class will primarily serve
  * two functionality: building a tree and finding close neighbors on the tree
- * governed by a extensible distance metric.
+ * governed by an extensible distance metric.
  * @param <T> the type of Nodes for the KDTree. The type implements KDNode
  *           interface and has the methods for finding the axis value
  *           and how many dimensions it has.

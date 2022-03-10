@@ -1,0 +1,17 @@
+INPUT
+load_json
+create_bf 0.9 1
+load_json info data/stars/ten-star.csv
+create_bf 0.9 1
+load_json match
+load_json info data/recommendation/json/studentInfoTest.json
+load_Json info data/recommendation/json/studentInfoTest.json info
+OUTPUT
+ERROR:
+00
+ERROR:
+00
+ERROR:
+[{"id":1,"yearsExperience":8,"weeklyAvailHours":13,"name":"Petr Dillingstone","classYear":"sophomore","communicationStyle":"email","meetingStyle":"in person","meetingTime":"afternoon"}, {"id":2,"yearsExperience":19,"weeklyAvailHours":19,"name":"Gerri Enterle","classYear":"sophomore","communicationStyle":"zoom","meetingStyle":"in person","meetingTime":"morning"}]
+ERROR:
+END

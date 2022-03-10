@@ -1,8 +1,13 @@
 package edu.brown.cs.student.main;
 
-import java.util.HashMap;
+import edu.brown.cs.student.main.API.json.JSONable;
+import edu.brown.cs.student.main.API.json.StudentInfo;
+import edu.brown.cs.student.main.API.json.StudentMatch;
 
-public class Student {
+import java.util.HashMap;
+import java.util.Objects;
+
+public class Student implements JSONable {
   /**
    * A map from a quantitative field name to its value.
    */
@@ -11,6 +16,28 @@ public class Student {
    * A map from a quantitative field name to its value.
    */
   private final HashMap<String, String> qualMap = new HashMap<>();
+
+  /**
+   * Method for initializing a student from two complementary PartialStudent objects
+   * (StudentInfo & StudentMatches). The two PartialStudent objects must be of the same ID.
+   * @param info StudentInfo object to merge
+   * @param match StudentMatch object to merge
+   * @throws IllegalArgumentException if IDs of PartialStudent objects don't match up
+   */
+  public void buildFromPartial(StudentInfo info, StudentMatch match)
+      throws IllegalArgumentException {
+    try {
+      assert info.getId() == match.getId() : "IDs must correspond";
+      // add studentInfo
+      quanMap.putAll(info.getQuantMap());
+      qualMap.putAll(info.getQualMap());
+      // add studentMatch
+      quanMap.putAll(match.getQuantMap());
+      qualMap.putAll(match.getQualMap());
+    } catch (AssertionError ase) {
+      throw new IllegalArgumentException("ERROR: " + ase.getMessage());
+    }
+  }
 
   /**
    * Method to store a quantitative field name and its value.
@@ -44,5 +71,29 @@ public class Student {
    */
   public HashMap<String, Double> getQuanMap() {
     return this.quanMap;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Student student = (Student) o;
+    return Objects.equals(getQuanMap(), student.getQuanMap())
+        && Objects.equals(getQualMap(), student.getQualMap());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getQuanMap(), getQualMap());
+  }
+
+  @Override
+  public String toString() {
+    return "Student " + qualMap.get("id") + " with keys: "
+        + qualMap.keySet() + ", " +  quanMap.keySet();
   }
 }
