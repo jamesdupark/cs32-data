@@ -1,16 +1,11 @@
 package edu.brown.cs.student.main.Commands.DatabaseCommands;
 
 import edu.brown.cs.student.main.Commands.REPLCommands;
-import edu.brown.cs.student.main.Recommender.Stud.DatabaseStudent;
 import edu.brown.cs.student.main.DBProxy.Proxy;
 
 import javax.sql.rowset.CachedRowSet;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +57,7 @@ public class DataCommands extends ConnectDB implements REPLCommands {
           conn = this.proxy.getConn();
           break;
         case "select_all_data":
-          this.selectAllCmd(argv, argc);
+          this.selectAllCmd(argc);
           break;
         case "find_same_interests_data":
           this.findSameInterestsCmd(argv, argc);
@@ -80,16 +75,26 @@ public class DataCommands extends ConnectDB implements REPLCommands {
       System.err.println(e.getMessage());
     }
   }
-
+  /**
+   * Method to set up the command table for the "select_all_data" command. That is,
+   * the SQL Commands in the SQL for the command will be mapped to the respective
+   * table name.
+   */
+  private void setupSelectAllCommandTable() {
+    commandToTable.clear();
+    commandToTable.put("SELECT", "names");
+    commandToTable.put("SELECT", "traits");
+    commandToTable.put("SELECT", "skills");
+    commandToTable.put("SELECT", "interests");
+  }
   /**
    * Executes the "select_all_data" command which queries off the Students Database.
    * If successful, the names of all the students should be printed.
    * Prints informative error message upon failure.
-   * @param argv array of strings representing tokenized user input
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void selectAllCmd(String[] argv, int argc)
+  private void selectAllCmd(int argc)
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 1) {
@@ -103,61 +108,11 @@ public class DataCommands extends ConnectDB implements REPLCommands {
           + "trait, skill, interest FROM names JOIN traits ON names.id = traits.id JOIN "
           + "skills ON names.id = skills.id JOIN interests ON names.id = interests.id "
           + "ORDER BY names.id DESC;";
-      // clear commandToTable and add to it
-      commandToTable.clear();
-      commandToTable.put("SELECT", "names");
-      commandToTable.put("SELECT", "traits");
-      commandToTable.put("SELECT", "skills");
-      commandToTable.put("SELECT", "interests");
-      if (proxy.validateQuery(commandToTable)) {
+      setupSelectAllCommandTable();
+      if (proxy.validateQuery(this.commandToTable)) {
         // valid query
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
-        ResultSet rsForPrinting = rowSet.createCopy();
-        Map<String, DatabaseStudent> idToStud = new HashMap<>();
-        while (rsForPrinting.next()) {
-          DatabaseStudent student = new DatabaseStudent();
-          String id = rsForPrinting.getString(1);
-          String name = rsForPrinting.getString(2);
-          String email = rsForPrinting.getString(3);
-          String attrType = rsForPrinting.getString(4);
-          String trait = rsForPrinting.getString(5);
-          String skill = rsForPrinting.getString(6);
-          final int interestRSCol = 7;
-          String interest = rsForPrinting.getString(interestRSCol);
-          if (idToStud.containsKey(id)) {
-            // key exists so add to strengths, weaknesses, interests fields
-            student = idToStud.get(id);
-          } else {
-            student.setId(id);
-            student.setName(name);
-            student.setEmail(email);
-            student.setSkill(skill);
-            student.setInterest(interest);
-          }
-          if (!student.getInterest().contains(interest)) {
-            student.setInterest(interest);
-          }
-          if (attrType.equals("weaknesses")) {
-            if (student.getWeaknesses() == null || !student.getWeaknesses().contains(trait)) {
-              student.setWeaknesses(trait);
-            }
-          } else if (attrType.equals("strengths")) {
-            if (student.getStrengths() == null || !student.getStrengths().contains(trait)) {
-              student.setStrengths(trait);
-            }
-          }
-          idToStud.put(id, student);
-//          dbStud.add(student);
-        }
-        List<DatabaseStudent> dbStud = new ArrayList<>();
-        idToStud.forEach((k, v) -> {
-          dbStud.add(v);
-        });
-        Collections.sort(dbStud);
-        for (DatabaseStudent ds : dbStud) {
-          System.out.println(ds);
-        }
-        System.out.println("Cache size " + proxy.getCache().size());
+        printResultSet(rowSet, 6);
       } else {
         // error: sql table does not have this level of permission
         System.out.println("ERROR: SQL Table does not have the level of permission");
@@ -167,6 +122,17 @@ public class DataCommands extends ConnectDB implements REPLCommands {
     } catch (ExecutionException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Method to set up the command table for the "find_same_interests_data" command. That is,
+   * the SQL Commands in the SQL for the command will be mapped to the respective
+   * table name.
+   */
+  private void setupFindSameInterestsCommandTable() {
+    commandToTable.clear();
+    commandToTable.put("SELECT", "names");
+    commandToTable.put("JOIN", "interests");
   }
   /**
    * Executes the "find_same_interests_data" command which queries off the Students
@@ -190,27 +156,11 @@ public class DataCommands extends ConnectDB implements REPLCommands {
       final String lookFor = "music";
       String sqlQuery = "SELECT name, email, interest FROM names as n JOIN interests as i"
           + " on n.id = i.id WHERE i.interest = \'" + lookFor + "\' ORDER BY name;";
-      // clear commandToTable and add to it
-      commandToTable.clear();
-      commandToTable.put("SELECT", "names");
-      commandToTable.put("JOIN", "interests");
+      setupFindSameInterestsCommandTable();
       if (proxy.validateQuery(commandToTable)) {
         // valid query
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
-        ResultSet rsForPrinting = rowSet.createCopy();
-        List<DatabaseStudent> dbStud = new ArrayList<>();
-        while (rsForPrinting.next()) {
-          DatabaseStudent student = new DatabaseStudent();
-          String name = rsForPrinting.getString(1);
-          String email = rsForPrinting.getString(2);
-          String interest = rsForPrinting.getString(3);
-          student.setName(name);
-          student.setEmail(email);
-          student.setInterest(interest);
-          dbStud.add(student);
-          System.out.println(name + " " + email + " " + interest);
-        }
-        System.out.println(proxy.getCache().size());
+        printResultSet(rowSet, 3);
       } else {
         // error: sql table does not have this level of permission
         System.out.println("ERROR: SQL Table does not have the level of permission");
@@ -222,6 +172,19 @@ public class DataCommands extends ConnectDB implements REPLCommands {
     }
   }
 
+  /**
+   * Method to set up the command table for the "find_same_traits_and_skills_data" command.
+   * That is, the SQL Commands in the SQL for the command will be mapped to the respective
+   * table name.
+   */
+  private void setupFindSameTraitsAndSkilsCommandTable() {
+    commandToTable.clear();
+    commandToTable.put("SELECT", "names");
+    commandToTable.put("SELECT", "traits");
+    commandToTable.put("SELECT", "skills");
+    commandToTable.put("JOIN", "traits");
+    commandToTable.put("JOIN", "skills");
+  }
   /**
    * Executes the "find_same_traits_and_skills_data" command which queries off the Students
    * Database for students with the same traits and skills as a target trait and skill
@@ -247,36 +210,11 @@ public class DataCommands extends ConnectDB implements REPLCommands {
       String sqlQuery = "SELECT name, LOWER(type_of_attribute) as type_attribute, trait, skill "
           + "FROM names, traits as t, skills as s WHERE t.id = s.id AND trait = \'"
           + searchTrait + "\' AND skill = \'" + searchSkill + "\' ORDER BY name;";
-      System.out.println(sqlQuery);
-      // clear commandToTable and add to it
-      commandToTable.clear();
-      commandToTable.put("SELECT", "names");
-      commandToTable.put("SELECT", "traits");
-      commandToTable.put("SELECT", "skills");
-      commandToTable.put("JOIN", "traits");
-      commandToTable.put("JOIN", "skills");
-      if (proxy.validateQuery(commandToTable)) {
+      setupFindSameTraitsAndSkilsCommandTable();
+      if (proxy.validateQuery(this.commandToTable)) {
         // valid query
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
-        ResultSet rsForPrinting = rowSet.createCopy();
-        List<DatabaseStudent> dbStud = new ArrayList<>();
-        while (rsForPrinting.next()) {
-          DatabaseStudent student = new DatabaseStudent();
-          String name = rsForPrinting.getString(1);
-          String attrType = rsForPrinting.getString(2);
-          String trait = rsForPrinting.getString(3);
-          String skill = rsForPrinting.getString(4);
-          student.setName(name);
-          if (attrType.equals("strengths")) {
-            student.setWeaknesses(trait);
-          } else if (attrType.equals("weaknesses")) {
-            student.setStrengths(trait);
-          }
-          student.setSkill(skill);
-          dbStud.add(student);
-          System.out.println(name + ", (" + attrType + ") " + trait + ", " + skill);
-        }
-        System.out.println(proxy.getCache().size());
+        printResultSet(rowSet, 4);
       } else {
         // error: sql table does not have this level of permission
         System.out.println("ERROR: SQL Table does not have the level of permission");

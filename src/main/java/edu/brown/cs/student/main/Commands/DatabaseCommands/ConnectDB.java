@@ -6,7 +6,9 @@ import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseTables;
 import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseZooTables;
 import edu.brown.cs.student.main.DBProxy.Proxy;
 
+import javax.sql.rowset.CachedRowSet;
 import java.io.FileNotFoundException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -176,5 +178,23 @@ public abstract class ConnectDB {
       System.out.println("ERROR: " + e.getMessage());
     }
     return proxy;
+  }
+  /**
+   * Method that prints the values from a ResultSet.
+   * @param rowSet CachedRowSet corresponding to the ResultSet form a SQL Query
+   * @param fieldsPresent the number of fields that should be retrieved from the ResultSet
+   * @throws SQLException if there is an error with the ResultSet
+   */
+  public void printResultSet(CachedRowSet rowSet, int fieldsPresent)
+      throws SQLException {
+    ResultSet rs = rowSet.createCopy();
+    while (rs.next()) {
+      String res = "";
+      for (int i = 1; i <= fieldsPresent; i++) {
+        res += rs.getString(i) + ", ";
+      }
+      res = res.substring(0, res.length() - 2);
+      System.out.println(res);
+    }
   }
 }

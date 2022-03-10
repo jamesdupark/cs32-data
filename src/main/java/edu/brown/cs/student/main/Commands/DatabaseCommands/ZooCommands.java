@@ -4,7 +4,6 @@ import edu.brown.cs.student.main.Commands.REPLCommands;
 import edu.brown.cs.student.main.DBProxy.Proxy;
 
 import javax.sql.rowset.CachedRowSet;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,7 +70,15 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
       System.err.println(e.getMessage());
     }
   }
-
+  /**
+   * Method to set up the command table for the "insert_animal_zoo" command. That is,
+   * the SQL Commands in the SQL for the command will be mapped to the respective
+   * table name.
+   */
+  private void setupInsertAnimalCommandTable() {
+    commandToTable.clear();
+    commandToTable.put("INSERT", "zoo");
+  }
   /**
    * Executes the "insert_animal_zoo" command which inserts an animal into the
    * Zoo Database. If successful, a success message informing the client that
@@ -97,16 +104,13 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
       int height = Integer.parseInt(argv[4]);
       String sqlQuery = "INSERT INTO zoo VALUES (\'" + id + "\', + \'" + name + "\', + \'"
           + age + "\', + \'" + height + "\');";
-      // clear commandToTable and add to it
-      commandToTable.clear();
-      commandToTable.put("INSERT", "zoo");
+      setupInsertAnimalCommandTable();
       if (proxy.validateQuery(commandToTable)) {
         // valid query
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
         if (rowSet == null) {
           System.out.println("Success: animal has been added!");
         }
-        System.out.println(proxy.getCache().size());
       } else {
         // error: sql table does not have this level of permission
         System.out.println("ERROR: SQL Table does not have the level of permission");
@@ -117,7 +121,15 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
       e.printStackTrace();
     }
   }
-
+  /**
+   * Method to set up the command table for the "count_animal_zoo" command. That is,
+   * the SQL Commands in the SQL for the command will be mapped to the respective
+   * table name.
+   */
+  private void setupCountAniimalCommandTable() {
+    commandToTable.clear();
+    commandToTable.put("SELECT", "zoo");
+  }
   /**
    * Executes the "count_animal_zoo" command which counts the number of animals in
    * the Zoo Database. If successful, the number of animals should be printed.
@@ -137,19 +149,13 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
     checkDatabaseConnected();
     try {
       String sqlQuery = "SELECT COUNT(*) FROM zoo;";
-      // clear commandToTable and add to it
-      commandToTable.clear();
-      commandToTable.put("SELECT", "zoo");
+      setupCountAniimalCommandTable();
       if (proxy.validateQuery(commandToTable)) {
         // valid query
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
-        if (rowSet == null) {
-          System.out.println("Caller rowset null");
-          return;
-        }
-        ResultSet rsForPrinting = rowSet.createCopy();
-        rsForPrinting.next();
-        String count = rsForPrinting.getString(1);
+        ResultSet rs = rowSet.createCopy();
+        rs.next();
+        String count = rs.getString(1);
         System.out.println("Number of animals is " + count);
       } else {
         // error: sql table does not have this level of permission

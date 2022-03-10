@@ -105,14 +105,12 @@ public class DBStudentGenerator {
           if (!student.getInterest().contains(interest)) {
             student.setInterest(interest);
           }
-          if (attrType.equals("weaknesses")) {
-            if (student.getWeaknesses() == null || !student.getWeaknesses().contains(trait)) {
-              student.setWeaknesses(trait);
-            }
-          } else if (attrType.equals("strengths")) {
-            if (student.getStrengths() == null || !student.getStrengths().contains(trait)) {
-              student.setStrengths(trait);
-            }
+          if (attrType.equals("weaknesses") && (student.getWeaknesses() == null
+              || !student.getWeaknesses().contains(trait))) {
+            student.setWeaknesses(trait);
+          } else if (attrType.equals("strengths") && (student.getStrengths() == null
+              || !student.getStrengths().contains(trait))) {
+            student.setStrengths(trait);
           }
           idToStud.put(id, student);
         }

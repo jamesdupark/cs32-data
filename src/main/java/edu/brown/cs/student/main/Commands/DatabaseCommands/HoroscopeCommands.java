@@ -1,14 +1,11 @@
 package edu.brown.cs.student.main.Commands.DatabaseCommands;
 
 import edu.brown.cs.student.main.Commands.REPLCommands;
-import edu.brown.cs.student.main.DBProxy.DBItems.DatabaseHoroscope;
 import edu.brown.cs.student.main.DBProxy.Proxy;
 
 import javax.sql.rowset.CachedRowSet;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +69,17 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
       System.err.println(e.getMessage());
     }
   }
-
+  /**
+   * Method to set up the command table for the "find_tas_w_horoscope_horo" command. That is,
+   * the SQL Commands in the SQL for the command will be mapped to the respective
+   * table name.
+   */
+  private void setupFindTasWHoroscopeCommandTable() {
+    commandToTable.clear();
+    commandToTable.put("SELECT", "tas");
+    commandToTable.put("JOIN", "ta_horoscope");
+    commandToTable.put("JOIN", "horoscopes");
+  }
   /**
    * Executes the "find_tas_w_horoscope_horo" command which queries off the Horoscopes
    * Database for TAs with the same horoscope as a target horoscope. If successful,
@@ -95,27 +102,11 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
       String sqlQuery = "SELECT name, role, horoscope FROM tas JOIN ta_horoscope AS tah "
           + "ON tas.id = tah.ta_id JOIN horoscopes AS h ON h.horoscope_id = tah.horoscope_id "
           + "WHERE horoscope = \'" + horoscopeMatch + "\';";
-      // clear commandToTable and add to it
-      commandToTable.clear();
-      commandToTable.put("SELECT", "tas");
-      commandToTable.put("JOIN", "ta_horoscope");
-      commandToTable.put("JOIN", "horoscopes");
+      setupFindTasWHoroscopeCommandTable();
       if (proxy.validateQuery(commandToTable)) {
+        // valid query
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
-        ResultSet rsForPrinting = rowSet.createCopy();
-        List<DatabaseHoroscope> dbHoro = new ArrayList<>();
-        while (rsForPrinting.next()) {
-          DatabaseHoroscope horo = new DatabaseHoroscope();
-          String name = rsForPrinting.getString(1);
-          String role = rsForPrinting.getString(2);
-          String horoscope = rsForPrinting.getString(3);
-          horo.setTaName(name);
-          horo.setTaRole(role);
-          horo.setHoroscope(horoscope);
-          dbHoro.add(horo);
-          System.out.println(name + ", " + role + ", " + horoscope);
-        }
-        System.out.println(proxy.getCache().size());
+        printResultSet(rowSet, 3);
       } else {
         // error: sql table does not have this level of permission
         System.out.println("ERROR: SQL Table does not have the level of permission");
@@ -126,7 +117,15 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
       e.printStackTrace();
     }
   }
-
+  /**
+   * Method to set up the command table for the "update_ta_role_horo" command. That is,
+   * the SQL Commands in the SQL for the command will be mapped to the respective
+   * table name.
+   */
+  private void setupUpdateTaRoleCommandTable() {
+    commandToTable.clear();
+    commandToTable.put("UPDATE", "tas");
+  }
   /**
    * Executes the "update_ta_role_horo" command which queries off the Horoscopes
    * Database for TAs with the same name as an input name (argv[2]). For all matches,
@@ -149,16 +148,13 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
       String newRole = argv[1];
       String name = argv[2];
       String sqlQuery = "UPDATE tas SET role = \'" + newRole + "\' WHERE name = \'" + name + "\';";
-      // clear commandToTable and add to it
-      commandToTable.clear();
-      commandToTable.put("UPDATE", "tas");
+      setupUpdateTaRoleCommandTable();
       if (proxy.validateQuery(commandToTable)) {
         // valid query
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
         if (rowSet == null) {
           System.out.println("Success: TA's role has been updated!");
         }
-        System.out.println(proxy.getCache().size());
       } else {
         // error: sql table does not have this level of permission
         System.out.println("ERROR: SQL Table does not have the level of permission");
@@ -169,7 +165,6 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
       e.printStackTrace();
     }
   }
-
   @Override
   protected void checkDatabaseConnected() {
     if (conn == null || !this.filepath.equals("data/recommendation/sql/horoscopes.sqlite3")) {
