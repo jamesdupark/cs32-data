@@ -13,7 +13,6 @@ import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDimTree.KDTree;
 import edu.brown.cs.student.main.KDimTree.KIsNegativeException;
 import edu.brown.cs.student.main.KDimTree.KeyNotFoundException;
-import edu.brown.cs.student.main.KNNCalculator.BloomKNNCalculator;
 import edu.brown.cs.student.main.Student;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,15 +86,43 @@ public class RecommenderCommands implements REPLCommands {
       throw new IllegalArgumentException("Need to call headers_load before calling recsys_load");
     }
     CSVParser<Student> reader = new CSVParser<>(new StudentBuilder(typeMap));
-    reader.load(argv[1]);
+    reader.load(argv[2]);
     List<Student> studentList = reader.getDataList();
     // list of bloom list or student nodes.
-    List<List<String>> bloomData = new ArrayList<>();
     List<KDNode> nodesList = new ArrayList<>();
     int maxInsert = 0;
     // maker for each Bloom List and Student Node
-    DirectStudentBloomListMaker bloomMaker = new DirectStudentBloomListMaker();
     DirectStudentNodeMaker nodeMaker = new DirectStudentNodeMaker();
+    for (Student scholar : studentList) {
+      // extracting StudentBloomList and finding maxInsert
+      int id = Integer.parseInt(scholar.getQualMap().get("id"));
+      nodesList.add(nodeMaker.build(id, scholar.getQuanMap()));
+    }
+
+    Map<Integer, BloomFilter> newFilters =
+        getBloomFilterMap(studentList, maxInsert);
+    if (newFilters == null) {
+      return;
+    }
+    // for kdTree
+    this.kdTree = new KDTree<>();
+    this.kdTree.insertList(nodesList, 0);
+
+    numStudents = studentList.size();
+    System.out.println("Loaded Recommender with " + numStudents + " student(s)");
+    allFilters = newFilters;
+  }
+
+  /**
+   * Does the loading of Bloom Filters for recsys_load call.
+   * @param studentList - List of students to make Bloom Filters with.
+   * @param maxInsert
+   * @return
+   */
+  private Map<Integer, BloomFilter> getBloomFilterMap(List<Student> studentList,
+                                                             int maxInsert) {
+    List<List<String>> bloomData = new ArrayList<>();
+    DirectStudentBloomListMaker bloomMaker = new DirectStudentBloomListMaker();
     for (Student scholar : studentList) {
       // extracting StudentBloomList and finding maxInsert
       List<String> bloomList = bloomMaker.build(scholar.getQualMap());
@@ -103,10 +130,7 @@ public class RecommenderCommands implements REPLCommands {
       if (bloomList.size() > maxInsert) {
         maxInsert = bloomList.size();
       }
-      int id = Integer.parseInt(scholar.getQualMap().get("id"));
-      nodesList.add(nodeMaker.build(id, scholar.getQuanMap()));
     }
-
     // for bloom
     Map<Integer, BloomFilter> newFilters = new HashMap<>();
     for (List<String> toInsert : bloomData) {
@@ -116,16 +140,10 @@ public class RecommenderCommands implements REPLCommands {
         newFilters.put(id, filter);
       } catch (IllegalArgumentException ex) {
         System.err.println(ex.getMessage());
-        return;
+        return null;
       }
     }
-    // for kdTree
-    this.kdTree = new KDTree<>();
-    this.kdTree.insertList(nodesList, 0);
-
-    numStudents = studentList.size();
-    System.out.println("Loaded Recommender with " + numStudents + " student(s)");
-    allFilters = newFilters;
+    return newFilters;
   }
 
   /**
