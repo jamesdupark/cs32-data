@@ -109,7 +109,7 @@ public class Student implements JSONable {
 
   @Override
   public String toString() {
-    return "Student " + qualMap.get("id") + " with keys: "
-        + qualMap.keySet() + ", " + quanMap.keySet();
+    return "Student " + qualMap.get("id")
+        + " with keys: " + qualMap.keySet() + ", " +  quanMap.keySet();
   }
 }

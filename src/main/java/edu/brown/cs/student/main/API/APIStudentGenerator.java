@@ -36,7 +36,7 @@ public class APIStudentGenerator {
     List<StudentMatch> matchList;
     try { // get dataset halves
       infoList = infoAggregator.aggregate(StudentInfo.class);
-      matchList = infoAggregator.aggregate(StudentMatch.class);
+      matchList = matchAggregator.aggregate(StudentMatch.class);
       // sort by id
       Collections.sort(infoList);
       Collections.sort(matchList);
