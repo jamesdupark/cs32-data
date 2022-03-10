@@ -30,7 +30,8 @@ public class StudentTest {
   @Test
   public void testBuildFromPartial() {
     Student studentOne = new Student();
-    studentOne.buildFromPartial(twoInfos.get(0), twoMatches.get(0));
+    studentOne.buildFromPartial(twoInfos.get(0);
+    studentOne.buildFromPartial(twoMatches.get(0));
 
     Map<String, Double> oneQuan = studentOne.getQuanMap();
     Map<String, String> oneQual = studentOne.getQualMap();

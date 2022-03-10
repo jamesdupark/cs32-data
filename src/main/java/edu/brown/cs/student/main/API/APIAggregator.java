@@ -4,7 +4,8 @@ import edu.brown.cs.student.main.API.APIRequests.APIRequestBuilder;
 import edu.brown.cs.student.main.API.APIRequests.APIRequestHandler;
 import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.JSONParser;
-import edu.brown.cs.student.main.Recommender.Stud.PartialStudent;
+import edu.brown.cs.student.main.API.json.JSONable;
+import edu.brown.cs.student.main.API.json.PartialStudent;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -24,7 +25,8 @@ public class APIAggregator {
    */
   private static final int EXPECT_SIZE = 60;
   /**
-   * type of the API aggregator (info or match) indicating which type of endpoint is being queried.
+   * type of the API aggregator (info or match) indicating which type of endpoint
+   * is being queried.
    */
   private final String type;
   /**
@@ -47,6 +49,7 @@ public class APIAggregator {
 
   /**
    * Constructor for the APIAggregator class.
+   * 
    * @param type string representing the type of the aggregator to be created.
    *             can be either "info" or "match"
    * @throws IllegalArgumentException if type is not "info" or "match".
@@ -67,6 +70,7 @@ public class APIAggregator {
    * Makes a get request to the '/get-active' API endpoint for the aggregator's
    * base URL, and returns a list of Strings representing the currently active
    * API endpoints.
+   * 
    * @return currently active API endpoints
    * @throws BadStatusException when the API request returns a bad status code
    */
@@ -84,18 +88,20 @@ public class APIAggregator {
   }
 
   /**
-   * Initializes map of HTTPRequests by adding requests for currently active endpoints
+   * Initializes map of HTTPRequests by adding requests for currently active
+   * endpoints
    * if they are not in the map already.
+   * 
    * @param active list of active endpoints
    */
   public void initReqMap(List<String> active) {
     String apiKey = ClientAuth.getApiKey();
     String auth = ClientAuth.getAuth();
-    String[] urlAuth = new String[]{"auth", auth, "key", apiKey};
-    String[] apiAuth = new String[]{"x-api-key", apiKey};
-    String[] bodyAuth = new String[]{"auth", auth};
+    String[] urlAuth = new String[] { "auth", auth, "key", apiKey };
+    String[] apiAuth = new String[] { "x-api-key", apiKey };
+    String[] bodyAuth = new String[] { "auth", auth };
 
-    for (String endpoint: active) {
+    for (String endpoint : active) {
       if (!reqMap.containsKey(endpoint)) {
         String endpointUrl = baseUrl + endpoint;
         APIRequestBuilder requestBuilder = new APIRequestBuilder(endpointUrl);
@@ -119,15 +125,18 @@ public class APIAggregator {
   }
 
   /**
-   * Aggregates data from multiple API endpoints to create a complete data list. Cycles through
-   * each endpoint until either a successful request or three consecutive failed requests, at which
+   * Aggregates data from multiple API endpoints to create a complete data list.
+   * Cycles through
+   * each endpoint until either a successful request or three consecutive failed
+   * requests, at which
    * point the active endpoints are updated.
+   * 
    * @return list of type T
    * @param tClass class of the list to be returned. Must implement JSONable
-   * @param <T> either studentMatch or studentInfo
+   * @param <T>    either studentMatch or studentInfo
    * @throws BadStatusException when active endpoints cannot be queried
    */
-  public <T extends PartialStudent> List<T> aggregate(Class<T> tClass) throws BadStatusException {
+  public <T extends JSONable> List<T> aggregate(Class<T> tClass) throws BadStatusException {
     boolean dataComplete = false;
     List<T> dataset = new ArrayList<>();
     int retries = 0;
@@ -152,7 +161,8 @@ public class APIAggregator {
           List<T> subset = JSONParser.getJsonObjectList(response.body(), tClass);
           dataset.addAll(subset);
           consecutiveFails = 0;
-          // if the connection times out or fails, add endpoint to end of list to query again later
+          // if the connection times out or fails, add endpoint to end of list to query
+          // again later
         } catch (BadStatusException | HttpTimeoutException ex) {
           active.add(currEndpoint);
           consecutiveFails++;
