@@ -10,8 +10,6 @@ import edu.brown.cs.student.main.Commands.KDCommands;
 import edu.brown.cs.student.main.Commands.NightSkyCommands;
 import edu.brown.cs.student.main.Commands.REPLCommands;
 import edu.brown.cs.student.main.Commands.RecommenderCommands;
-import edu.brown.cs.student.main.DBProxy.DBStudentGenerator;
-import edu.brown.cs.student.main.Recommender.Stud.DatabaseStudent;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;

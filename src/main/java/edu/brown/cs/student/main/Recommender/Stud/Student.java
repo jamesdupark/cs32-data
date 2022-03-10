@@ -5,6 +5,9 @@ import edu.brown.cs.student.main.API.json.JSONable;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * Student class that stores qualitative and quantitative characteristics of them.
+ */
 public class Student implements JSONable {
   /**
    * A map from a quantitative field name to its value.
@@ -18,9 +21,8 @@ public class Student implements JSONable {
   /**
    * Method for initializing a student from two complementary PartialStudent
    * objects
-   * (StudentInfo & StudentMatches). The two PartialStudent objects must be of the
+   * (StudentInfo and StudentMatches). The two PartialStudent objects must be of the
    * same ID.
-   * 
    * @param part PartialStudent object to add information from
    * @throws IllegalArgumentException if IDs of PartialStudent objects don't match
    *                                  up
@@ -39,7 +41,6 @@ public class Student implements JSONable {
 
   /**
    * gets the id of the current student.
-   * 
    * @return student's id
    */
   private Integer getId() {
@@ -51,7 +52,6 @@ public class Student implements JSONable {
 
   /**
    * Method to store a quantitative field name and its value.
-   * 
    * @param field - the field name of a field for Student.
    * @param value - the value of field for Student.
    */
@@ -61,7 +61,6 @@ public class Student implements JSONable {
 
   /**
    * Method to store a qualitative field name and its value.
-   * 
    * @param field - the field name of a field for Student.
    * @param value - the value of field for Student.
    */
@@ -71,7 +70,6 @@ public class Student implements JSONable {
 
   /**
    * Getter for the qualMap field.
-   * 
    * @return - the Hashmap with qualitative field name as key and field value as
    *         value.
    */
@@ -81,7 +79,6 @@ public class Student implements JSONable {
 
   /**
    * Getter for the quanMap field.
-   * 
    * @return - the Hashmap with quantitative field name as key and field value as
    *         value.
    */

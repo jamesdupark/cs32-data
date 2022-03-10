@@ -25,6 +25,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * REPLCommands package for commands related to the Recommender commands.
+ * @author tkato1
+ */
 public class RecommenderCommands implements REPLCommands {
   /**
    * List of strings representing the command keywords supported by this class.

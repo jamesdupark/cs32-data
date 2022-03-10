@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.CSVParse.Builder;
 
 import java.util.List;
+
 /**
  * Interface for a builder of class T.
  * @param <T> - the class that the class that implements CSVBuilder will create with build method.
