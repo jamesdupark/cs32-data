@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * StudentInfo class for storing json information from student info API endpoints.
  */
-public class StudentInfo implements PartialStudent, Comparable<StudentInfo> {
+public class StudentInfo implements PartialStudent, Comparable<StudentInfo>, JSONable {
   /**
    * integer parameters for student info - unique id, years of experience, and
    * weekly available hours.
