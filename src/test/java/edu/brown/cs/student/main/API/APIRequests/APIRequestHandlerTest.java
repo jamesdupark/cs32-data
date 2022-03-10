@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import edu.brown.cs.student.main.API.APIAggregator;
 import edu.brown.cs.student.main.API.ClientAuth;
 import edu.brown.cs.student.main.API.json.JSONParser;
+import edu.brown.cs.student.main.API.json.StudentMatch;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -69,8 +70,6 @@ public class APIRequestHandlerTest {
     do {
       try { // retry until request goes through
         HttpResponse<String> authResponse = handler.makeRequest(authGet);
-        assertEquals(200, authResponse.statusCode());
-        // TODO: convert to students
         done = true;
       } catch (BadStatusException | HttpTimeoutException ignored) {
       }
@@ -90,7 +89,6 @@ public class APIRequestHandlerTest {
       try { // retry until request goes through
         HttpResponse<String> authResponse = handler.makeRequest(authPost);
         assertEquals(200, authResponse.statusCode());
-        // TODO: convert to students
         postDone = true;
       } catch (BadStatusException | HttpTimeoutException ignored) {
       }
