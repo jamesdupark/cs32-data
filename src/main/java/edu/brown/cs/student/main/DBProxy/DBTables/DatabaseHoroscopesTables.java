@@ -12,7 +12,7 @@ public class DatabaseHoroscopesTables implements DatabaseTables {
    * The order of the <key, value> pair is determined by the order of the
    * tables in the database.
    */
-  private Map<Integer, String> indexTables = new HashMap<>() {{
+  private final Map<Integer, String> indexTables = new HashMap<>() {{
       put(0, "sqlite_sequence");
       put(1, "horoscopes");
       put(2, "ta_horoscope");

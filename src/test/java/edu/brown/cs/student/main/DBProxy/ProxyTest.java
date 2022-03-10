@@ -3,24 +3,29 @@ package edu.brown.cs.student.main.DBProxy;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Class to test the Proxy.
  */
 public class ProxyTest {
-  Map<String, String> studentTablePermissions;
   /**
-   * Method to initialize and populate the three KDTrees fields.
-   * @throws IOException if the CSVReader is unable to read the file path
+   * HashMap mapping from String table name in the Student Database to its
+   * corresponding and respective table permission.
+   */
+  private Map<String, String> studentTablePermissions;
+  /**
+   * Method to initialize and populate the studentTablePermissions field.
    */
   @Before
-  public void setup() throws IOException {
+  public void setup() {
     // initialize student table permissions
     studentTablePermissions = new HashMap<>();
     studentTablePermissions.put("names", "RW");
@@ -50,6 +55,17 @@ public class ProxyTest {
   }
 
   /**
+   * Method to test connectDB throws an exception for incorrect file path.
+   */
+  @Test(expected = FileNotFoundException.class)
+  public void testConnectDBThrowsException() throws SQLException, IOException, ClassNotFoundException {
+    setup();
+    Proxy proxy = new Proxy("invalid/filepath.sqlite3",
+        studentTablePermissions);
+    proxy.connectDB();
+  }
+
+  /**
    * Method to test connectDB.
    */
   @Test
@@ -57,8 +73,57 @@ public class ProxyTest {
     setup();
     Proxy proxy = new Proxy("data/recommendation/sql/data.sqlite3",
         studentTablePermissions);
-    assertEquals(proxy.getConn(), null);
     proxy.connectDB();
-//    assertEquals(proxy.getConn().toString(), "org.sqlite.jdbc4.JDBC4Connection@3ef41c66");
+    assertNotNull(proxy.getConn());
+  }
+
+  /**
+   * Method to test hasWriteCommand.
+   */
+  @Test
+  public void testHasWriteCommand() throws IOException {
+    String sqlQueryNoWrite = "SELECT name, email, interest FROM names as n JOIN interests as i"
+        + " on n.id = i.id WHERE i.interest = \'music\' ORDER BY name;";
+    String sqlQueryWithWrite = "UPDATE tas SET role = \'HTA\' WHERE name = \'Dylan\';";
+    String sqlQueryWithWrite2 = "DROP ALL";
+    setup();
+    Proxy proxy = new Proxy("data/recommendation/sql/data.sqlite3",
+        studentTablePermissions);
+
+    assertEquals(proxy.hasWriteCommand(sqlQueryNoWrite), false);
+    assertEquals(proxy.hasWriteCommand(sqlQueryWithWrite), true);
+    assertEquals(proxy.hasWriteCommand(sqlQueryWithWrite2), true);
+  }
+
+  /**
+   * Method to test validateQuery throws exception for an empty table permission input.
+   */
+  @Test(expected = RuntimeException.class)
+  public void testValidateQueryThrowsRuntimeEx() {
+    Proxy proxy = new Proxy("data/recommendation/sql/data.sqlite3",
+        new HashMap<>());
+    proxy.validateQuery(new HashMap<>());
+  }
+
+
+  /**
+   * Method to set up a command table for validateQuery test.
+   */
+  private void setupFindSameInterestsCommandTable(Map<String, String> commandToTable) {
+    commandToTable.clear();
+    commandToTable.put("SELECT", "names");
+    commandToTable.put("JOIN", "interests");
+  }
+
+  /**
+   * Method to test validateQuery.
+   */
+  @Test
+  public void testValidateQuery() {
+    Proxy proxy = new Proxy("data/recommendation/sql/data.sqlite3",
+        studentTablePermissions);
+    Map<String, String> commandToTable = new HashMap<>();
+    setupFindSameInterestsCommandTable(commandToTable);
+    assertEquals(proxy.validateQuery(commandToTable), true);
   }
 }

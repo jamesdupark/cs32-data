@@ -147,7 +147,7 @@ public class Proxy {
    * @param sqlQuery string representing the SQL query that we are checking for write access
    * @return whether the string contains a command that needs Write (W) access
    */
-  private boolean hasWriteCommand(String sqlQuery) {
+  public boolean hasWriteCommand(String sqlQuery) {
     for (String key : sqlPermissions.keySet()) {
       String val = sqlPermissions.get(key);
       if (val.contains("W") && sqlQuery.contains(key)) {

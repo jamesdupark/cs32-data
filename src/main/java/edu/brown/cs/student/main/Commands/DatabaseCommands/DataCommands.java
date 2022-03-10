@@ -92,7 +92,7 @@ public class DataCommands extends ConnectDB implements REPLCommands {
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void selectAllCmd(int argc)
+  public void selectAllCmd(int argc)
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 1) {
@@ -143,7 +143,7 @@ public class DataCommands extends ConnectDB implements REPLCommands {
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void findSameInterestsCmd(int argc)
+  public void findSameInterestsCmd(int argc)
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 1) {
@@ -197,7 +197,7 @@ public class DataCommands extends ConnectDB implements REPLCommands {
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void findTraitAndSkillsCmd(int argc)
+  public void findTraitAndSkillsCmd(int argc)
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 1) {
@@ -229,6 +229,34 @@ public class DataCommands extends ConnectDB implements REPLCommands {
     } catch (InvalidTablePermissionException e) {
       System.err.println(e.getMessage());
     }
+  }
+  /**
+   * Accessor method to get the Conn field that is used for testing.
+   * @return the Conn
+   */
+  public Connection getConn() {
+    return this.conn;
+  }
+  /**
+   * Mutator method to set the Conn field that is used for testing.
+   * @param newConn the new conn.
+   */
+  public void setConn(Connection newConn) {
+    this.conn = newConn;
+  }
+  /**
+   * Accessor method to get the Proxy field that is used for testing.
+   * @return the Proxy
+   */
+  public Proxy getProxy() {
+    return this.proxy;
+  }
+  /**
+   * Mutator method to set the Proxy field that is used for testing.
+   * @param proxy the new proxy.
+   */
+  public void setProxy(Proxy proxy) {
+    this.proxy = proxy;
   }
   @Override
   public void checkDatabaseConnected() {
