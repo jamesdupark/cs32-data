@@ -141,6 +141,7 @@ public class DataCommands extends ConnectDB implements REPLCommands {
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
         ResultSet rsForPrinting = rowSet.createCopy();
         List<DatabaseStudent> dbStud = new ArrayList<>();
+        Map<String, DatabaseStudent> idToStud = new HashMap<>();
         while (rsForPrinting.next()) {
           DatabaseStudent student = new DatabaseStudent();
           String id = rsForPrinting.getString(1);
@@ -151,21 +152,26 @@ public class DataCommands extends ConnectDB implements REPLCommands {
           String skill = rsForPrinting.getString(6);
           final int interestRSCol = 7;
           String interest = rsForPrinting.getString(interestRSCol);
-          student.setId(id);
-          student.setName(name);
-          student.setEmail(email);
+          if (idToStud.containsKey(id)) {
+            // key exists so add to strengths, weaknesses, interests fields
+            student = idToStud.get(id);
+          } else {
+            student.setId(id);
+            student.setName(name);
+            student.setEmail(email);
+            student.setSkill(skill);
+            student.setInterest(interest);
+          }
           if (attrType.equals("weaknesses")) {
             student.setWeaknesses(trait);
           } else if (attrType.equals("strengths")) {
             student.setStrengths(trait);
           }
-          student.setSkill(skill);
-          student.setInterest(interest);
           dbStud.add(student);
         }
-        for (DatabaseStudent ds : dbStud) {
-          System.out.println(ds);
-        }
+        idToStud.forEach((k, v) -> {
+          System.out.println(k + ": " + v);
+        });
         System.out.println("Cache size " + proxy.getCache().size());
       } else {
         // error: sql table does not have this level of permission

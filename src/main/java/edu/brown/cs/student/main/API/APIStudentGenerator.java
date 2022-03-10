@@ -1,9 +1,9 @@
 package edu.brown.cs.student.main.API;
 
 import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
-import edu.brown.cs.student.main.API.json.StudentInfo;
-import edu.brown.cs.student.main.API.json.StudentMatch;
-import edu.brown.cs.student.main.Recommender.Student;
+import edu.brown.cs.student.main.Recommender.Stud.Student;
+import edu.brown.cs.student.main.Recommender.Stud.StudentInfo;
+import edu.brown.cs.student.main.Recommender.Stud.StudentMatch;
 
 import java.util.ArrayList;
 import java.util.Collections;

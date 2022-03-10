@@ -5,7 +5,6 @@ import edu.brown.cs.student.main.API.APIRequests.APIRequestHandler;
 import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.JSONParser;
 import edu.brown.cs.student.main.API.json.JSONable;
-import edu.brown.cs.student.main.API.json.PartialStudent;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
