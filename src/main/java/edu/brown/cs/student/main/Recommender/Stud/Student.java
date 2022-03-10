@@ -18,9 +18,8 @@ public class Student implements JSONable {
   /**
    * Method for initializing a student from two complementary PartialStudent
    * objects
-   * (StudentInfo & StudentMatches). The two PartialStudent objects must be of the
+   * (StudentInfo and StudentMatches). The two PartialStudent objects must be of the
    * same ID.
-   * 
    * @param part PartialStudent object to add information from
    * @throws IllegalArgumentException if IDs of PartialStudent objects don't match
    *                                  up
