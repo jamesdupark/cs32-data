@@ -13,7 +13,7 @@ import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDimTree.KDTree;
 import edu.brown.cs.student.main.KDimTree.KIsNegativeException;
 import edu.brown.cs.student.main.KDimTree.KeyNotFoundException;
-import edu.brown.cs.student.main.Recommender.Student;
+import edu.brown.cs.student.main.Recommender.Stud.Student;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -176,7 +176,6 @@ public class RecommenderCommands implements REPLCommands {
       Map<Integer, BloomFilter> otherStudents = new HashMap<>(allFilters);
       // remove target students from potential recommendations
       otherStudents.remove(id);
-      // assert that id not in otherFilters?
       BloomComparator studentComparator = new XNORSimilarity(base);
       Map<Integer, Integer> idToBloomDists = new HashMap<>();
       for (int studentID : otherStudents.keySet()) {
