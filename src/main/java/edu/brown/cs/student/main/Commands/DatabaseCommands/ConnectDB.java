@@ -62,8 +62,6 @@ public abstract class ConnectDB {
    * matches the database filepath
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-//  abstract void connectDBCmd(String[] argv, int argc)
-//      throws IllegalArgumentException;
   public void connectDBCmd(String[] argv, int argc, String filepath)
       throws IllegalArgumentException {
     // check correct number of args
@@ -110,6 +108,9 @@ public abstract class ConnectDB {
    * @return a HashMap mapping from the table in the database to its respective table permission.
    */
   public Map<String, String> setUpTablePerm(String[] argv, String database) {
+    if (!dbIndex.containsKey(database)) {
+      throw new IllegalArgumentException("ERROR: Database path is not recognized");
+    }
     DatabaseTables dbTables = getDBTables(database);
     Map<Integer, String> dbIndexTables = dbTables.getIndexTables();
     Map<String, String> tablePermissions = new HashMap<>();
