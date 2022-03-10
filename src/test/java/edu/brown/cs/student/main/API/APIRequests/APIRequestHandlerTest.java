@@ -7,9 +7,12 @@ import static org.junit.Assert.assertTrue;
 import edu.brown.cs.student.main.API.APIAggregator;
 import edu.brown.cs.student.main.API.ClientAuth;
 import edu.brown.cs.student.main.API.json.JSONParser;
+import edu.brown.cs.student.main.Recommender.Stud.StudentInfo;
+import edu.brown.cs.student.main.Recommender.Stud.StudentMatch;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpTimeoutException;
@@ -22,9 +25,11 @@ public class APIRequestHandlerTest {
   private final APIAggregator matchAggregator = new APIAggregator("match");
   private String apiKey, auth;
   private String[] urlAuth, badUrlAuth, postHead, badHead, postBody, badBody;
+  List<StudentInfo> twoInfos;
+  List<StudentMatch> twoMatches;
 
   @Before
-  public void init() throws BadStatusException {
+  public void init() throws BadStatusException, IOException {
     String activeUrl = "https://studentinfoapi.herokuapp.com/get-active";
     activeBuilder = new APIRequestBuilder(activeUrl);
     // get active endpoints and create builders for them
@@ -44,6 +49,10 @@ public class APIRequestHandlerTest {
     badHead = new String[]{"x-api-key", "apiKey"};
     postBody = new String[]{"auth", auth};
     badBody = new String[]{"auth", "me"};
+    twoInfos = JSONParser.readJsonFile(
+        "data/recommendation/json/studentInfoTest.json", StudentInfo.class);
+    twoMatches = JSONParser.readJsonFile(
+        "data/recommendation/json/studentMatchTest.json", StudentMatch.class);
   }
 
   @Test
@@ -68,6 +77,10 @@ public class APIRequestHandlerTest {
     do {
       try { // retry until request goes through
         HttpResponse<String> authResponse = handler.makeRequest(authGet);
+        List<StudentInfo> infos =
+            JSONParser.getJsonObjectList(authResponse.body(), StudentInfo.class);
+        assertEquals(twoInfos.get(0), infos.get(0));
+        assertEquals(200, authResponse.statusCode());
         done = true;
       } catch (BadStatusException | IllegalArgumentException | HttpTimeoutException ignored) {
       }
@@ -86,6 +99,9 @@ public class APIRequestHandlerTest {
     do {
       try { // retry until request goes through
         HttpResponse<String> authResponse = handler.makeRequest(authPost);
+        List<StudentMatch> matches =
+            JSONParser.getJsonObjectList(authResponse.body(), StudentMatch.class);
+        assertEquals(twoMatches.get(0), matches.get(0));
         assertEquals(200, authResponse.statusCode());
         postDone = true;
       } catch (BadStatusException | IllegalArgumentException | HttpTimeoutException ignored) {
