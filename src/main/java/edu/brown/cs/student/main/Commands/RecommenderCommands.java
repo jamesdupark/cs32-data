@@ -232,7 +232,7 @@ public class RecommenderCommands implements REPLCommands {
         Collections.shuffle(distToIDs.get(nextNearest));
         for (int j = 0; j < distToIDs.get(nextNearest).size(); j++) {
           // iterate through list value of map and print the Student ids
-          if (((p + j) < k) && (idPrinted < numStudents - 1)) {
+          if ((p + j) < k && idPrinted < numStudents - 1) {
             System.out.println(distToIDs.get(nextNearest).get(j));
             idPrinted++;
           }
