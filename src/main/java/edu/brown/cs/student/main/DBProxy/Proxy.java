@@ -200,7 +200,6 @@ public class Proxy {
     } else {
       // store query in cache
       Optional<CachedRowSet> rs = this.cache.getUnchecked(sqlQuery);
-      System.out.println(cache.asMap());
       return rs.orElse(null);
     }
   }
