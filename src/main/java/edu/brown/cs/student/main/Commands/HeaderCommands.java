@@ -2,7 +2,7 @@ package edu.brown.cs.student.main.Commands;
 
 import edu.brown.cs.student.main.CSVParse.Builder.HeaderBuilder;
 import edu.brown.cs.student.main.CSVParse.CSVParser;
-import edu.brown.cs.student.main.Header;
+import edu.brown.cs.student.main.Recommender.Header;
 import java.util.HashMap;
 import java.util.List;
 
