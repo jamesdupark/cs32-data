@@ -14,16 +14,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class to establish a connection to the Student Database and retrieve a List of
+ * DatabaseStudents that is passed to the Recommender System.
+ */
 public class DBStudentGenerator {
   /**
    * Connection used to establish a connection to the database through a filepath.
    */
   private static Connection conn = null;
-  private String filepath = null;
   /**
-   * Map that keys on an index to the corresponding table name in the database.
-   * The order of the <key, value> pair is determined by the order of the
-   * tables in the database.
+   * Filepath of the database.
+   */
+  private String filepath;
+  /**
+   * Map that keys on table name in the student database to its corresponding
+   * table permission in the database.
    */
   private final Map<String, String> indexTables = new HashMap<>() {{
       put("names", "R");
@@ -31,6 +37,10 @@ public class DBStudentGenerator {
       put("skills", "R");
       put("interests", "R");
     }};
+  /**
+   * Map that keys on the SQL command used in the SQL Query that retrieves the
+   * List of DatabaseStudents to its respective table name in the database.
+   */
   private final Map<String, String> commandToTable = new HashMap<>() {{
       put("SELECT", "names");
       put("SELECT", "traits");
@@ -38,9 +48,23 @@ public class DBStudentGenerator {
       put("SELECT", "interests");
     }};
 
+  /**
+   * Constructor for the DBStudentGenerator.
+   * @param filepath String representing the filepath of the Student Database.
+   */
   public DBStudentGenerator(String filepath) {
+    // validate filepath is to Student Database
+    assert filepath.equals("data/recommendation/sql/data.sqlite3") : "Filepath must be"
+        + "the filepath to the Student Database!";
     this.filepath = filepath;
   }
+
+  /**
+   * Method to retrieve a list of DatabaseStudents that is passed to the Recommender
+   * System. This list is obtained from executing a SQL query that retrieves all the
+   * fields from the Student Database.
+   * @return a list of DatabaseStudents with all fields in the Database.
+   */
   public List<DatabaseStudent> getDBStudents() {
     try {
       String urlToDB = "jdbc:sqlite:" + filepath;
