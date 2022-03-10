@@ -3,9 +3,11 @@ headers_load data/recommendation/csv/header_types.csv
 recsys_load fsd data/project1/proj1_big.csv
 recsys_load CSV doesnotexist
 recsys_load API-DB doesnotexist
+recsys_load CSV data/project1/proj1_big.csv data/project1/proj1_big.csv
 OUTPUT
 Loaded header types.
 ERROR: second argument should either be CSV or API-DB
 ERROR: doesnotexist (No such file or directory)
+ERROR:
 ERROR:
 END

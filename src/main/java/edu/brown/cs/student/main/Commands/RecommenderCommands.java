@@ -208,7 +208,7 @@ public class RecommenderCommands implements REPLCommands {
       // set and hashmap of lists method to randomize ties
       Map<Double, List<Integer>> distToIDs = new HashMap<>();
       Set<Double> distanceSet = new HashSet<>();
-      // adding each id and distance into distance set and hashmap.
+      // add each id and distance into distance set and hashmap.
       idToNormalizedDist.forEach((studentID, normedDist) -> {
         if (!distanceSet.add(normedDist)) {
           distToIDs.get(normedDist).add(studentID);
