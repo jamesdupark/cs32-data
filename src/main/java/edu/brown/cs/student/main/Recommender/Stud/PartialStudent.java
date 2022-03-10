@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.API.json;
+package edu.brown.cs.student.main.Recommender.Stud;
 
 import java.util.Map;
 

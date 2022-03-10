@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.API.json;
 
+import edu.brown.cs.student.main.Recommender.Stud.StudentInfo;
 import org.junit.Before;
 import org.junit.Test;
 

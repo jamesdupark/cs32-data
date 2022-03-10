@@ -1,9 +1,9 @@
 package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.API.json.JSONParser;
-import edu.brown.cs.student.main.API.json.StudentInfo;
-import edu.brown.cs.student.main.API.json.StudentMatch;
-import edu.brown.cs.student.main.Recommender.Student;
+import edu.brown.cs.student.main.Recommender.Stud.Student;
+import edu.brown.cs.student.main.Recommender.Stud.StudentInfo;
+import edu.brown.cs.student.main.Recommender.Stud.StudentMatch;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +24,8 @@ public class StudentTest {
     try {
       twoInfos = JSONParser.readJsonFile(infoFilePath, StudentInfo.class);
       twoMatches = JSONParser.readJsonFile(matchFilePath, StudentMatch.class);
-    } catch (IOException ignored) { }
+    } catch (IOException ignored) {
+    }
   }
 
   @Test

@@ -6,8 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.JSONParser;
-import edu.brown.cs.student.main.API.json.StudentInfo;
-import edu.brown.cs.student.main.API.json.StudentMatch;
+import edu.brown.cs.student.main.Recommender.Stud.StudentInfo;
+import edu.brown.cs.student.main.Recommender.Stud.StudentMatch;
 import org.junit.Before;
 import org.junit.Test;
 

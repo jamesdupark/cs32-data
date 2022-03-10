@@ -6,9 +6,9 @@ import edu.brown.cs.student.main.API.APIRequests.APIRequestHandler;
 import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.APIStudentGenerator;
 import edu.brown.cs.student.main.API.json.JSONParser;
-import edu.brown.cs.student.main.API.json.StudentInfo;
-import edu.brown.cs.student.main.API.json.StudentMatch;
-import edu.brown.cs.student.main.Recommender.Student;
+import edu.brown.cs.student.main.Recommender.Stud.StudentInfo;
+import edu.brown.cs.student.main.Recommender.Stud.StudentMatch;
+import edu.brown.cs.student.main.Recommender.Stud.Student;
 
 import java.io.IOException;
 import java.net.http.HttpRequest;

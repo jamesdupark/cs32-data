@@ -1,9 +1,6 @@
-package edu.brown.cs.student.main.Recommender;
+package edu.brown.cs.student.main.Recommender.Stud;
 
 import edu.brown.cs.student.main.API.json.JSONable;
-import edu.brown.cs.student.main.API.json.PartialStudent;
-import edu.brown.cs.student.main.API.json.StudentInfo;
-import edu.brown.cs.student.main.API.json.StudentMatch;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -19,10 +16,14 @@ public class Student implements JSONable {
   private final HashMap<String, String> qualMap = new HashMap<>();
 
   /**
-   * Method for initializing a student from two complementary PartialStudent objects
-   * (StudentInfo & StudentMatches). The two PartialStudent objects must be of the same ID.
+   * Method for initializing a student from two complementary PartialStudent
+   * objects
+   * (StudentInfo & StudentMatches). The two PartialStudent objects must be of the
+   * same ID.
+   * 
    * @param part PartialStudent object to add information from
-   * @throws IllegalArgumentException if IDs of PartialStudent objects don't match up
+   * @throws IllegalArgumentException if IDs of PartialStudent objects don't match
+   *                                  up
    */
   public void buildFromPartial(PartialStudent part)
       throws IllegalArgumentException {
@@ -38,6 +39,7 @@ public class Student implements JSONable {
 
   /**
    * gets the id of the current student.
+   * 
    * @return student's id
    */
   private Integer getId() {
@@ -49,6 +51,7 @@ public class Student implements JSONable {
 
   /**
    * Method to store a quantitative field name and its value.
+   * 
    * @param field - the field name of a field for Student.
    * @param value - the value of field for Student.
    */
@@ -58,6 +61,7 @@ public class Student implements JSONable {
 
   /**
    * Method to store a qualitative field name and its value.
+   * 
    * @param field - the field name of a field for Student.
    * @param value - the value of field for Student.
    */
@@ -67,7 +71,9 @@ public class Student implements JSONable {
 
   /**
    * Getter for the qualMap field.
-   * @return - the Hashmap with qualitative field name as key and field value as value.
+   * 
+   * @return - the Hashmap with qualitative field name as key and field value as
+   *         value.
    */
   public HashMap<String, String> getQualMap() {
     return this.qualMap;
@@ -75,7 +81,9 @@ public class Student implements JSONable {
 
   /**
    * Getter for the quanMap field.
-   * @return - the Hashmap with quantitative field name as key and field value as value.
+   * 
+   * @return - the Hashmap with quantitative field name as key and field value as
+   *         value.
    */
   public HashMap<String, Double> getQuanMap() {
     return this.quanMap;
@@ -101,7 +109,7 @@ public class Student implements JSONable {
 
   @Override
   public String toString() {
-    return "Student " + qualMap.get("id");
-//        + " with keys: " + qualMap.keySet() + ", " +  quanMap.keySet();
+    return "Student " + qualMap.get("id")
+        + " with keys: " + qualMap.keySet() + ", " +  quanMap.keySet();
   }
 }
