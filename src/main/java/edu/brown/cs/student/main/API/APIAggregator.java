@@ -6,6 +6,7 @@ import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.JSONParser;
 import edu.brown.cs.student.main.API.json.JSONable;
 
+import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpTimeoutException;
@@ -154,9 +155,11 @@ public class APIAggregator {
           List<T> subset = JSONParser.getJsonObjectList(response.body(), tClass);
           dataset.addAll(subset);
           consecutiveFails = 0;
-          // if the connection times out or fails, add endpoint to end of list to query
-          // again later
-        } catch (BadStatusException | HttpTimeoutException ex) {
+          /*
+          if the connection times out or fails, add endpoint to end of list to query
+          again later.
+           */
+        } catch (BadStatusException | IllegalArgumentException | HttpTimeoutException ex) {
           active.add(currEndpoint);
           consecutiveFails++;
         }
