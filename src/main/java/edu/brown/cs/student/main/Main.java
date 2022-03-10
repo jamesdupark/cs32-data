@@ -14,10 +14,8 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * The Main class of our project. This is where execution begins.
@@ -77,6 +75,7 @@ public final class Main {
         api, data, zoo, horo);
     Repl myRepl = new Repl(commandsList);
 
+    // run the repl
     myRepl.run();
   }
 
