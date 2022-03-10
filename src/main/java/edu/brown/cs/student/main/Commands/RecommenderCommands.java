@@ -7,8 +7,8 @@ import edu.brown.cs.student.main.Blooms.SimilarityMetrics.XNORSimilarity;
 import edu.brown.cs.student.main.Blooms.StudentBloom;
 import edu.brown.cs.student.main.CSVParse.Builder.StudentBuilder;
 import edu.brown.cs.student.main.CSVParse.CSVParser;
-import edu.brown.cs.student.main.CSVParse.DirectStudentBloomListMaker;
-import edu.brown.cs.student.main.CSVParse.DirectStudentNodeMaker;
+import edu.brown.cs.student.main.CSVParse.Maker.DirectStudentBloomListMaker;
+import edu.brown.cs.student.main.CSVParse.Maker.DirectStudentNodeMaker;
 import edu.brown.cs.student.main.DBProxy.DBStudentGenerator;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
 import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
@@ -92,38 +92,42 @@ public class RecommenderCommands implements REPLCommands {
     } else if (typeMap.isEmpty()) {
       throw new IllegalArgumentException("Need to call headers_load before calling recsys_load");
     }
-    List<Student> studentList = new ArrayList<>();
-    if (argv[1].equals("CSV")) {
-      CSVParser<Student> reader = new CSVParser<>(new StudentBuilder(typeMap));
-      reader.load(argv[2]);
-      studentList = reader.getDataList();
-    } else if (argv[1].equals("API-DB")) {
-      DBStudentGenerator a = new DBStudentGenerator(argv[2]);
-      APIStudentGenerator gen = new APIStudentGenerator();
-      List<DatabaseStudent> dbStudents = a.getDBStudents();
-      List<Student> apiStudents = gen.studentsFromAPI();
-      for (int i = 0; i < apiStudents.size(); i++) {
-        Student currStudent = apiStudents.get(i);
-        DatabaseStudent dbStudent = dbStudents.get(i);
-        assert Integer.parseInt(currStudent.getQualMap().get("id")) == dbStudent.getId()
-            : "Ids must correspond";
-        currStudent.buildFromPartial(dbStudent);
-        studentList.add(currStudent);
+    try {
+      List<Student> studentList = new ArrayList<>();
+      if (argv[1].equals("CSV")) {
+        CSVParser<Student> reader = new CSVParser<>(new StudentBuilder(typeMap));
+        reader.load(argv[2]);
+        studentList = reader.getDataList();
+      } else if (argv[1].equals("API-DB")) {
+        DBStudentGenerator a = new DBStudentGenerator(argv[2]);
+        APIStudentGenerator gen = new APIStudentGenerator();
+        List<DatabaseStudent> dbStudents = a.getDBStudents();
+        List<Student> apiStudents = gen.studentsFromAPI();
+        for (int i = 0; i < apiStudents.size(); i++) {
+          Student currStudent = apiStudents.get(i);
+          DatabaseStudent dbStudent = dbStudents.get(i);
+          assert Integer.parseInt(currStudent.getQualMap().get("id")) == dbStudent.getId()
+              : "Ids must correspond";
+          currStudent.buildFromPartial(dbStudent);
+          studentList.add(currStudent);
+        }
+      } else {
+        throw new IllegalArgumentException("second argument should either be CSV or API-DB");
       }
-    } else {
-      throw new IllegalArgumentException("second argument should either be CSV or API-DB");
+      // make StudentNodes from studentList
+      loadKD(studentList);
+      // make HashMap that will become allFilters from studentList
+      Map<Integer, BloomFilter> newFilters = getBloomFilterMap(studentList);
+      if (newFilters == null) {
+        return;
+      }
+      allFilters = newFilters;
+      numStudents = studentList.size();
+      System.out.println("Loaded Recommender with " + numStudents + " student(s)");
+      allFilters = newFilters;
+    } catch (AssertionError ex) {
+      System.err.println("input sql file path does not exist");
     }
-    // make StudentNodes from studentList
-    loadKD(studentList);
-    // make HashMap that will become allFilters from studentList
-    Map<Integer, BloomFilter> newFilters = getBloomFilterMap(studentList);
-    if (newFilters == null) {
-      return;
-    }
-    allFilters = newFilters;
-    numStudents = studentList.size();
-    System.out.println("Loaded Recommender with " + numStudents + " student(s)");
-    allFilters = newFilters;
   }
 
   /**

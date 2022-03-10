@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.CSVParse;
+package edu.brown.cs.student.main.CSVParse.Maker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
