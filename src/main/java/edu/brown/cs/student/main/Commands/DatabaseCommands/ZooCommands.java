@@ -178,6 +178,13 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
       System.err.println(e.getMessage());
     }
   }
+  /**
+   * Accessor method to get the Proxy field that is used for testing.
+   * @return the Proxy
+   */
+  public Proxy getProxy() {
+    return proxy;
+  }
   @Override
   public void checkDatabaseConnected() throws DatabaseNotConnectedException {
     if (conn == null || !this.filepath.equals("data/recommendation/sql/zoo.sqlite3")) {
