@@ -14,8 +14,10 @@ import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * The Main class of our project. This is where execution begins.
@@ -74,7 +76,6 @@ public final class Main {
     List<REPLCommands> commandsList = List.of(blooms, stars, kdTree, header, recommender,
         api, data, zoo, horo);
     Repl myRepl = new Repl(commandsList);
-
 
     myRepl.run();
   }

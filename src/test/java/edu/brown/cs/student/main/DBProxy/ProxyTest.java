@@ -105,7 +105,6 @@ public class ProxyTest {
     proxy.validateQuery(new HashMap<>());
   }
 
-
   /**
    * Method to set up a command table for validateQuery test.
    */
