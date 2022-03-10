@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,7 +141,6 @@ public class DataCommands extends ConnectDB implements REPLCommands {
         // valid query
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
         ResultSet rsForPrinting = rowSet.createCopy();
-        List<DatabaseStudent> dbStud = new ArrayList<>();
         Map<String, DatabaseStudent> idToStud = new HashMap<>();
         while (rsForPrinting.next()) {
           DatabaseStudent student = new DatabaseStudent();
@@ -162,16 +162,29 @@ public class DataCommands extends ConnectDB implements REPLCommands {
             student.setSkill(skill);
             student.setInterest(interest);
           }
-          if (attrType.equals("weaknesses")) {
-            student.setWeaknesses(trait);
-          } else if (attrType.equals("strengths")) {
-            student.setStrengths(trait);
+          if (!student.getInterest().contains(interest)) {
+            student.setInterest(interest);
           }
-          dbStud.add(student);
+          if (attrType.equals("weaknesses")) {
+            if (student.getWeaknesses() == null || !student.getWeaknesses().contains(trait)) {
+              student.setWeaknesses(trait);
+            }
+          } else if (attrType.equals("strengths")) {
+            if (student.getStrengths() == null || !student.getStrengths().contains(trait)) {
+              student.setStrengths(trait);
+            }
+          }
+          idToStud.put(id, student);
+//          dbStud.add(student);
         }
+        List<DatabaseStudent> dbStud = new ArrayList<>();
         idToStud.forEach((k, v) -> {
-          System.out.println(k + ": " + v);
+          dbStud.add(v);
         });
+        Collections.sort(dbStud);
+        for (DatabaseStudent ds : dbStud) {
+          System.out.println(ds);
+        }
         System.out.println("Cache size " + proxy.getCache().size());
       } else {
         // error: sql table does not have this level of permission

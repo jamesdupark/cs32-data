@@ -7,7 +7,7 @@ import java.util.Map;
  * Class to represent an individual student in the Student Database. Upon instantiation,
  * all fields will evaluate to null, which will then be mutated through setters.
  */
-public class DatabaseStudent implements PartialStudent {
+public class DatabaseStudent implements PartialStudent, Comparable<DatabaseStudent> {
   /** String representing the ID of the student. This serves as a unique
    * identifier for each student. */
   private String id;
@@ -191,5 +191,11 @@ public class DatabaseStudent implements PartialStudent {
         + ", email='" + email + '\'' + ", weaknesses='" + weaknesses + '\''
         + ", strengths='" + strengths + '\'' + ", skill='" + skill + '\''
         + ", interest='" + interests + '\'' + '}';
+  }
+  @Override
+  public int compareTo(DatabaseStudent o) {
+    Integer id1 = this.getId();
+    Integer id2 = o.getId();
+    return id1.compareTo(id2);
   }
 }
