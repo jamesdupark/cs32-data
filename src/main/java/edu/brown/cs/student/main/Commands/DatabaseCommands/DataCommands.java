@@ -112,13 +112,16 @@ public class DataCommands extends ConnectDB implements REPLCommands {
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
         printResultSet(rowSet, 6);
       } else {
-        // error: sql table does not have this level of permission
-        System.out.println("ERROR: SQL Table does not have the level of permission");
+        // sql table does not have this level of permission
+        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+            + "have the level of permission");
       }
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
-      e.printStackTrace();
+      System.err.println("ERROR :" + e.getMessage());
+    } catch (InvalidTablePermissionException e) {
+      System.err.println(e.getMessage());
     }
   }
 
@@ -159,13 +162,16 @@ public class DataCommands extends ConnectDB implements REPLCommands {
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
         printResultSet(rowSet, 3);
       } else {
-        // error: sql table does not have this level of permission
-        System.out.println("ERROR: SQL Table does not have the level of permission");
+        // sql table does not have this level of permission
+        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+            + "have the level of permission");
       }
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
-      e.printStackTrace();
+      System.err.println("ERROR :" + e.getMessage());
+    } catch (InvalidTablePermissionException e) {
+      System.err.println(e.getMessage());
     }
   }
 
@@ -212,13 +218,16 @@ public class DataCommands extends ConnectDB implements REPLCommands {
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
         printResultSet(rowSet, 4);
       } else {
-        // error: sql table does not have this level of permission
-        System.out.println("ERROR: SQL Table does not have the level of permission");
+        // sql table does not have this level of permission
+        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+            + "have the level of permission");
       }
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
-      e.printStackTrace();
+      System.err.println("ERROR :" + e.getMessage());
+    } catch (InvalidTablePermissionException e) {
+      System.err.println(e.getMessage());
     }
   }
   @Override

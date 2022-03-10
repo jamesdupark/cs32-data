@@ -110,13 +110,16 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
           System.out.println("Success: animal has been added!");
         }
       } else {
-        // error: sql table does not have this level of permission
-        System.out.println("ERROR: SQL Table does not have the level of permission");
+        // sql table does not have this level of permission
+        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+            + "have the level of permission");
       }
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
-      e.printStackTrace();
+      System.err.println("ERROR :" + e.getMessage());
+    } catch (InvalidTablePermissionException e) {
+      System.err.println(e.getMessage());
     }
   }
   /**
@@ -124,7 +127,7 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
    * the SQL Commands in the SQL for the command will be mapped to the respective
    * table name.
    */
-  private void setupCountAniimalCommandTable() {
+  private void setupCountAnimalCommandTable() {
     commandToTable.clear();
     commandToTable.put("SELECT", "zoo");
   }
@@ -146,7 +149,7 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
     checkDatabaseConnected();
     try {
       String sqlQuery = "SELECT COUNT(*) FROM zoo;";
-      setupCountAniimalCommandTable();
+      setupCountAnimalCommandTable();
       if (proxy.validateQuery(commandToTable)) {
         // valid query
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
@@ -155,13 +158,16 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
         String count = rs.getString(1);
         System.out.println("Number of animals is " + count);
       } else {
-        // error: sql table does not have this level of permission
-        System.out.println("ERROR: SQL Table does not have the level of permission");
+        // sql table does not have this level of permission
+        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+            + "have the level of permission");
       }
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
-      e.printStackTrace();
+      System.err.println("ERROR :" + e.getMessage());
+    } catch (InvalidTablePermissionException e) {
+      System.err.println(e.getMessage());
     }
   }
   @Override
