@@ -1,0 +1,7 @@
+INPUT
+recsys_load CSV data/project1/proj1_big.csv
+recommend 1 1
+OUTPUT
+ERROR:
+ERROR:
+END

@@ -98,6 +98,9 @@ public class RecommenderCommands implements REPLCommands {
         CSVParser<Student> reader = new CSVParser<>(new StudentBuilder(typeMap));
         reader.load(argv[2]);
         studentList = reader.getDataList();
+        if (studentList.size() == 0) {
+          throw new IllegalArgumentException("ERROR: no file found");
+        }
       } else if (argv[1].equals("API-DB")) {
         DBStudentGenerator a = new DBStudentGenerator(argv[2]);
         APIStudentGenerator gen = new APIStudentGenerator();
@@ -126,7 +129,9 @@ public class RecommenderCommands implements REPLCommands {
       System.out.println("Loaded Recommender with " + numStudents + " student(s)");
       allFilters = newFilters;
     } catch (AssertionError ex) {
-      System.err.println("input sql file path does not exist");
+      System.err.println("ERROR: input sql file path does not exist");
+    } catch (IllegalArgumentException ex) {
+      // purposely blank
     }
   }
 
@@ -192,62 +197,12 @@ public class RecommenderCommands implements REPLCommands {
     int k, id;
     id = -1;
     try {
-      k = Integer.parseInt(argv[1]); // assert that this exists
-      id = Integer.parseInt(argv[2]); // assert that this exists
-      BloomFilter base = allFilters.get(id);
-      if (k < 0) {
-        throw new IllegalArgumentException("k cannot be negative");
-      }
-
-      double bloomMin = Integer.MAX_VALUE;
-      double bloomMax = Integer.MIN_VALUE;
-      // get local copy of all students
-      Map<Integer, BloomFilter> otherStudents = new HashMap<>(allFilters);
-      // remove target students from potential recommendations
-      otherStudents.remove(id);
-      BloomComparator studentComparator = new XNORSimilarity(base);
-      Map<Integer, Integer> idToBloomDists = new HashMap<>();
-      for (int studentID : otherStudents.keySet()) {
-        BloomFilter filter = otherStudents.get(studentID);
-        int dist = studentComparator.similarity(filter);
-        idToBloomDists.put(studentID, dist);
-        if (dist < bloomMin) {
-          bloomMin = dist;
-        }
-        if (dist > bloomMax) {
-          bloomMax = dist;
-        }
-      }
-      Map<Integer, Double> idToNormalizedDist = new HashMap<>();
-      for (int studentID : otherStudents.keySet()) {
-        double distanceInDouble = idToBloomDists.get(studentID);
-        double normalized = (distanceInDouble - bloomMin) / (bloomMax - bloomMin);
-        idToNormalizedDist.put(studentID, normalized);
-      }
-      kdTree.cleanDataStructures();
-      // loads DistanceQueue field with k length Queue from target student
-      this.kdTree.findKSN(numStudents, id, this.kdTree.getRoot(), new EuclideanDistance());
-      // find the min and max for normalization
-      double kdMax = Double.MIN_VALUE;
-      double kdMin = Double.MAX_VALUE;
-      for (Double distance : this.kdTree.getDistanceQueue()) {
-        if (distance > kdMax) {
-          kdMax = distance;
-        }
-        if (distance < kdMin) {
-          kdMin = distance;
-        }
-      }
-      // loop through DistanceQueue to find normalized Distance for each node.
-      for (Double distance : this.kdTree.getDistanceQueue()) {
-        double normalizedDistance = (distance - kdMin) / (kdMax - kdMin);
-        // loop through list of students with the same normalized distance to
-        // combine their distance with bloom filter.
-        for (Integer studentID : this.kdTree.getDistToUserID().get(distance)) {
-          idToNormalizedDist.replace(studentID,
-              idToNormalizedDist.get(studentID) + normalizedDistance);
-        }
-      }
+      k = Integer.parseInt(argv[1]);
+      id = Integer.parseInt(argv[2]);
+      // get id to normalized bloom similarity map.
+      Map<Integer, Double> idToNormalizedDist = getBloomNormalizedMap(k, id);
+      // add normalized kd similarity to idToNormalizedDist map
+      addNormalizedKdSimilarity(id, idToNormalizedDist);
       // set and hashmap of lists method to randomize ties
       Map<Double, List<Integer>> distToIDs = new HashMap<>();
       Set<Double> distanceSet = new HashSet<>();
@@ -292,5 +247,80 @@ public class RecommenderCommands implements REPLCommands {
     } catch (NullPointerException e) {
       System.err.println("ERROR: input student id does not exist");
     }
+  }
+
+  /**
+   * Adds the normalized kd similarity score to idToNormalizedDist.
+   * @param id - the id of the student to find similar students to
+   * @param idToNormalizedDist - hashmap from student id to normalized score in similarity
+   * @throws KIsNegativeException - when k is negative
+   * @throws KeyNotFoundException - when student id does not exist
+   */
+  private void addNormalizedKdSimilarity(int id, Map<Integer, Double> idToNormalizedDist)
+      throws KIsNegativeException, KeyNotFoundException {
+    kdTree.cleanDataStructures();
+    // loads DistanceQueue field with k length Queue from target student
+    this.kdTree.findKSN(numStudents, id, this.kdTree.getRoot(), new EuclideanDistance());
+    // find the min and max for normalization
+    double kdMax = Double.MIN_VALUE;
+    double kdMin = Double.MAX_VALUE;
+    for (Double distance : this.kdTree.getDistanceQueue()) {
+      if (distance > kdMax) {
+        kdMax = distance;
+      }
+      if (distance < kdMin) {
+        kdMin = distance;
+      }
+    }
+    // loop through DistanceQueue to find normalized Distance for each node.
+    for (Double distance : this.kdTree.getDistanceQueue()) {
+      double normalizedDistance = (distance - kdMin) / (kdMax - kdMin);
+      // loop through list of students with the same normalized distance to
+      // combine their distance with bloom filter.
+      for (Integer studentID : this.kdTree.getDistToUserID().get(distance)) {
+        idToNormalizedDist.replace(studentID,
+            idToNormalizedDist.get(studentID) + normalizedDistance);
+      }
+    }
+  }
+
+  /**
+   * Outputs a map from student id to normalized bloom similarity score.
+   * @param k - the number of similar students to find.
+   * @param id - the id of the student to find similar students to
+   * @return - a hashmap from student id to normalized bloom similarity score
+   */
+  private Map<Integer, Double> getBloomNormalizedMap(int k, int id) {
+    BloomFilter base = allFilters.get(id);
+    if (k < 0) {
+      throw new IllegalArgumentException("k cannot be negative");
+    }
+
+    double bloomMin = Integer.MAX_VALUE;
+    double bloomMax = Integer.MIN_VALUE;
+    // get local copy of all students
+    Map<Integer, BloomFilter> otherStudents = new HashMap<>(allFilters);
+    // remove target students from potential recommendations
+    otherStudents.remove(id);
+    BloomComparator studentComparator = new XNORSimilarity(base);
+    Map<Integer, Integer> idToBloomDists = new HashMap<>();
+    for (int studentID : otherStudents.keySet()) {
+      BloomFilter filter = otherStudents.get(studentID);
+      int dist = studentComparator.similarity(filter);
+      idToBloomDists.put(studentID, dist);
+      if (dist < bloomMin) {
+        bloomMin = dist;
+      }
+      if (dist > bloomMax) {
+        bloomMax = dist;
+      }
+    }
+    Map<Integer, Double> idToNormalizedDist = new HashMap<>();
+    for (int studentID : otherStudents.keySet()) {
+      double distanceInDouble = idToBloomDists.get(studentID);
+      double normalized = (distanceInDouble - bloomMin) / (bloomMax - bloomMin);
+      idToNormalizedDist.put(studentID, normalized);
+    }
+    return idToNormalizedDist;
   }
 }

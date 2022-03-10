@@ -1,0 +1,11 @@
+INPUT
+headers_load data/recommendation/csv/header_types.csv
+recsys_load CSV data/project1/proj1_big.csv
+recommend -1 1
+recommend 1 0
+OUTPUT
+Loaded header types.
+Loaded Recommender with 500 student(s)
+ERROR:
+ERROR:
+END

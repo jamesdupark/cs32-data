@@ -36,7 +36,7 @@ public class HeaderCommands implements REPLCommands {
         System.err.println("ERROR: Command not recognized.");
       }
     } catch (IllegalArgumentException ex) {
-      System.err.println("ERROR: " + ex.getMessage());
+      System.err.println(ex.getMessage());
     }
   }
 
@@ -51,7 +51,9 @@ public class HeaderCommands implements REPLCommands {
     CSVParser<Header> reader = new CSVParser<>(new HeaderBuilder());
     reader.load(argv[1]);
     List<Header> headersList = reader.getDataList();
-
+    if (headersList.size() == 0) {
+      return;
+    }
     for (Header header : headersList) {
       typeMap.put(header.getFieldName(), header.getDataType());
     }

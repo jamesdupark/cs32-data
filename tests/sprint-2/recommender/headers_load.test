@@ -1,0 +1,9 @@
+INPUT
+headers_load
+headers_load data/recommendation/csv/wrong.csv
+headers_load data/recommendation/csv/header_types.csv
+OUTPUT
+ERROR: Incorrect number of arguments. Expected 2 arguments but got 1
+ERROR: data/recommendation/csv/wrong.csv (No such file or directory)
+Loaded header types.
+END

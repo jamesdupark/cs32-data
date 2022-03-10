@@ -1,0 +1,13 @@
+INPUT
+headers_load data/recommendation/csv/header_types.csv
+recsys_load CSV data/project1/proj1_big.csv
+recsys_load CSV data/project1/proj1_medium.csv
+recsys_load CSV data/project1/proj1_small.csv
+recsys_load API-DB data/recommendation/sql/data.sqlite3
+OUTPUT
+Loaded header types.
+Loaded Recommender with 500 student(s)
+Loaded Recommender with 60 student(s)
+Loaded Recommender with 20 student(s)
+Loaded Recommender with 60 student(s)
+END

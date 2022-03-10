@@ -1,0 +1,18 @@
+INPUT
+headers_load data/recommendation/csv/header_types.csv
+recsys_load CSV data/project1/proj1_small.csv
+recommend 10 10
+OUTPUT
+Loaded header types.
+Loaded Recommender with 20 student(s)
+16
+17
+2
+14
+1
+6
+15
+20
+5
+8
+END
