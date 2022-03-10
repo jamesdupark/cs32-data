@@ -77,12 +77,8 @@ public final class Main {
         api, data, zoo, horo);
     Repl myRepl = new Repl(commandsList);
 
-    DBStudentGenerator a = new DBStudentGenerator("data/recommendation/sql/data.sqlite3");
-//    a.getDBStudents();
-    for (DatabaseStudent ds : a.getDBStudents()) {
-      System.out.println(ds);
-    }
-//    myRepl.run();
+
+    myRepl.run();
   }
 
   private void runSparkServer(int port) {

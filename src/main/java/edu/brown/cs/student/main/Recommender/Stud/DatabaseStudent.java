@@ -56,12 +56,12 @@ public class DatabaseStudent implements PartialStudent, Comparable<DatabaseStude
   public Map<String, String> getQualMap() {
     Map<String, String> qualMap = new HashMap<>();
     qualMap.put("id", this.id);
-    qualMap.put("name", this.id);
-    qualMap.put("email", this.id);
-    qualMap.put("weaknesses", this.id);
-    qualMap.put("strengths", this.id);
-    qualMap.put("skill", this.id);
-    qualMap.put("interests", this.id);
+    qualMap.put("name", this.name);
+    qualMap.put("email", this.email);
+    qualMap.put("weaknesses", this.weaknesses);
+    qualMap.put("strengths", this.strengths);
+    qualMap.put("skills", this.skill);
+    qualMap.put("interests", this.interests);
     return qualMap;
   }
 

@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.Commands;
 
+import edu.brown.cs.student.main.API.APIStudentGenerator;
 import edu.brown.cs.student.main.Blooms.BloomFilter;
 import edu.brown.cs.student.main.Blooms.SimilarityMetrics.BloomComparator;
 import edu.brown.cs.student.main.Blooms.SimilarityMetrics.XNORSimilarity;
@@ -8,11 +9,13 @@ import edu.brown.cs.student.main.CSVParse.Builder.StudentBuilder;
 import edu.brown.cs.student.main.CSVParse.CSVParser;
 import edu.brown.cs.student.main.CSVParse.DirectStudentBloomListMaker;
 import edu.brown.cs.student.main.CSVParse.DirectStudentNodeMaker;
+import edu.brown.cs.student.main.DBProxy.DBStudentGenerator;
 import edu.brown.cs.student.main.Distances.EuclideanDistance;
 import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDimTree.KDTree;
 import edu.brown.cs.student.main.KDimTree.KIsNegativeException;
 import edu.brown.cs.student.main.KDimTree.KeyNotFoundException;
+import edu.brown.cs.student.main.Recommender.Stud.DatabaseStudent;
 import edu.brown.cs.student.main.Recommender.Stud.Student;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,15 +82,33 @@ public class RecommenderCommands implements REPLCommands {
    */
   public void load(String[] argv, int argc) {
     //check correct number of args
-    if (argc != 2) {
+    if (argc != 3) {
       throw new IllegalArgumentException("Incorrect number of arguments."
-          + " Expected 2 arguments but got " + argc);
+          + " Expected 3 arguments but got " + argc);
     } else if (typeMap.isEmpty()) {
       throw new IllegalArgumentException("Need to call headers_load before calling recsys_load");
     }
-    CSVParser<Student> reader = new CSVParser<>(new StudentBuilder(typeMap));
-    reader.load(argv[2]);
-    List<Student> studentList = reader.getDataList();
+    List<Student> studentList = new ArrayList<>();
+    if (argv[1].equals("CSV")) {
+      CSVParser<Student> reader = new CSVParser<>(new StudentBuilder(typeMap));
+      reader.load(argv[2]);
+      studentList = reader.getDataList();
+    } else if (argv[1].equals("API-DB")) {
+      DBStudentGenerator a = new DBStudentGenerator(argv[2]);
+      APIStudentGenerator gen = new APIStudentGenerator();
+      List<DatabaseStudent> dbStudents = a.getDBStudents();
+      List<Student> apiStudents = gen.studentsFromAPI();
+      for (int i = 0; i < apiStudents.size(); i++) {
+        Student currStudent = apiStudents.get(i);
+        DatabaseStudent dbStudent = dbStudents.get(i);
+        assert Integer.parseInt(currStudent.getQualMap().get("id")) == dbStudent.getId()
+            : "Ids must correspond";
+        currStudent.buildFromPartial(dbStudent);
+        studentList.add(currStudent);
+      }
+    } else {
+      throw new IllegalArgumentException("second argument should either be CSV or API-DB");
+    }
     // make StudentNodes from studentList
     loadKD(studentList);
     // make HashMap that will become allFilters from studentList

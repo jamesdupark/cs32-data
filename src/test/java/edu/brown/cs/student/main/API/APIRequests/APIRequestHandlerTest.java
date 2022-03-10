@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import edu.brown.cs.student.main.API.APIAggregator;
 import edu.brown.cs.student.main.API.ClientAuth;
 import edu.brown.cs.student.main.API.json.JSONParser;
-import edu.brown.cs.student.main.API.json.StudentMatch;
 import org.junit.Before;
 import org.junit.Test;
 
