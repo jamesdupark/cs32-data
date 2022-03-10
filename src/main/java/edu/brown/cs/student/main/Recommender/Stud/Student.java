@@ -28,7 +28,7 @@ public class Student implements JSONable {
   public void buildFromPartial(PartialStudent part)
       throws IllegalArgumentException {
     try {
-      assert part.getId() == this.getId() : "IDs must correspond";
+      assert this.getId() == null || this.getId().equals(part.getId()) : "IDs must correspond";
       // add info from the partial student
       quanMap.putAll(part.getQuantMap());
       qualMap.putAll(part.getQualMap());
@@ -42,8 +42,11 @@ public class Student implements JSONable {
    * 
    * @return student's id
    */
-  private int getId() {
-    return Integer.parseInt(qualMap.get("id"));
+  private Integer getId() {
+    if (qualMap.containsKey("id")) {
+      return Integer.parseInt(qualMap.get("id"));
+    }
+    return null;
   }
 
   /**
