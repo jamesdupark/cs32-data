@@ -57,7 +57,7 @@ public class Proxy {
     final int maxCacheSize = 10;
     CacheLoader<String, Optional<CachedRowSet>> loader = new CacheLoader<>() {
       @Override
-      public Optional<CachedRowSet> load(String key) throws SQLException, ExecutionException {
+      public Optional<CachedRowSet> load(String key) throws SQLException {
         ResultSet result = execQuery(key);
         if (result == null) {
           return null;

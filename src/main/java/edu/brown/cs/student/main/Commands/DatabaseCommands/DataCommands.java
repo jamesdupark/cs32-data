@@ -60,18 +60,16 @@ public class DataCommands extends ConnectDB implements REPLCommands {
           this.selectAllCmd(argc);
           break;
         case "find_same_interests_data":
-          this.findSameInterestsCmd(argv, argc);
+          this.findSameInterestsCmd(argc);
           break;
         case "find_same_traits_and_skills_data":
-          this.findTraitAndSkillsCmd(argv, argc);
+          this.findTraitAndSkillsCmd(argc);
           break;
         default:
           System.err.println("ERROR: Command not recognized.");
           break;
       }
     } catch (IllegalArgumentException e) {
-      System.err.println(e.getMessage());
-    } catch (RuntimeException e) {
       System.err.println(e.getMessage());
     }
   }
@@ -139,11 +137,10 @@ public class DataCommands extends ConnectDB implements REPLCommands {
    * Database for students with the same interests as a target interest. If successful,
    * the ids, names, and interests of all the students should be printed.
    * Prints informative error message upon failure.
-   * @param argv array of strings representing tokenized user input
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void findSameInterestsCmd(String[] argv, int argc)
+  private void findSameInterestsCmd(int argc)
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 1) {
@@ -191,11 +188,10 @@ public class DataCommands extends ConnectDB implements REPLCommands {
    * respectively. If successful, the names, attribute types, traits, and skills of all
    * the students should be printed.
    * Prints informative error message upon failure.
-   * @param argv array of strings representing tokenized user input
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void findTraitAndSkillsCmd(String[] argv, int argc)
+  private void findTraitAndSkillsCmd(int argc)
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 1) {

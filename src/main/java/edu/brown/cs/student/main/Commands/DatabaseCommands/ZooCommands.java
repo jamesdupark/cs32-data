@@ -58,15 +58,13 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
           this.insertAnimalCmd(argv, argc);
           break;
         case "count_animal_zoo":
-          this.countAnimalCmd(argv, argc);
+          this.countAnimalCmd(argc);
           break;
         default:
           System.err.println("ERROR: Command not recognized.");
           break;
       }
     } catch (IllegalArgumentException e) {
-      System.err.println(e.getMessage());
-    } catch (RuntimeException e) {
       System.err.println(e.getMessage());
     }
   }
@@ -134,11 +132,10 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
    * Executes the "count_animal_zoo" command which counts the number of animals in
    * the Zoo Database. If successful, the number of animals should be printed.
    * Prints informative error message upon failure.
-   * @param argv array of strings representing tokenized user input
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void countAnimalCmd(String[] argv, int argc)
+  private void countAnimalCmd(int argc)
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 1) {

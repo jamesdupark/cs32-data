@@ -54,7 +54,7 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
           conn = this.proxy.getConn();
           break;
         case "find_tas_w_horoscope_horo":
-          this.findTARoleForAHoroscopeCmd(argv, argc);
+          this.findTARoleForAHoroscopeCmd(argc);
           break;
         case "update_ta_role_horo":
           this.updateTARoleCmd(argv, argc);
@@ -64,8 +64,6 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
           break;
       }
     } catch (IllegalArgumentException e) {
-      System.err.println(e.getMessage());
-    } catch (RuntimeException e) {
       System.err.println(e.getMessage());
     }
   }
@@ -85,11 +83,10 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
    * Database for TAs with the same horoscope as a target horoscope. If successful,
    * the TA name, TA role, and horoscope of al the matches should be printed.
    * Prints informative error message upon failure.
-   * @param argv array of strings representing tokenized user input
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void findTARoleForAHoroscopeCmd(String[] argv, int argc) {
+  private void findTARoleForAHoroscopeCmd(int argc) {
     // check correct number of args
     if (argc != 1) {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
