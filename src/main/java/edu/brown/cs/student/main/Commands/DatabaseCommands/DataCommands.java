@@ -231,32 +231,11 @@ public class DataCommands extends ConnectDB implements REPLCommands {
     }
   }
   /**
-   * Accessor method to get the Conn field that is used for testing.
-   * @return the Conn
-   */
-  public Connection getConn() {
-    return this.conn;
-  }
-  /**
-   * Mutator method to set the Conn field that is used for testing.
-   * @param newConn the new conn.
-   */
-  public void setConn(Connection newConn) {
-    this.conn = newConn;
-  }
-  /**
    * Accessor method to get the Proxy field that is used for testing.
    * @return the Proxy
    */
   public Proxy getProxy() {
     return this.proxy;
-  }
-  /**
-   * Mutator method to set the Proxy field that is used for testing.
-   * @param proxy the new proxy.
-   */
-  public void setProxy(Proxy proxy) {
-    this.proxy = proxy;
   }
   @Override
   public void checkDatabaseConnected() {
