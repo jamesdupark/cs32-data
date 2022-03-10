@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.CSVParse.Builder;
 
-import edu.brown.cs.student.main.Header;
+import edu.brown.cs.student.main.Recommender.Header;
 
 import java.util.List;
 

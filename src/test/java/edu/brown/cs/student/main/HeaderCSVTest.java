@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main;
 
-import edu.brown.cs.student.main.Blooms.BloomFilter;
 import edu.brown.cs.student.main.Commands.HeaderCommands;
+import edu.brown.cs.student.main.Recommender.Header;
 import org.junit.Before;
 import org.junit.Test;
 

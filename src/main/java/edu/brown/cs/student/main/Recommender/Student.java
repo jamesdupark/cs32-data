@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.Recommender;
 
 import edu.brown.cs.student.main.API.json.JSONable;
 import edu.brown.cs.student.main.API.json.StudentInfo;
