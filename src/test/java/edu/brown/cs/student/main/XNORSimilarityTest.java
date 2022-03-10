@@ -29,9 +29,9 @@ public class XNORSimilarityTest {
 
   @Test
   public void testSimilarity() {
-    assertEquals(5, comp.similarity(compSet));
-    assertEquals(6, comp.similarity(emptySet));
-    assertEquals(7, comp.similarity(simSet));
+    assertEquals(3, comp.similarity(compSet));
+    assertEquals(2, comp.similarity(emptySet));
+    assertEquals(1, comp.similarity(simSet));
     assertThrows(AssertionError.class, () -> comp.similarity(bigSet));
   }
 

@@ -44,7 +44,7 @@ public class RecommenderCommands implements REPLCommands {
   /**
    * the number of students loaded from CSV file.
    */
-  private int numStudents;
+  private int numStudents = 0;
   /**
    * Constructor for a new HeaderCommands.
    * @param map - Hashmap from column name to data type.
@@ -128,40 +128,52 @@ public class RecommenderCommands implements REPLCommands {
     allFilters = newFilters;
   }
 
+  /**
+   * Prints the k (argv[1]) most similar students from student with the input id.
+   * @param argc - the length of the argv.
+   * @param argv - array of strings representing tokenized user input.
+   */
   private void recommend(int argc, String[] argv) {
-
-    int k = Integer.parseInt(argv[1]); // assert that this exists
-    int id = Integer.parseInt(argv[2]); // assert that this exists
-    BloomFilter base = allFilters.get(id);
-
-    double bloomMin = Integer.MAX_VALUE;
-    double bloomMax = Integer.MIN_VALUE;
-    // get local copy of all students
-    Map<Integer, BloomFilter> otherStudents = new HashMap<>(allFilters);
-    // remove target students from potential recommendations
-    otherStudents.remove(id);
-    // assert that id not in otherFilters?
-    BloomComparator studentComparator = new XNORSimilarity(base);
-    Map<Integer, Integer> idToBloomDists = new HashMap<>();
-    for (int studentID : otherStudents.keySet()) {
-      BloomFilter filter = otherStudents.get(studentID);
-      int dist = studentComparator.similarity(filter);
-      idToBloomDists.put(studentID, dist);
-      if (dist < bloomMin) {
-        bloomMin = dist;
-      }
-      if (dist > bloomMax) {
-        bloomMax = dist;
-      }
+    if (numStudents == 0) {
+      throw new IllegalArgumentException("must call recsys_load before calling recommend");
     }
-    Map<Integer, Double> idToNormalizedDist = new HashMap<>();
-    for (int studentID : otherStudents.keySet()) {
-      double distanceInDouble = idToBloomDists.get(studentID);
-      double normalized = (distanceInDouble - bloomMin) / (bloomMax - bloomMin);
-      idToNormalizedDist.put(studentID, normalized);
-    }
-    kdTree.cleanDataStructures();
+    int k, id;
+    id = -1;
     try {
+      k = Integer.parseInt(argv[1]); // assert that this exists
+      id = Integer.parseInt(argv[2]); // assert that this exists
+      BloomFilter base = allFilters.get(id);
+      if (k < 0) {
+        throw new IllegalArgumentException("k cannot be negative");
+      }
+
+      double bloomMin = Integer.MAX_VALUE;
+      double bloomMax = Integer.MIN_VALUE;
+      // get local copy of all students
+      Map<Integer, BloomFilter> otherStudents = new HashMap<>(allFilters);
+      // remove target students from potential recommendations
+      otherStudents.remove(id);
+      // assert that id not in otherFilters?
+      BloomComparator studentComparator = new XNORSimilarity(base);
+      Map<Integer, Integer> idToBloomDists = new HashMap<>();
+      for (int studentID : otherStudents.keySet()) {
+        BloomFilter filter = otherStudents.get(studentID);
+        int dist = studentComparator.similarity(filter);
+        idToBloomDists.put(studentID, dist);
+        if (dist < bloomMin) {
+          bloomMin = dist;
+        }
+        if (dist > bloomMax) {
+          bloomMax = dist;
+        }
+      }
+      Map<Integer, Double> idToNormalizedDist = new HashMap<>();
+      for (int studentID : otherStudents.keySet()) {
+        double distanceInDouble = idToBloomDists.get(studentID);
+        double normalized = (distanceInDouble - bloomMin) / (bloomMax - bloomMin);
+        idToNormalizedDist.put(studentID, normalized);
+      }
+      kdTree.cleanDataStructures();
       // loads DistanceQueue field with k length Queue from target student
       this.kdTree.findKSN(numStudents, id, this.kdTree.getRoot(), new EuclideanDistance());
       // find the min and max for normalization
@@ -204,7 +216,7 @@ public class RecommenderCommands implements REPLCommands {
       // iterate through sorted list
       int idPrinted = 0;
       for (int p = 0; p < k; p++) {
-        if (idPrinted >= numStudents) {
+        if (idPrinted >= numStudents - 1) {
           break;
         }
         Double nextNearest = sortedList.get(p);
@@ -213,7 +225,7 @@ public class RecommenderCommands implements REPLCommands {
         for (int j = 0; j < distToIDs.get(nextNearest).size(); j++) {
           // iterate through list value of map and print the Student ids
           if ((p + j) < k) {
-            if (idPrinted < numStudents) {
+            if (idPrinted < numStudents - 1) {
               System.out.println(distToIDs.get(nextNearest).get(j));
               idPrinted++;
             }
@@ -224,7 +236,10 @@ public class RecommenderCommands implements REPLCommands {
       System.err.println(ex.getMessage());
     } catch (KeyNotFoundException e) {
       System.err.println("ERROR: Key not found");
+    } catch (NumberFormatException ex) {
+      System.err.println("k (arg 1) and id (arg 2) must be an integer");
+    } catch (NullPointerException e) {
+      System.err.println("ERROR: input student id does not exist");
     }
-
   }
 }

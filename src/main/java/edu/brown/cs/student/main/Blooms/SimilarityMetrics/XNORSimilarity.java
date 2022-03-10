@@ -23,7 +23,7 @@ public class XNORSimilarity implements BloomComparator {
   @Override
   public int compare(BloomFilter o1, BloomFilter o2) {
     // "more similar" -> higher similarity score
-    return Integer.compare(similarity(o2), similarity(o1));
+    return Integer.compare(similarity(o1), similarity(o2));
   }
 
   @Override
@@ -40,7 +40,7 @@ public class XNORSimilarity implements BloomComparator {
     BitSet compSet = compFilter.getFilter();
     compSet.xor(baseSet); // modifies compSet to the xor of itself and baseSet
     compSet.flip(0, baseFilter.size()); // xnor = complement of xor
-    return compSet.cardinality();
+    return baseFilter.size() - compSet.cardinality();
   }
 
   @Override
