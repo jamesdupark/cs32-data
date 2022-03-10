@@ -2,8 +2,7 @@
 
 ## Section 2: Overall Description
 ### 2.1: User Needs
-Based on the provided data on student stakeholders, our users will need to be able to find compatible group mates based 
-on their provided data and our recommender system. Currently, groupmaking is by word of mouth only or completely random,
+Based on the provided data on student stakeholders, our users will need to be able to find compatible group mates based on their provided data and our recommender system. Currently, groupmaking is by word of mouth only or completely random,
 so students who don’t have friends in CS32 or just want to meet new people may be matched with incompatible group mates 
 and suffer as a result.
 

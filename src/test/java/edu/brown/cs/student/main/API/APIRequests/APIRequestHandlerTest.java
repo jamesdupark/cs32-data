@@ -10,7 +10,6 @@ import edu.brown.cs.student.main.API.json.JSONParser;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpTimeoutException;
@@ -70,7 +69,7 @@ public class APIRequestHandlerTest {
       try { // retry until request goes through
         HttpResponse<String> authResponse = handler.makeRequest(authGet);
         done = true;
-      } catch (BadStatusException | HttpTimeoutException ignored) {
+      } catch (BadStatusException | IllegalArgumentException | HttpTimeoutException ignored) {
       }
     } while (!done);
     assertThrows(BadStatusException.class, () -> handler.makeRequest(failedAuthGet));
@@ -89,7 +88,7 @@ public class APIRequestHandlerTest {
         HttpResponse<String> authResponse = handler.makeRequest(authPost);
         assertEquals(200, authResponse.statusCode());
         postDone = true;
-      } catch (BadStatusException | HttpTimeoutException ignored) {
+      } catch (BadStatusException | IllegalArgumentException | HttpTimeoutException ignored) {
       }
     } while (!postDone);
     assertThrows(BadStatusException.class, () -> handler.makeRequest(failedAuth));
