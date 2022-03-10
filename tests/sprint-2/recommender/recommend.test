@@ -2,6 +2,7 @@ INPUT
 headers_load data/recommendation/csv/header_types.csv
 recsys_load CSV data/project1/proj1_small.csv
 recommend 10 10
+recommend 0 10
 recsys_load API-DB data/recommendation/sql/data.sqlite3
 recommend 10 10
 OUTPUT
