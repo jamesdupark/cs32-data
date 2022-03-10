@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.CSVParse;
+package edu.brown.cs.student.main.CSVParse.Maker;
 
 import edu.brown.cs.student.main.KDimTree.KDNodes.KDNode;
 import edu.brown.cs.student.main.KDimTree.KDNodes.StudentNode;
