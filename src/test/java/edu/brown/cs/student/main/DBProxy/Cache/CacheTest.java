@@ -1,10 +1,7 @@
 package edu.brown.cs.student.main.DBProxy.Cache;
 
-import edu.brown.cs.student.main.Commands.DatabaseCommands.ConnectDB;
 import edu.brown.cs.student.main.Commands.DatabaseCommands.DataCommands;
 import edu.brown.cs.student.main.Commands.DatabaseCommands.HoroscopeCommands;
-import edu.brown.cs.student.main.DBProxy.Proxy;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -58,36 +55,44 @@ public class CacheTest {
    * Method to test that repeated SQL queries are Cached.
    */
   @Test
-  public void testRepeatedQueriesEnterCache() throws SQLException, FileNotFoundException,
-      ClassNotFoundException {
-    setupStudTablePerm();
+  public void testRepeatedQueriesEnterCache() {
     DataCommands dataCmd = new DataCommands();
-    dataCmd.setProxy(dataCmd.connectProxy("data/recommendation/sql/data.sqlite3",
-        studTablePermissions));
-    dataCmd.setConn(dataCmd.getProxy().getConn());
-    dataCmd.getProxy().connectDB();
+    String[] argv = new String[6];
+    argv[0] = "connect_db_data";
+    argv[1] = "data/recommendation/sql/data.sqlite3";
+    argv[2] = "RW";
+    argv[3] = "RW";
+    argv[4] = "RW";
+    argv[5] = "RW";
+    dataCmd.executeCmds("connect_db_data", argv, 6);
 
     // run a sql query
-    dataCmd.selectAllCmd(1);
+    String[] argv2 = new String[1];
+    argv2[0] = "select_all_data";
+    dataCmd.executeCmds("select_all_data", argv2, 1);
     assertEquals(dataCmd.getProxy().getCache().size(), 1);
 
     // repeat sql query
-    dataCmd.selectAllCmd(1);
+    dataCmd.executeCmds("select_all_data", argv2, 1);
     assertEquals(dataCmd.getProxy().getCache().size(), 1);
 
     // run a new sql query
-    dataCmd.findTraitAndSkillsCmd(1);
+    String[] argv3 = new String[1];
+    argv3[0] = "find_same_traits_and_skills_data";
+    dataCmd.executeCmds("find_same_traits_and_skills_data", argv3, 1);
     assertEquals(dataCmd.getProxy().getCache().size(), 2);
 
     // run a new sql query
-    dataCmd.findSameInterestsCmd(1);
+    String[] argv4 = new String[1];
+    argv4[0] = "find_same_interests_data";
+    dataCmd.executeCmds("find_same_interests_data", argv4, 1);
     assertEquals(dataCmd.getProxy().getCache().size(), 3);
 
     // repeat old queries
-    dataCmd.findSameInterestsCmd(1);
-    dataCmd.findTraitAndSkillsCmd(1);
-    dataCmd.findTraitAndSkillsCmd(1);
-    dataCmd.selectAllCmd(1);
+    dataCmd.executeCmds("find_same_interests_data", argv4, 1);
+    dataCmd.executeCmds("find_same_traits_and_skills_data", argv3, 1);
+    dataCmd.executeCmds("find_same_traits_and_skills_data", argv3, 1);
+    dataCmd.executeCmds("select_all_data", argv2, 1);
     assertEquals(dataCmd.getProxy().getCache().size(), 3);
   }
 
@@ -98,24 +103,29 @@ public class CacheTest {
    * @throws ClassNotFoundException if there is no definition for the class specified to the proxy
    */
   @Test
-  public void testCacheClearsOnWriteCmd() throws SQLException, FileNotFoundException, ClassNotFoundException {
-    setupHoroTalblePerm();
+  public void testCacheClearsOnWriteCmd() {
     HoroscopeCommands horoCmd = new HoroscopeCommands();
-    horoCmd.setProxy(horoCmd.connectProxy("data/recommendation/sql/horoscopes.sqlite3",
-        horoTablePermissions));
-    horoCmd.setConn(horoCmd.getProxy().getConn());
-    horoCmd.getProxy().connectDB();
+    String[] argv = new String[6];
+    argv[0] = "connect_db_horo";
+    argv[1] = "data/recommendation/sql/horoscopes.sqlite3";
+    argv[2] = "RW";
+    argv[3] = "RW";
+    argv[4] = "RW";
+    argv[5] = "RW";
+    horoCmd.executeCmds("connect_db_horo", argv, 6);
 
     // run a sql query that does not need write command
-    horoCmd.findTARoleForAHoroscopeCmd(1);
+    String[] argv2 = new String[1];
+    argv2[0] = "find_tas_w_horoscope_horo";
+    horoCmd.executeCmds("find_tas_w_horoscope_horo", argv2, 1);
     assertEquals(horoCmd.getProxy().getCache().size(), 1);
 
     // run a sql query that uses write command
-    String[] argv = new String[3];
-    argv[0] = "data/recommendation/sql/horoscopes.sqlite3";
-    argv[1] = "HTA";
-    argv[2] = "Dylan";
-    horoCmd.updateTARoleCmd(argv, 3);
+    String[] argv3 = new String[3];
+    argv3[0] = "update_ta_role_horo";
+    argv3[1] = "HTA";
+    argv3[2] = "Dylan";
+    horoCmd.executeCmds("update_ta_role_horo", argv3, 3);
     assertEquals(horoCmd.getProxy().getCache().size(), 0);
   }
 }
