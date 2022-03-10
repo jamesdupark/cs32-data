@@ -1,8 +1,10 @@
 package edu.brown.cs.student.main.Recommender;
 
 import java.util.List;
-import java.util.Locale;
 
+/**
+ * Class to represent a header and store its type.
+ */
 public class Header {
   /**
    * The name of the field / header.

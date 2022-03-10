@@ -60,7 +60,7 @@ public class StudentBloomListBuilder implements CSVBuilder<List<String>> {
     List<String> singleFields = List.of(id, classYr, race, communicationStyle, meetingStyle);
     retList.addAll(singleFields);
     retList.addAll(parseField(strengths));
-  retList .addAll(parseField(skills));
+    retList .addAll(parseField(skills));
     retList.addAll(parseField(interests));
     return retList;
   }

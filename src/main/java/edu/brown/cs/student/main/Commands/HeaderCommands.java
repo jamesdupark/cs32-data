@@ -6,6 +6,9 @@ import edu.brown.cs.student.main.Recommender.Header;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * REPL Commands relates to header commands.
+ */
 public class HeaderCommands implements REPLCommands {
   /**
    * List of strings representing the command keywords supported by this class.

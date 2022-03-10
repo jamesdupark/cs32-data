@@ -5,6 +5,9 @@ import edu.brown.cs.student.main.Recommender.Stud.Student;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Builder for the Student class.
+ */
 public class StudentBuilder implements CSVBuilder<Student> {
   /**
    * Map from field name to data type of field.
@@ -13,7 +16,7 @@ public class StudentBuilder implements CSVBuilder<Student> {
 
   /**
    * Constructor for new StudentBuilder class.
-   * @param typeMap
+   * @param typeMap - The type map from field name to field type.
    */
   public StudentBuilder(HashMap<String, String> typeMap) {
     this.typeMap = typeMap;
