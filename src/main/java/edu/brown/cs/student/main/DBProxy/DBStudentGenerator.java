@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.DBProxy;
 
+import edu.brown.cs.student.main.Commands.DatabaseCommands.InvalidTablePermissionException;
 import edu.brown.cs.student.main.Recommender.Stud.DatabaseStudent;
 
 import java.io.FileNotFoundException;
@@ -13,6 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Class to establish a connection to the Student Database and retrieve a List of
@@ -81,57 +83,70 @@ public class DBStudentGenerator {
       if (proxy.validateQuery(this.commandToTable)) {
         // valid query
         ResultSet rs = proxy.execQuery(sqlQuery);
-        Map<String, DatabaseStudent> idToStud = new HashMap<>();
-        while (rs.next()) {
-          DatabaseStudent student = new DatabaseStudent();
-          String id = rs.getString(1);
-          String name = rs.getString(2);
-          String email = rs.getString(3);
-          String attrType = rs.getString(4);
-          String trait = rs.getString(5);
-          String skill = rs.getString(6);
-          final int interestRSCol = 7;
-          String interest = rs.getString(interestRSCol);
-          if (idToStud.containsKey(id)) {
-            // key exists so add to strengths, weaknesses, interests fields
-            student = idToStud.get(id);
-          } else {
-            student.setId(id);
-            student.setName(name);
-            student.setEmail(email);
-            student.setSkill(skill);
-            student.setInterest(interest);
-          }
-          if (!student.getInterest().contains(interest)) {
-            student.setInterest(interest);
-          }
-          if (attrType.equals("weaknesses") && (student.getWeaknesses() == null
-              || !student.getWeaknesses().contains(trait))) {
-            student.setWeaknesses(trait);
-          } else if (attrType.equals("strengths") && (student.getStrengths() == null
-              || !student.getStrengths().contains(trait))) {
-            student.setStrengths(trait);
-          }
-          idToStud.put(id, student);
-        }
-        List<DatabaseStudent> dbStud = new ArrayList<>();
-        idToStud.forEach((k, v) -> {
-          dbStud.add(v);
-        });
-        Collections.sort(dbStud);
-        return dbStud;
+        return makeDatabaseStudentList(rs);
       } else {
-        // error: sql table does not have this level of permission
-        System.out.println("ERROR: SQL Table does not have the level of permission");
-        return null;
+        // sql table does not have this level of permission
+        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+            + "have the level of permission");
       }
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
+    } catch (InvalidTablePermissionException e) {
+      System.err.println(e.getMessage());
     } catch (FileNotFoundException e) {
-      e.printStackTrace();
+      System.err.println("ERROR: " + e.getMessage());
     } catch (ClassNotFoundException e) {
-      e.printStackTrace();
+      System.err.println("ERROR: " + e.getMessage());
     }
     return null;
+  }
+
+  /**
+   * Method to make a list of Database Students from a ResultSet.
+   * @param rs the ResultSet containing all the students that is returned from executing
+   *           the SQL Query
+   * @return the list of Database Students from the ResultSet
+   * @throws SQLException if there is an error related to the SQL query
+   */
+  public List<DatabaseStudent> makeDatabaseStudentList(ResultSet rs) throws SQLException {
+    Map<String, DatabaseStudent> idToStud = new HashMap<>();
+    while (rs.next()) {
+      DatabaseStudent student = new DatabaseStudent();
+      String id = rs.getString(1);
+      String name = rs.getString(2);
+      String email = rs.getString(3);
+      String attrType = rs.getString(4);
+      String trait = rs.getString(5);
+      String skill = rs.getString(6);
+      final int interestRSCol = 7;
+      String interest = rs.getString(interestRSCol);
+      if (idToStud.containsKey(id)) {
+        // key exists so add to strengths, weaknesses, interests fields
+        student = idToStud.get(id);
+      } else {
+        student.setId(id);
+        student.setName(name);
+        student.setEmail(email);
+        student.setSkill(skill);
+        student.setInterest(interest);
+      }
+      if (!student.getInterest().contains(interest)) {
+        student.setInterest(interest);
+      }
+      if (attrType.equals("weaknesses") && (student.getWeaknesses() == null
+          || !student.getWeaknesses().contains(trait))) {
+        student.setWeaknesses(trait);
+      } else if (attrType.equals("strengths") && (student.getStrengths() == null
+          || !student.getStrengths().contains(trait))) {
+        student.setStrengths(trait);
+      }
+      idToStud.put(id, student);
+    }
+    List<DatabaseStudent> dbStud = new ArrayList<>();
+    idToStud.forEach((k, v) -> {
+      dbStud.add(v);
+    });
+    Collections.sort(dbStud);
+    return dbStud;
   }
 }
