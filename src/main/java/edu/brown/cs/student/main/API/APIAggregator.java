@@ -48,7 +48,6 @@ public class APIAggregator {
 
   /**
    * Constructor for the APIAggregator class.
-   * 
    * @param type string representing the type of the aggregator to be created.
    *             can be either "info" or "match"
    * @throws IllegalArgumentException if type is not "info" or "match".
@@ -64,12 +63,10 @@ public class APIAggregator {
       throw new IllegalArgumentException("ERROR: " + ase.getMessage());
     }
   }
-
   /**
    * Makes a get request to the '/get-active' API endpoint for the aggregator's
    * base URL, and returns a list of Strings representing the currently active
    * API endpoints.
-   * 
    * @return currently active API endpoints
    * @throws BadStatusException when the API request returns a bad status code
    */
@@ -85,20 +82,18 @@ public class APIAggregator {
 
     return JSONParser.toStringList(response.body());
   }
-
   /**
    * Initializes map of HTTPRequests by adding requests for currently active
    * endpoints
    * if they are not in the map already.
-   * 
    * @param active list of active endpoints
    */
   public void initReqMap(List<String> active) {
     String apiKey = ClientAuth.getApiKey();
     String auth = ClientAuth.getAuth();
-    String[] urlAuth = new String[] { "auth", auth, "key", apiKey };
-    String[] apiAuth = new String[] { "x-api-key", apiKey };
-    String[] bodyAuth = new String[] { "auth", auth };
+    String[] urlAuth = new String[] {"auth", auth, "key", apiKey };
+    String[] apiAuth = new String[] {"x-api-key", apiKey };
+    String[] bodyAuth = new String[] {"auth", auth };
 
     for (String endpoint : active) {
       if (!reqMap.containsKey(endpoint)) {
@@ -129,7 +124,6 @@ public class APIAggregator {
    * each endpoint until either a successful request or three consecutive failed
    * requests, at which
    * point the active endpoints are updated.
-   * 
    * @return list of type T
    * @param tClass class of the list to be returned. Must implement JSONable
    * @param <T>    either studentMatch or studentInfo

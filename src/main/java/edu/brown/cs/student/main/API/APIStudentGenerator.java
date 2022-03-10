@@ -27,9 +27,8 @@ public class APIStudentGenerator {
    * Uses API aggregators to get two halves of a student dataset, then returns the
    * full student
    * dataset, sorted in ascending order by student ID.
-   * 
    * @return list of students with studentInfo and studentMatch data added.
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException if aggregation from APIs fails.
    */
   public List<Student> studentsFromAPI() throws IllegalArgumentException {
     List<StudentInfo> infoList;
