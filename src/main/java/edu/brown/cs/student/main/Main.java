@@ -10,6 +10,8 @@ import edu.brown.cs.student.main.Commands.KDCommands;
 import edu.brown.cs.student.main.Commands.NightSkyCommands;
 import edu.brown.cs.student.main.Commands.REPLCommands;
 import edu.brown.cs.student.main.Commands.RecommenderCommands;
+import edu.brown.cs.student.main.DBProxy.DBStudentGenerator;
+import edu.brown.cs.student.main.Recommender.Stud.DatabaseStudent;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.Spark;
@@ -74,7 +76,13 @@ public final class Main {
     List<REPLCommands> commandsList = List.of(blooms, stars, kdTree, header, recommender,
         api, data, zoo, horo);
     Repl myRepl = new Repl(commandsList);
-    myRepl.run();
+
+    DBStudentGenerator a = new DBStudentGenerator("data/recommendation/sql/data.sqlite3");
+//    a.getDBStudents();
+    for (DatabaseStudent ds : a.getDBStudents()) {
+      System.out.println(ds);
+    }
+//    myRepl.run();
   }
 
   private void runSparkServer(int port) {
