@@ -2,11 +2,13 @@ package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.main.Commands.APICommands;
 import edu.brown.cs.student.main.Commands.BloomCommands;
+import edu.brown.cs.student.main.Commands.DatabaseCommands.DataCommands;
+import edu.brown.cs.student.main.Commands.DatabaseCommands.HoroscopeCommands;
+import edu.brown.cs.student.main.Commands.DatabaseCommands.ZooCommands;
 import edu.brown.cs.student.main.Commands.HeaderCommands;
 import edu.brown.cs.student.main.Commands.KDCommands;
 import edu.brown.cs.student.main.Commands.NightSkyCommands;
 import edu.brown.cs.student.main.Commands.REPLCommands;
-import edu.brown.cs.student.main.Commands.SQLCommands;
 import edu.brown.cs.student.main.Commands.RecommenderCommands;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -65,9 +67,12 @@ public final class Main {
     HeaderCommands header = new HeaderCommands(typeMap);
     RecommenderCommands recommender = new RecommenderCommands(typeMap);
     APICommands api = new APICommands();
-    SQLCommands sql = new SQLCommands();
+    DataCommands data = new DataCommands();
+    ZooCommands zoo = new ZooCommands();
+    HoroscopeCommands horo = new HoroscopeCommands();
     // creating list
-    List<REPLCommands> commandsList = List.of(blooms, stars, kdTree, api, sql, header, recommender);
+    List<REPLCommands> commandsList = List.of(blooms, stars, kdTree, header, recommender,
+        api, data, zoo, horo);
     Repl myRepl = new Repl(commandsList);
     myRepl.run();
   }
