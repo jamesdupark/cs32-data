@@ -5,7 +5,6 @@ import edu.brown.cs.student.main.DBProxy.DBItems.DatabaseHoroscope;
 import edu.brown.cs.student.main.DBProxy.Proxy;
 
 import javax.sql.rowset.CachedRowSet;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,7 +48,13 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
     try {
       switch (cmd) {
         case "connect_db_horo":
-          this.connectDBCmd(argv, argc);
+          // check correct number of args
+          if (argc < 2) {
+            throw new IllegalArgumentException("ERROR: Incorrect number of arguments");
+          }
+          this.proxy = connectProxy(argv[1], setUpTablePerm(argv, argv[1]));
+          connectDBCmd(argv, argc, this.filepath);
+          conn = this.proxy.getConn();
           break;
         case "find_tas_w_horoscope_horo":
           this.findTARoleForAHoroscopeCmd(argv, argc);
@@ -68,40 +73,6 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
     }
   }
 
-  @Override
-  public void connectDBCmd(String[] argv, int argc)
-      throws IllegalArgumentException {
-    // check correct number of args
-    if (argc < 2) {
-      throw new IllegalArgumentException("ERROR: Incorrect number of arguments");
-    }
-    try {
-      // check correct number of args
-      if (!getDbIndex().containsKey(argv[1])) {
-        System.out.println("ERROR: Database Proxy does not support commands for this database");
-        return;
-      }
-      if (!argv[1].equals(this.filepath)) {
-        System.out.println("ERROR: Filepath does not correspond to database");
-        return;
-      }
-      checkConnectionHasCorrectNumTablePerm(argv[1], argc);
-      Map<String, String> tablePermissions = setUpTablePerm(argv, argv[1]);
-      proxy = new Proxy(argv[1], tablePermissions);
-      proxy.connectDB();
-      conn = proxy.getConn();
-      System.out.println("Successful connection made to " + argv[1]);
-      System.out.println(proxy);
-    } catch (FileNotFoundException e) {
-      System.err.println("ERROR: " + argv[1] + " is an invalid filename");
-    } catch (IllegalArgumentException e) {
-      System.err.println(e.getMessage());
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    }
-  }
   /**
    * Executes the "find_tas_w_horoscope_horo" command which queries off the Horoscopes
    * Database for TAs with the same horoscope as a target horoscope. If successful,

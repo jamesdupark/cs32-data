@@ -4,8 +4,13 @@ import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseHoroscopesTables;
 import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseStudentTables;
 import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseTables;
 import edu.brown.cs.student.main.DBProxy.DBTables.DatabaseZooTables;
+import edu.brown.cs.student.main.DBProxy.Proxy;
 
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,10 +55,35 @@ public abstract class ConnectDB {
    * Prints informative error message upon failure.
    * @param argv array of strings representing tokenized user input
    * @param argc length of argv
+   * @param filepath String representing the filepath of the database that is being
+   * connected to. This field will be used to check whether user input (argv[1])
+   * matches the database filepath
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  abstract void connectDBCmd(String[] argv, int argc)
-      throws IllegalArgumentException;
+//  abstract void connectDBCmd(String[] argv, int argc)
+//      throws IllegalArgumentException;
+  public void connectDBCmd(String[] argv, int argc, String filepath)
+      throws IllegalArgumentException {
+    // check correct number of args
+    if (argc < 2) {
+      throw new IllegalArgumentException("ERROR: Incorrect number of arguments");
+    }
+    try {
+      // check correct number of args
+      if (!getDbIndex().containsKey(argv[1])) {
+        System.out.println("ERROR: Database Proxy does not support commands for this database");
+        return;
+      }
+      if (!argv[1].equals(filepath)) {
+        System.out.println("ERROR: Filepath does not correspond to database");
+        return;
+      }
+      checkConnectionHasCorrectNumTablePerm(argv[1], argc);
+      System.out.println("Successful connection made to " + argv[1]);
+    } catch (IllegalArgumentException e) {
+      System.err.println(e.getMessage());
+    }
+  }
 
   /**
    * Method to check whether the client has entered the correct number of table
@@ -100,5 +130,51 @@ public abstract class ConnectDB {
    */
   public Map<String, Integer> getDbIndex() {
     return dbIndex;
+  }
+
+  /**
+   * List that stores all Proxy objects from the DatabaseCommands classes.
+   */
+  private List<Proxy> proxyList = new ArrayList<>();
+
+  /**
+   * Method to close any and all existing connections from the list of Proxy. This
+   * ensures that the program is bug-safe since an existing connection could
+   * write to the database with another active connection, which would result in
+   * out-of-date results.
+   */
+  private void closeExistingConnection() {
+    try {
+      for (Proxy p : proxyList) {
+        p.getConn().close();
+      }
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e.getMessage());
+    }
+  }
+
+  /**
+   * Method to connect the caller of the Proxy with the Proxy by creating a Proxy
+   * object. The caller of the Proxy will be a DatabaseCommands class.
+   * @param filename String representing the filename of the database that the
+   *                 caller is trying to establish connection to
+   * @param tablePerm the table permissions for the database that determines the
+   *                  level of SQL command access
+   * @return the Proxy that connects the caller of the proxy with the proxy
+   */
+  public Proxy connectProxy(String filename, Map<String, String> tablePerm) {
+    Proxy proxy = new Proxy(filename, tablePerm);
+    closeExistingConnection();
+    proxyList.add(proxy);
+    try {
+      proxy.connectDB();
+    } catch (ClassNotFoundException e) {
+      System.out.println("ERROR: " + e.getMessage());
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e.getMessage());
+    } catch (FileNotFoundException e) {
+      System.out.println("ERROR: " + e.getMessage());
+    }
+    return proxy;
   }
 }

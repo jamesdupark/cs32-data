@@ -47,7 +47,13 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
     try {
       switch (cmd) {
         case "connect_db_zoo":
-          connectDBCmd(argv, argc);
+          // check correct number of args
+          if (argc < 2) {
+            throw new IllegalArgumentException("ERROR: Incorrect number of arguments");
+          }
+          this.proxy = connectProxy(argv[1], setUpTablePerm(argv, argv[1]));
+          connectDBCmd(argv, argc, this.filepath);
+          conn = this.proxy.getConn();
           break;
         case "insert_animal_zoo":
           this.insertAnimalCmd(argv, argc);
@@ -63,41 +69,6 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
       System.err.println(e.getMessage());
     } catch (RuntimeException e) {
       System.err.println(e.getMessage());
-    }
-  }
-
-  @Override
-  public void connectDBCmd(String[] argv, int argc)
-      throws IllegalArgumentException {
-    // check correct number of args
-    if (argc < 2) {
-      throw new IllegalArgumentException("ERROR: Incorrect number of arguments");
-    }
-    try {
-      // check correct number of args
-      if (!getDbIndex().containsKey(argv[1])) {
-        System.out.println("ERROR: Database Proxy does not support commands for this database");
-        return;
-      }
-      if (!argv[1].equals(this.filepath)) {
-        System.out.println("ERROR: Filepath does not correspond to database");
-        return;
-      }
-      checkConnectionHasCorrectNumTablePerm(argv[1], argc);
-      Map<String, String> tablePermissions = setUpTablePerm(argv, argv[1]);
-      proxy = new Proxy(argv[1], tablePermissions);
-      proxy.connectDB();
-      conn = proxy.getConn();
-      System.out.println("Successful connection made to " + argv[1]);
-      System.out.println(proxy);
-    } catch (FileNotFoundException e) {
-      System.err.println("ERROR: " + argv[1] + " is an invalid filename");
-    } catch (IllegalArgumentException e) {
-      System.err.println(e.getMessage());
-    } catch (SQLException e) {
-      e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
     }
   }
 
