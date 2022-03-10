@@ -98,8 +98,12 @@ public class RecommenderCommands implements REPLCommands {
         CSVParser<Student> reader = new CSVParser<>(new StudentBuilder(typeMap));
         reader.load(argv[2]);
         studentList = reader.getDataList();
-        if (studentList.size() == 0) {
-          throw new IllegalArgumentException("ERROR: no file found");
+        try {
+          if (studentList.size() == 0) {
+            throw new IllegalArgumentException("ERROR: no file found");
+          }
+        } catch (IllegalArgumentException ex) {
+          return;
         }
       } else if (argv[1].equals("API-DB")) {
         DBStudentGenerator a = new DBStudentGenerator(argv[2]);
@@ -130,8 +134,6 @@ public class RecommenderCommands implements REPLCommands {
       allFilters = newFilters;
     } catch (AssertionError ex) {
       System.err.println("ERROR: input sql file path does not exist");
-    } catch (IllegalArgumentException ex) {
-      // purposely blank
     }
   }
 
@@ -230,11 +232,9 @@ public class RecommenderCommands implements REPLCommands {
         Collections.shuffle(distToIDs.get(nextNearest));
         for (int j = 0; j < distToIDs.get(nextNearest).size(); j++) {
           // iterate through list value of map and print the Student ids
-          if ((p + j) < k) {
-            if (idPrinted < numStudents - 1) {
-              System.out.println(distToIDs.get(nextNearest).get(j));
-              idPrinted++;
-            }
+          if (((p + j) < k) && (idPrinted < numStudents - 1)) {
+            System.out.println(distToIDs.get(nextNearest).get(j));
+            idPrinted++;
           }
         }
       }

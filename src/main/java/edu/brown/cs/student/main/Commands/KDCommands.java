@@ -9,7 +9,6 @@ import edu.brown.cs.student.main.KDimTree.KDTree;
 import edu.brown.cs.student.main.KDimTree.KIsNegativeException;
 import edu.brown.cs.student.main.KDimTree.KeyNotFoundException;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,17 +25,7 @@ public class KDCommands implements REPLCommands {
    * the most recently created KDTree, able to be inserted into and queried.
    * */
   private KDTree<KDNode> kdTree;
-  /**
-   * Map from characteristic name to characteristic type (qualitative or quantitative).
-   */
-  private final HashMap<String, String> typeMap;
-  /**
-   * Constructor for a new KDCommands.
-   * @param map - Hashmap from column name to data type.
-   */
-  public KDCommands(HashMap<String, String> map) {
-    this.typeMap = map;
-  }
+
   @Override
   public void executeCmds(String cmd, String[] argv, int argc) {
     // verifying that command is a supported one; should never fail

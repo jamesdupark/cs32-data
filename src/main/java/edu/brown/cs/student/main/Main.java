@@ -61,9 +61,9 @@ public final class Main {
     HashMap<String, String> typeMap = new HashMap<>();
 
     // adding REPLCommands packages
-    BloomCommands blooms = new BloomCommands(typeMap);
-    NightSkyCommands stars = new NightSkyCommands(typeMap);
-    KDCommands kdTree = new KDCommands(typeMap);
+    BloomCommands blooms = new BloomCommands();
+    NightSkyCommands stars = new NightSkyCommands();
+    KDCommands kdTree = new KDCommands();
     HeaderCommands header = new HeaderCommands(typeMap);
     RecommenderCommands recommender = new RecommenderCommands(typeMap);
     APICommands api = new APICommands();
