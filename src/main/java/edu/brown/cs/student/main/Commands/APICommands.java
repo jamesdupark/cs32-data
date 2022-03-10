@@ -61,7 +61,7 @@ public class APICommands implements REPLCommands {
           this.loadJsonCmd(argc, argv);
           break;
         case "aggregate_all":
-          this.aggregateAllCmd(argc, argv);
+          this.aggregateAllCmd(argc);
           break;
         default:
           System.err.println("ERROR: Command not recognized.");
@@ -234,7 +234,7 @@ public class APICommands implements REPLCommands {
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void aggregateAllCmd(int argc, String[] argv)
+  private void aggregateAllCmd(int argc)
       throws IllegalArgumentException {
     if (argc != 1) {
       throw new IllegalArgumentException("ERROR: incorrect number of arguments.");

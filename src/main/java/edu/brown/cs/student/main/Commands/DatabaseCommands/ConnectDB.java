@@ -106,6 +106,8 @@ public abstract class ConnectDB {
    * @param argv array of strings representing tokenized user input
    * @param database String filepath corresponding to the connected database
    * @return a HashMap mapping from the table in the database to its respective table permission.
+   * @throws InvalidTablePermissionException if a user entered something that is not
+   * R, W, or RW for the table permissions
    */
   public Map<String, String> setUpTablePerm(String[] argv, String database)
       throws InvalidTablePermissionException {
