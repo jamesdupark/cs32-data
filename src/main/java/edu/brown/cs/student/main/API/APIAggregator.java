@@ -4,6 +4,7 @@ import edu.brown.cs.student.main.API.APIRequests.APIRequestBuilder;
 import edu.brown.cs.student.main.API.APIRequests.APIRequestHandler;
 import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.JSONParser;
+import edu.brown.cs.student.main.API.json.JSONable;
 import edu.brown.cs.student.main.API.json.PartialStudent;
 
 import java.net.http.HttpRequest;
@@ -127,7 +128,7 @@ public class APIAggregator {
    * @param <T> either studentMatch or studentInfo
    * @throws BadStatusException when active endpoints cannot be queried
    */
-  public <T extends PartialStudent> List<T> aggregate(Class<T> tClass) throws BadStatusException {
+  public <T extends JSONable> List<T> aggregate(Class<T> tClass) throws BadStatusException {
     boolean dataComplete = false;
     List<T> dataset = new ArrayList<>();
     int retries = 0;
