@@ -66,7 +66,6 @@ public class APIAggregatorTest {
     Set<StudentMatch> matchSet = new HashSet<>(studentMatchList);
     assertEquals(infoExpect, infoSet);
     assertEquals(matchExpect, matchSet);
-
   }
 
   @Test

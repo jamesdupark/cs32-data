@@ -52,9 +52,13 @@ public class DataCommands extends ConnectDB implements REPLCommands {
           if (argc < 2) {
             throw new IllegalArgumentException("ERROR: Incorrect number of arguments");
           }
-          this.proxy = connectProxy(argv[1], setUpTablePerm(argv, argv[1]));
-          connectDBCmd(argv, argc, this.filepath);
-          conn = this.proxy.getConn();
+          try {
+            this.proxy = connectProxy(argv[1], setUpTablePerm(argv, argv[1]));
+            connectDBCmd(argv, argc, this.filepath);
+            conn = this.proxy.getConn();
+          } catch (InvalidTablePermissionException e) {
+            System.err.println(e.getMessage());
+          }
           break;
         case "select_all_data":
           this.selectAllCmd(argc);
@@ -99,9 +103,9 @@ public class DataCommands extends ConnectDB implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
           + "Expected 1 argument but got " + argc);
     }
-    // check if connection to database has been made
-    checkDatabaseConnected();
     try {
+      // check if connection to database has been made
+      checkDatabaseConnected();
       String sqlQuery = "SELECT names.id, names.name, email, LOWER(type_of_attribute), "
           + "trait, skill, interest FROM names JOIN traits ON names.id = traits.id JOIN "
           + "skills ON names.id = skills.id JOIN interests ON names.id = interests.id "
@@ -113,14 +117,16 @@ public class DataCommands extends ConnectDB implements REPLCommands {
         printResultSet(rowSet, 6);
       } else {
         // sql table does not have this level of permission
-        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+        throw new InvalidSQLAccessException("ERROR: SQL Table does not "
             + "have the level of permission");
       }
+    } catch (DatabaseNotConnectedException e) {
+      System.err.println("ERROR: " + e.getMessage());
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
       System.err.println("ERROR :" + e.getMessage());
-    } catch (InvalidTablePermissionException e) {
+    } catch (InvalidSQLAccessException e) {
       System.err.println(e.getMessage());
     }
   }
@@ -150,9 +156,9 @@ public class DataCommands extends ConnectDB implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
           + "Expected 1 argument but got " + argc);
     }
-    // check if connection to database has been made
-    checkDatabaseConnected();
     try {
+      // check if connection to database has been made
+      checkDatabaseConnected();
       final String lookFor = "music";
       String sqlQuery = "SELECT name, email, interest FROM names as n JOIN interests as i"
           + " on n.id = i.id WHERE i.interest = \'" + lookFor + "\' ORDER BY name;";
@@ -163,14 +169,16 @@ public class DataCommands extends ConnectDB implements REPLCommands {
         printResultSet(rowSet, 3);
       } else {
         // sql table does not have this level of permission
-        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+        throw new InvalidSQLAccessException("ERROR: SQL Table does not "
             + "have the level of permission");
       }
+    } catch (DatabaseNotConnectedException e) {
+      System.err.println("ERROR: " + e.getMessage());
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
       System.err.println("ERROR :" + e.getMessage());
-    } catch (InvalidTablePermissionException e) {
+    } catch (InvalidSQLAccessException e) {
       System.err.println(e.getMessage());
     }
   }
@@ -205,8 +213,8 @@ public class DataCommands extends ConnectDB implements REPLCommands {
           + "Expected 1 argument but got " + argc);
     }
     // check if connection to database has been made
-    checkDatabaseConnected();
     try {
+      checkDatabaseConnected();
       final String searchTrait = "friendly";
       final String searchSkill = "algorithms";
       String sqlQuery = "SELECT name, LOWER(type_of_attribute) as type_attribute, trait, skill "
@@ -219,14 +227,16 @@ public class DataCommands extends ConnectDB implements REPLCommands {
         printResultSet(rowSet, 4);
       } else {
         // sql table does not have this level of permission
-        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+        throw new InvalidSQLAccessException("ERROR: SQL Table does not "
             + "have the level of permission");
       }
+    } catch (DatabaseNotConnectedException e) {
+      System.out.println(e.getMessage());
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
       System.err.println("ERROR :" + e.getMessage());
-    } catch (InvalidTablePermissionException e) {
+    } catch (InvalidSQLAccessException e) {
       System.err.println(e.getMessage());
     }
   }
@@ -238,9 +248,9 @@ public class DataCommands extends ConnectDB implements REPLCommands {
     return this.proxy;
   }
   @Override
-  public void checkDatabaseConnected() {
+  public void checkDatabaseConnected() throws DatabaseNotConnectedException {
     if (conn == null || !this.filepath.equals("data/recommendation/sql/data.sqlite3")) {
-      throw new RuntimeException("ERROR: Student database has not been connected!");
+      throw new DatabaseNotConnectedException("ERROR: Student database has not been connected!");
     }
   }
   @Override

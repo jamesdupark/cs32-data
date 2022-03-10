@@ -1,0 +1,11 @@
+INPUT
+connect_db_data data/recommendation/sql/data.sqlite3 RW RW RW RW
+insert_animal_zoo 1 Aflack 2 3
+connect_db_zoo data/recommendation/sql/zoo.sqlite3 W
+update_ta_role_horo
+OUTPUT
+Successful connection made to data/recommendation/sql/data.sqlite3
+ERROR:
+Successful connection made to data/recommendation/sql/zoo.sqlite3
+ERROR:
+END

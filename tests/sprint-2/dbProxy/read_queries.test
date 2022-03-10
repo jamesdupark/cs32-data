@@ -1,0 +1,1206 @@
+INPUT
+connect_db_data data/recommendation/sql/data.sqlite3 RW RW RW RW
+select_all_data
+OUTPUT
+Successful connection made to data/recommendation/sql/data.sqlite3
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, unprepared, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, unprepared, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, unprepared, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, unprepared, testing
+60, Sibelle Slafford, sslafford1n@behance.net, strengths, good teacher, testing
+60, Sibelle Slafford, sslafford1n@behance.net, strengths, good teacher, testing
+60, Sibelle Slafford, sslafford1n@behance.net, strengths, good teacher, testing
+60, Sibelle Slafford, sslafford1n@behance.net, strengths, good teacher, testing
+60, Sibelle Slafford, sslafford1n@behance.net, strengths, knowledgeable, testing
+60, Sibelle Slafford, sslafford1n@behance.net, strengths, knowledgeable, testing
+60, Sibelle Slafford, sslafford1n@behance.net, strengths, knowledgeable, testing
+60, Sibelle Slafford, sslafford1n@behance.net, strengths, knowledgeable, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, unavailable, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, unavailable, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, unavailable, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, unavailable, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, dishonest, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, dishonest, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, dishonest, testing
+60, Sibelle Slafford, sslafford1n@behance.net, weaknesses, dishonest, testing
+59, Jess Miettinen, jmiettinen1m@meetup.com, strengths, honest, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, strengths, honest, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, strengths, honest, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, strengths, honest, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, strengths, team player, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, strengths, team player, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, strengths, team player, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, strengths, team player, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, unavailable, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, unavailable, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, unavailable, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, unavailable, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, controlling, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, controlling, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, controlling, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, controlling, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, unprepared, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, unprepared, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, unprepared, data structures
+59, Jess Miettinen, jmiettinen1m@meetup.com, weaknesses, unprepared, data structures
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, strengths, good teacher, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, strengths, good teacher, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, strengths, good teacher, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, strengths, good teacher, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, strengths, friendly, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, strengths, friendly, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, strengths, friendly, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, strengths, friendly, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, late, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, late, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, late, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, late, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, procrastinator, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, procrastinator, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, procrastinator, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, procrastinator, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, unresponsive, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, unresponsive, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, unresponsive, OOP
+58, Jack Sommerled, jsommerled1l@ezinearticles.com, weaknesses, unresponsive, OOP
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, dishonest, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, dishonest, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, dishonest, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, dishonest, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, strengths, quick learner, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, strengths, quick learner, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, strengths, quick learner, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, strengths, quick learner, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, strengths, early starter, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, strengths, early starter, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, strengths, early starter, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, strengths, early starter, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, controlling, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, controlling, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, controlling, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, controlling, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, procrastinator, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, procrastinator, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, procrastinator, front-end
+57, Graig Wardle, gwardle1k@artisteer.com, weaknesses, procrastinator, front-end
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, controlling, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, controlling, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, controlling, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, controlling, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, dishonest, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, dishonest, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, dishonest, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, dishonest, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, strengths, early starter, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, strengths, early starter, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, strengths, early starter, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, strengths, early starter, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, strengths, knowledgeable, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, strengths, knowledgeable, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, strengths, knowledgeable, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, strengths, knowledgeable, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, unavailable, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, unavailable, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, unavailable, algorithms
+56, Maude Sweatland, msweatland1j@google.com.hk, weaknesses, unavailable, algorithms
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, unavailable, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, unavailable, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, unavailable, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, unavailable, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, cutthroat, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, cutthroat, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, cutthroat, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, cutthroat, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, strengths, early starter, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, strengths, early starter, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, strengths, early starter, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, strengths, early starter, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, strengths, quick learner, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, strengths, quick learner, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, strengths, quick learner, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, strengths, quick learner, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, dishonest, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, dishonest, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, dishonest, front-end
+55, Daisy Sewell, dsewell1i@mayoclinic.com, weaknesses, dishonest, front-end
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, unprepared, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, unprepared, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, unprepared, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, unprepared, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, strengths, good teacher, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, strengths, good teacher, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, strengths, good teacher, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, strengths, good teacher, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, strengths, prepared, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, strengths, prepared, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, strengths, prepared, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, strengths, prepared, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, procrastinator, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, procrastinator, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, procrastinator, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, procrastinator, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, unresponsive, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, unresponsive, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, unresponsive, algorithms
+54, Tore Giorgetti, tgiorgetti1h@dyndns.org, weaknesses, unresponsive, algorithms
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, procrastinator, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, procrastinator, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, procrastinator, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, procrastinator, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, unfriendly, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, unfriendly, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, unfriendly, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, unfriendly, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, strengths, early starter, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, strengths, early starter, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, strengths, early starter, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, strengths, early starter, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, strengths, team player, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, strengths, team player, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, strengths, team player, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, strengths, team player, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, controlling, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, controlling, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, controlling, commenting
+53, Farrell Ellesmere, fellesmere1g@tinypic.com, weaknesses, controlling, commenting
+52, Lanae Petric, lpetric1f@hugedomains.com, strengths, honest, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, strengths, honest, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, strengths, honest, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, strengths, honest, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, strengths, early starter, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, strengths, early starter, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, strengths, early starter, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, strengths, early starter, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, controlling, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, controlling, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, controlling, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, controlling, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, procrastinator, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, procrastinator, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, procrastinator, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, procrastinator, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, unavailable, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, unavailable, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, unavailable, algorithms
+52, Lanae Petric, lpetric1f@hugedomains.com, weaknesses, unavailable, algorithms
+51, Heidie Antonias, hantonias1e@gnu.org, strengths, friendly, testing
+51, Heidie Antonias, hantonias1e@gnu.org, strengths, friendly, testing
+51, Heidie Antonias, hantonias1e@gnu.org, strengths, friendly, testing
+51, Heidie Antonias, hantonias1e@gnu.org, strengths, friendly, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, unprepared, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, unprepared, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, unprepared, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, unprepared, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, late, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, late, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, late, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, late, testing
+51, Heidie Antonias, hantonias1e@gnu.org, strengths, knowledgeable, testing
+51, Heidie Antonias, hantonias1e@gnu.org, strengths, knowledgeable, testing
+51, Heidie Antonias, hantonias1e@gnu.org, strengths, knowledgeable, testing
+51, Heidie Antonias, hantonias1e@gnu.org, strengths, knowledgeable, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, unresponsive, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, unresponsive, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, unresponsive, testing
+51, Heidie Antonias, hantonias1e@gnu.org, weaknesses, unresponsive, testing
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, strengths, knowledgeable, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, strengths, knowledgeable, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, strengths, knowledgeable, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, strengths, knowledgeable, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, strengths, team player, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, strengths, team player, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, strengths, team player, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, strengths, team player, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, controlling, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, controlling, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, controlling, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, controlling, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, procrastinator, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, procrastinator, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, procrastinator, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, procrastinator, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, late, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, late, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, late, algorithms
+50, Dannye Abramchik, dabramchik1d@scientificamerican.com, weaknesses, late, algorithms
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, unfriendly, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, unfriendly, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, unfriendly, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, unfriendly, testing
+49, Ella Kitman, ekitman1c@webnode.com, strengths, good teacher, testing
+49, Ella Kitman, ekitman1c@webnode.com, strengths, good teacher, testing
+49, Ella Kitman, ekitman1c@webnode.com, strengths, good teacher, testing
+49, Ella Kitman, ekitman1c@webnode.com, strengths, good teacher, testing
+49, Ella Kitman, ekitman1c@webnode.com, strengths, knowledgeable, testing
+49, Ella Kitman, ekitman1c@webnode.com, strengths, knowledgeable, testing
+49, Ella Kitman, ekitman1c@webnode.com, strengths, knowledgeable, testing
+49, Ella Kitman, ekitman1c@webnode.com, strengths, knowledgeable, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, cutthroat, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, cutthroat, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, cutthroat, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, cutthroat, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, unprepared, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, unprepared, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, unprepared, testing
+49, Ella Kitman, ekitman1c@webnode.com, weaknesses, unprepared, testing
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, procrastinator, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, procrastinator, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, procrastinator, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, procrastinator, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, unfriendly, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, unfriendly, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, unfriendly, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, unfriendly, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, strengths, early starter, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, strengths, early starter, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, strengths, early starter, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, strengths, early starter, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, strengths, good teacher, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, strengths, good teacher, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, strengths, good teacher, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, strengths, good teacher, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, unprepared, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, unprepared, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, unprepared, commenting
+48, Rebekah Gresley, rgresley1b@lulu.com, weaknesses, unprepared, commenting
+47, Jocelyne Wheatley, jwheatley1a@ted.com, strengths, knowledgeable, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, strengths, knowledgeable, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, strengths, knowledgeable, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, strengths, knowledgeable, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, unprepared, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, unprepared, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, unprepared, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, unprepared, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, dishonest, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, dishonest, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, dishonest, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, dishonest, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, strengths, prepared, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, strengths, prepared, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, strengths, prepared, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, strengths, prepared, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, unavailable, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, unavailable, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, unavailable, data structures
+47, Jocelyne Wheatley, jwheatley1a@ted.com, weaknesses, unavailable, data structures
+46, Creigh Fike, cfike19@wikipedia.org, strengths, early starter, OOP
+46, Creigh Fike, cfike19@wikipedia.org, strengths, early starter, OOP
+46, Creigh Fike, cfike19@wikipedia.org, strengths, early starter, OOP
+46, Creigh Fike, cfike19@wikipedia.org, strengths, early starter, OOP
+46, Creigh Fike, cfike19@wikipedia.org, strengths, honest, OOP
+46, Creigh Fike, cfike19@wikipedia.org, strengths, honest, OOP
+46, Creigh Fike, cfike19@wikipedia.org, strengths, honest, OOP
+46, Creigh Fike, cfike19@wikipedia.org, strengths, honest, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, dishonest, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, dishonest, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, dishonest, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, dishonest, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, unfriendly, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, unfriendly, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, unfriendly, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, unfriendly, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, unresponsive, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, unresponsive, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, unresponsive, OOP
+46, Creigh Fike, cfike19@wikipedia.org, weaknesses, unresponsive, OOP
+45, Olivero Brangan, obrangan18@tmall.com, strengths, good teacher, commenting
+45, Olivero Brangan, obrangan18@tmall.com, strengths, good teacher, commenting
+45, Olivero Brangan, obrangan18@tmall.com, strengths, good teacher, commenting
+45, Olivero Brangan, obrangan18@tmall.com, strengths, good teacher, commenting
+45, Olivero Brangan, obrangan18@tmall.com, strengths, early starter, commenting
+45, Olivero Brangan, obrangan18@tmall.com, strengths, early starter, commenting
+45, Olivero Brangan, obrangan18@tmall.com, strengths, early starter, commenting
+45, Olivero Brangan, obrangan18@tmall.com, strengths, early starter, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, unresponsive, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, unresponsive, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, unresponsive, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, unresponsive, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, dishonest, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, dishonest, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, dishonest, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, dishonest, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, unfriendly, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, unfriendly, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, unfriendly, commenting
+45, Olivero Brangan, obrangan18@tmall.com, weaknesses, unfriendly, commenting
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, unprepared, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, unprepared, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, unprepared, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, unprepared, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, dishonest, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, dishonest, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, dishonest, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, dishonest, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, strengths, honest, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, strengths, honest, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, strengths, honest, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, strengths, honest, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, strengths, early starter, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, strengths, early starter, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, strengths, early starter, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, strengths, early starter, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, late, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, late, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, late, front-end
+44, Alexandro Clayworth, aclayworth17@apple.com, weaknesses, late, front-end
+43, Newton Berkley, nberkley16@digg.com, weaknesses, cutthroat, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, cutthroat, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, cutthroat, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, cutthroat, commenting
+43, Newton Berkley, nberkley16@digg.com, strengths, good teacher, commenting
+43, Newton Berkley, nberkley16@digg.com, strengths, good teacher, commenting
+43, Newton Berkley, nberkley16@digg.com, strengths, good teacher, commenting
+43, Newton Berkley, nberkley16@digg.com, strengths, good teacher, commenting
+43, Newton Berkley, nberkley16@digg.com, strengths, prepared, commenting
+43, Newton Berkley, nberkley16@digg.com, strengths, prepared, commenting
+43, Newton Berkley, nberkley16@digg.com, strengths, prepared, commenting
+43, Newton Berkley, nberkley16@digg.com, strengths, prepared, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, controlling, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, controlling, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, controlling, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, controlling, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, dishonest, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, dishonest, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, dishonest, commenting
+43, Newton Berkley, nberkley16@digg.com, weaknesses, dishonest, commenting
+42, Pamelina Couper, pcouper15@harvard.edu, strengths, team player, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, strengths, team player, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, strengths, team player, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, strengths, team player, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, cutthroat, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, cutthroat, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, cutthroat, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, cutthroat, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, strengths, early starter, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, strengths, early starter, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, strengths, early starter, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, strengths, early starter, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, unresponsive, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, unresponsive, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, unresponsive, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, unresponsive, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, late, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, late, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, late, data structures
+42, Pamelina Couper, pcouper15@harvard.edu, weaknesses, late, data structures
+41, Melvin Arendt, marendt14@springer.com, weaknesses, late, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, late, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, late, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, late, front-end
+41, Melvin Arendt, marendt14@springer.com, strengths, prepared, front-end
+41, Melvin Arendt, marendt14@springer.com, strengths, prepared, front-end
+41, Melvin Arendt, marendt14@springer.com, strengths, prepared, front-end
+41, Melvin Arendt, marendt14@springer.com, strengths, prepared, front-end
+41, Melvin Arendt, marendt14@springer.com, strengths, team player, front-end
+41, Melvin Arendt, marendt14@springer.com, strengths, team player, front-end
+41, Melvin Arendt, marendt14@springer.com, strengths, team player, front-end
+41, Melvin Arendt, marendt14@springer.com, strengths, team player, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, controlling, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, controlling, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, controlling, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, controlling, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, unprepared, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, unprepared, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, unprepared, front-end
+41, Melvin Arendt, marendt14@springer.com, weaknesses, unprepared, front-end
+40, Kirbie Garnul, kgarnul13@aboutads.info, strengths, prepared, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, strengths, prepared, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, strengths, prepared, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, strengths, prepared, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, procrastinator, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, procrastinator, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, procrastinator, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, procrastinator, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, dishonest, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, dishonest, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, dishonest, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, dishonest, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, strengths, friendly, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, strengths, friendly, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, strengths, friendly, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, strengths, friendly, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, unprepared, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, unprepared, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, unprepared, OOP
+40, Kirbie Garnul, kgarnul13@aboutads.info, weaknesses, unprepared, OOP
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, unavailable, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, unavailable, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, unavailable, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, unavailable, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, strengths, early starter, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, strengths, early starter, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, strengths, early starter, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, strengths, early starter, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, strengths, team player, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, strengths, team player, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, strengths, team player, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, strengths, team player, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, controlling, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, controlling, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, controlling, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, controlling, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, procrastinator, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, procrastinator, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, procrastinator, data structures
+39, Viola Sheirlaw, vsheirlaw12@lycos.com, weaknesses, procrastinator, data structures
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, late, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, late, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, late, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, late, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, unavailable, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, unavailable, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, unavailable, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, unavailable, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, strengths, honest, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, strengths, honest, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, strengths, honest, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, strengths, honest, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, strengths, friendly, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, strengths, friendly, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, strengths, friendly, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, strengths, friendly, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, unprepared, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, unprepared, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, unprepared, testing
+38, Anne Bruyntjes, abruyntjes11@businesswire.com, weaknesses, unprepared, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, unprepared, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, unprepared, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, unprepared, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, unprepared, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, strengths, quick learner, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, strengths, quick learner, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, strengths, quick learner, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, strengths, quick learner, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, strengths, good leader, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, strengths, good leader, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, strengths, good leader, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, strengths, good leader, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, cutthroat, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, cutthroat, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, cutthroat, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, cutthroat, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, unavailable, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, unavailable, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, unavailable, testing
+37, Spenser Giannassi, sgiannassi10@soup.io, weaknesses, unavailable, testing
+36, Delia Boice, dboicez@baidu.com, strengths, friendly, OOP
+36, Delia Boice, dboicez@baidu.com, strengths, friendly, OOP
+36, Delia Boice, dboicez@baidu.com, strengths, friendly, OOP
+36, Delia Boice, dboicez@baidu.com, strengths, friendly, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, controlling, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, controlling, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, controlling, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, controlling, OOP
+36, Delia Boice, dboicez@baidu.com, strengths, quick learner, OOP
+36, Delia Boice, dboicez@baidu.com, strengths, quick learner, OOP
+36, Delia Boice, dboicez@baidu.com, strengths, quick learner, OOP
+36, Delia Boice, dboicez@baidu.com, strengths, quick learner, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, cutthroat, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, cutthroat, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, cutthroat, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, cutthroat, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, dishonest, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, dishonest, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, dishonest, OOP
+36, Delia Boice, dboicez@baidu.com, weaknesses, dishonest, OOP
+35, Ashlin Wettern, awetterny@ucoz.ru, strengths, quick learner, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, strengths, quick learner, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, strengths, quick learner, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, strengths, quick learner, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, strengths, team player, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, strengths, team player, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, strengths, team player, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, strengths, team player, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, procrastinator, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, procrastinator, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, procrastinator, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, procrastinator, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, dishonest, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, dishonest, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, dishonest, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, dishonest, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, unfriendly, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, unfriendly, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, unfriendly, testing
+35, Ashlin Wettern, awetterny@ucoz.ru, weaknesses, unfriendly, testing
+34, Eleen Preto, epretox@hexun.com, weaknesses, procrastinator, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, procrastinator, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, procrastinator, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, procrastinator, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, unfriendly, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, unfriendly, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, unfriendly, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, unfriendly, data structures
+34, Eleen Preto, epretox@hexun.com, strengths, friendly, data structures
+34, Eleen Preto, epretox@hexun.com, strengths, friendly, data structures
+34, Eleen Preto, epretox@hexun.com, strengths, friendly, data structures
+34, Eleen Preto, epretox@hexun.com, strengths, friendly, data structures
+34, Eleen Preto, epretox@hexun.com, strengths, quick learner, data structures
+34, Eleen Preto, epretox@hexun.com, strengths, quick learner, data structures
+34, Eleen Preto, epretox@hexun.com, strengths, quick learner, data structures
+34, Eleen Preto, epretox@hexun.com, strengths, quick learner, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, late, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, late, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, late, data structures
+34, Eleen Preto, epretox@hexun.com, weaknesses, late, data structures
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, controlling, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, controlling, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, controlling, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, controlling, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, dishonest, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, dishonest, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, dishonest, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, dishonest, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, late, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, late, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, late, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, weaknesses, late, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, strengths, knowledgeable, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, strengths, knowledgeable, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, strengths, knowledgeable, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, strengths, knowledgeable, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, strengths, early starter, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, strengths, early starter, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, strengths, early starter, commenting
+33, Malissia Kubat, mkubatw@kickstarter.com, strengths, early starter, commenting
+32, Free Cook, fcookv@earthlink.net, weaknesses, procrastinator, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, procrastinator, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, procrastinator, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, procrastinator, algorithms
+32, Free Cook, fcookv@earthlink.net, strengths, knowledgeable, algorithms
+32, Free Cook, fcookv@earthlink.net, strengths, knowledgeable, algorithms
+32, Free Cook, fcookv@earthlink.net, strengths, knowledgeable, algorithms
+32, Free Cook, fcookv@earthlink.net, strengths, knowledgeable, algorithms
+32, Free Cook, fcookv@earthlink.net, strengths, good teacher, algorithms
+32, Free Cook, fcookv@earthlink.net, strengths, good teacher, algorithms
+32, Free Cook, fcookv@earthlink.net, strengths, good teacher, algorithms
+32, Free Cook, fcookv@earthlink.net, strengths, good teacher, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, unresponsive, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, unresponsive, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, unresponsive, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, unresponsive, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, unfriendly, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, unfriendly, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, unfriendly, algorithms
+32, Free Cook, fcookv@earthlink.net, weaknesses, unfriendly, algorithms
+31, Karolina Gronno, kgronnou@goo.gl, strengths, good teacher, data structures
+31, Karolina Gronno, kgronnou@goo.gl, strengths, good teacher, data structures
+31, Karolina Gronno, kgronnou@goo.gl, strengths, good teacher, data structures
+31, Karolina Gronno, kgronnou@goo.gl, strengths, good teacher, data structures
+31, Karolina Gronno, kgronnou@goo.gl, strengths, prepared, data structures
+31, Karolina Gronno, kgronnou@goo.gl, strengths, prepared, data structures
+31, Karolina Gronno, kgronnou@goo.gl, strengths, prepared, data structures
+31, Karolina Gronno, kgronnou@goo.gl, strengths, prepared, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, controlling, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, controlling, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, controlling, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, controlling, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, cutthroat, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, cutthroat, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, cutthroat, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, cutthroat, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, late, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, late, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, late, data structures
+31, Karolina Gronno, kgronnou@goo.gl, weaknesses, late, data structures
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, strengths, prepared, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, strengths, prepared, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, strengths, prepared, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, strengths, prepared, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, cutthroat, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, cutthroat, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, cutthroat, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, cutthroat, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, strengths, good teacher, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, strengths, good teacher, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, strengths, good teacher, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, strengths, good teacher, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, dishonest, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, dishonest, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, dishonest, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, dishonest, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, controlling, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, controlling, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, controlling, commenting
+30, Tasha McSporon, tmcsporont@sakura.ne.jp, weaknesses, controlling, commenting
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, procrastinator, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, procrastinator, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, procrastinator, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, procrastinator, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, strengths, good leader, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, strengths, good leader, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, strengths, good leader, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, strengths, good leader, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, strengths, early starter, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, strengths, early starter, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, strengths, early starter, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, strengths, early starter, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, unprepared, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, unprepared, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, unprepared, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, unprepared, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, controlling, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, controlling, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, controlling, OOP
+29, Mal Antonchik, mantonchiks@ucoz.ru, weaknesses, controlling, OOP
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, controlling, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, controlling, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, controlling, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, controlling, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, cutthroat, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, cutthroat, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, cutthroat, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, cutthroat, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, strengths, honest, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, strengths, honest, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, strengths, honest, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, strengths, honest, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, strengths, friendly, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, strengths, friendly, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, strengths, friendly, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, strengths, friendly, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, procrastinator, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, procrastinator, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, procrastinator, testing
+28, Paulita Mainds, pmaindsr@mozilla.com, weaknesses, procrastinator, testing
+27, Aila Border, aborderq@hhs.gov, weaknesses, procrastinator, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, procrastinator, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, procrastinator, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, procrastinator, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, cutthroat, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, cutthroat, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, cutthroat, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, cutthroat, OOP
+27, Aila Border, aborderq@hhs.gov, strengths, knowledgeable, OOP
+27, Aila Border, aborderq@hhs.gov, strengths, knowledgeable, OOP
+27, Aila Border, aborderq@hhs.gov, strengths, knowledgeable, OOP
+27, Aila Border, aborderq@hhs.gov, strengths, knowledgeable, OOP
+27, Aila Border, aborderq@hhs.gov, strengths, quick learner, OOP
+27, Aila Border, aborderq@hhs.gov, strengths, quick learner, OOP
+27, Aila Border, aborderq@hhs.gov, strengths, quick learner, OOP
+27, Aila Border, aborderq@hhs.gov, strengths, quick learner, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, controlling, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, controlling, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, controlling, OOP
+27, Aila Border, aborderq@hhs.gov, weaknesses, controlling, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, strengths, knowledgeable, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, strengths, knowledgeable, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, strengths, knowledgeable, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, strengths, knowledgeable, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, unfriendly, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, unfriendly, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, unfriendly, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, unfriendly, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, unavailable, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, unavailable, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, unavailable, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, unavailable, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, dishonest, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, dishonest, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, dishonest, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, weaknesses, dishonest, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, strengths, quick learner, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, strengths, quick learner, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, strengths, quick learner, OOP
+26, Sheff Hillaby, shillabyp@ucoz.ru, strengths, quick learner, OOP
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, procrastinator, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, procrastinator, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, procrastinator, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, procrastinator, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, controlling, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, controlling, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, controlling, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, controlling, testing
+25, Anthe Baseley, abaseleyo@boston.com, strengths, friendly, testing
+25, Anthe Baseley, abaseleyo@boston.com, strengths, friendly, testing
+25, Anthe Baseley, abaseleyo@boston.com, strengths, friendly, testing
+25, Anthe Baseley, abaseleyo@boston.com, strengths, friendly, testing
+25, Anthe Baseley, abaseleyo@boston.com, strengths, quick learner, testing
+25, Anthe Baseley, abaseleyo@boston.com, strengths, quick learner, testing
+25, Anthe Baseley, abaseleyo@boston.com, strengths, quick learner, testing
+25, Anthe Baseley, abaseleyo@boston.com, strengths, quick learner, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, dishonest, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, dishonest, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, dishonest, testing
+25, Anthe Baseley, abaseleyo@boston.com, weaknesses, dishonest, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, dishonest, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, dishonest, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, dishonest, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, dishonest, testing
+24, Giles Shorton, gshortonn@webmd.com, strengths, team player, testing
+24, Giles Shorton, gshortonn@webmd.com, strengths, team player, testing
+24, Giles Shorton, gshortonn@webmd.com, strengths, team player, testing
+24, Giles Shorton, gshortonn@webmd.com, strengths, team player, testing
+24, Giles Shorton, gshortonn@webmd.com, strengths, early starter, testing
+24, Giles Shorton, gshortonn@webmd.com, strengths, early starter, testing
+24, Giles Shorton, gshortonn@webmd.com, strengths, early starter, testing
+24, Giles Shorton, gshortonn@webmd.com, strengths, early starter, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, controlling, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, controlling, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, controlling, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, controlling, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, unavailable, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, unavailable, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, unavailable, testing
+24, Giles Shorton, gshortonn@webmd.com, weaknesses, unavailable, testing
+23, Gerick Millins, gmillinsm@webmd.com, strengths, team player, testing
+23, Gerick Millins, gmillinsm@webmd.com, strengths, team player, testing
+23, Gerick Millins, gmillinsm@webmd.com, strengths, team player, testing
+23, Gerick Millins, gmillinsm@webmd.com, strengths, team player, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, procrastinator, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, procrastinator, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, procrastinator, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, procrastinator, testing
+23, Gerick Millins, gmillinsm@webmd.com, strengths, honest, testing
+23, Gerick Millins, gmillinsm@webmd.com, strengths, honest, testing
+23, Gerick Millins, gmillinsm@webmd.com, strengths, honest, testing
+23, Gerick Millins, gmillinsm@webmd.com, strengths, honest, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, unavailable, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, unavailable, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, unavailable, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, unavailable, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, late, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, late, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, late, testing
+23, Gerick Millins, gmillinsm@webmd.com, weaknesses, late, testing
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, controlling, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, controlling, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, controlling, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, controlling, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, late, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, late, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, late, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, late, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, strengths, honest, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, strengths, honest, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, strengths, honest, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, strengths, honest, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, strengths, knowledgeable, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, strengths, knowledgeable, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, strengths, knowledgeable, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, strengths, knowledgeable, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, unresponsive, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, unresponsive, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, unresponsive, data structures
+22, Mitch Freegard, mfreegardl@wikimedia.org, weaknesses, unresponsive, data structures
+21, Fran Empson, fempsonk@elpais.com, strengths, good leader, testing
+21, Fran Empson, fempsonk@elpais.com, strengths, good leader, testing
+21, Fran Empson, fempsonk@elpais.com, strengths, good leader, testing
+21, Fran Empson, fempsonk@elpais.com, strengths, good leader, testing
+21, Fran Empson, fempsonk@elpais.com, strengths, team player, testing
+21, Fran Empson, fempsonk@elpais.com, strengths, team player, testing
+21, Fran Empson, fempsonk@elpais.com, strengths, team player, testing
+21, Fran Empson, fempsonk@elpais.com, strengths, team player, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, unprepared, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, unprepared, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, unprepared, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, unprepared, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, unresponsive, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, unresponsive, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, unresponsive, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, unresponsive, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, dishonest, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, dishonest, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, dishonest, testing
+21, Fran Empson, fempsonk@elpais.com, weaknesses, dishonest, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, late, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, late, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, late, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, late, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, unprepared, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, unprepared, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, unprepared, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, unprepared, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, cutthroat, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, cutthroat, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, cutthroat, testing
+20, Miquela Fidgett, mfidgettj@google.ca, weaknesses, cutthroat, testing
+20, Miquela Fidgett, mfidgettj@google.ca, strengths, good leader, testing
+20, Miquela Fidgett, mfidgettj@google.ca, strengths, good leader, testing
+20, Miquela Fidgett, mfidgettj@google.ca, strengths, good leader, testing
+20, Miquela Fidgett, mfidgettj@google.ca, strengths, good leader, testing
+20, Miquela Fidgett, mfidgettj@google.ca, strengths, knowledgeable, testing
+20, Miquela Fidgett, mfidgettj@google.ca, strengths, knowledgeable, testing
+20, Miquela Fidgett, mfidgettj@google.ca, strengths, knowledgeable, testing
+20, Miquela Fidgett, mfidgettj@google.ca, strengths, knowledgeable, testing
+19, Pamella McCudden, pmccuddeni@github.com, strengths, friendly, front-end
+19, Pamella McCudden, pmccuddeni@github.com, strengths, friendly, front-end
+19, Pamella McCudden, pmccuddeni@github.com, strengths, friendly, front-end
+19, Pamella McCudden, pmccuddeni@github.com, strengths, friendly, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, unavailable, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, unavailable, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, unavailable, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, unavailable, front-end
+19, Pamella McCudden, pmccuddeni@github.com, strengths, knowledgeable, front-end
+19, Pamella McCudden, pmccuddeni@github.com, strengths, knowledgeable, front-end
+19, Pamella McCudden, pmccuddeni@github.com, strengths, knowledgeable, front-end
+19, Pamella McCudden, pmccuddeni@github.com, strengths, knowledgeable, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, unresponsive, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, unresponsive, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, unresponsive, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, unresponsive, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, late, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, late, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, late, front-end
+19, Pamella McCudden, pmccuddeni@github.com, weaknesses, late, front-end
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, controlling, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, controlling, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, controlling, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, controlling, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, strengths, honest, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, strengths, honest, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, strengths, honest, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, strengths, honest, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, strengths, early starter, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, strengths, early starter, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, strengths, early starter, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, strengths, early starter, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, unfriendly, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, unfriendly, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, unfriendly, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, unfriendly, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, cutthroat, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, cutthroat, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, cutthroat, algorithms
+18, Rachele Sheldon, rsheldonh@va.gov, weaknesses, cutthroat, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, unfriendly, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, unfriendly, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, unfriendly, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, unfriendly, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, strengths, good teacher, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, strengths, good teacher, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, strengths, good teacher, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, strengths, good teacher, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, strengths, good leader, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, strengths, good leader, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, strengths, good leader, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, strengths, good leader, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, procrastinator, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, procrastinator, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, procrastinator, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, procrastinator, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, unresponsive, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, unresponsive, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, unresponsive, algorithms
+17, Filippo McGerraghty, fmcgerraghtyg@nba.com, weaknesses, unresponsive, algorithms
+16, Darline Reily, dreilyf@rediff.com, weaknesses, controlling, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, controlling, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, controlling, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, controlling, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, unfriendly, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, unfriendly, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, unfriendly, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, unfriendly, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, unprepared, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, unprepared, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, unprepared, commenting
+16, Darline Reily, dreilyf@rediff.com, weaknesses, unprepared, commenting
+16, Darline Reily, dreilyf@rediff.com, strengths, good leader, commenting
+16, Darline Reily, dreilyf@rediff.com, strengths, good leader, commenting
+16, Darline Reily, dreilyf@rediff.com, strengths, good leader, commenting
+16, Darline Reily, dreilyf@rediff.com, strengths, good leader, commenting
+16, Darline Reily, dreilyf@rediff.com, strengths, quick learner, commenting
+16, Darline Reily, dreilyf@rediff.com, strengths, quick learner, commenting
+16, Darline Reily, dreilyf@rediff.com, strengths, quick learner, commenting
+16, Darline Reily, dreilyf@rediff.com, strengths, quick learner, commenting
+15, Nance Fawbert, nfawberte@woothemes.com, strengths, honest, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, strengths, honest, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, strengths, honest, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, strengths, honest, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, strengths, quick learner, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, strengths, quick learner, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, strengths, quick learner, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, strengths, quick learner, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, controlling, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, controlling, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, controlling, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, controlling, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, dishonest, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, dishonest, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, dishonest, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, dishonest, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, unresponsive, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, unresponsive, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, unresponsive, OOP
+15, Nance Fawbert, nfawberte@woothemes.com, weaknesses, unresponsive, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, unprepared, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, unprepared, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, unprepared, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, unprepared, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, late, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, late, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, late, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, late, OOP
+14, Fallon Sheward, fshewardd@usda.gov, strengths, knowledgeable, OOP
+14, Fallon Sheward, fshewardd@usda.gov, strengths, knowledgeable, OOP
+14, Fallon Sheward, fshewardd@usda.gov, strengths, knowledgeable, OOP
+14, Fallon Sheward, fshewardd@usda.gov, strengths, knowledgeable, OOP
+14, Fallon Sheward, fshewardd@usda.gov, strengths, early starter, OOP
+14, Fallon Sheward, fshewardd@usda.gov, strengths, early starter, OOP
+14, Fallon Sheward, fshewardd@usda.gov, strengths, early starter, OOP
+14, Fallon Sheward, fshewardd@usda.gov, strengths, early starter, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, procrastinator, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, procrastinator, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, procrastinator, OOP
+14, Fallon Sheward, fshewardd@usda.gov, weaknesses, procrastinator, OOP
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, procrastinator, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, procrastinator, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, procrastinator, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, procrastinator, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, late, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, late, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, late, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, late, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, strengths, good teacher, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, strengths, good teacher, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, strengths, good teacher, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, strengths, good teacher, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, strengths, early starter, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, strengths, early starter, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, strengths, early starter, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, strengths, early starter, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, cutthroat, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, cutthroat, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, cutthroat, front-end
+13, Desmond Hyslop, dhyslopc@yahoo.co.jp, weaknesses, cutthroat, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, strengths, early starter, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, strengths, early starter, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, strengths, early starter, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, strengths, early starter, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, dishonest, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, dishonest, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, dishonest, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, dishonest, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, strengths, friendly, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, strengths, friendly, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, strengths, friendly, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, strengths, friendly, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, unfriendly, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, unfriendly, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, unfriendly, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, unfriendly, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, unprepared, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, unprepared, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, unprepared, front-end
+12, Gregoor Huckerby, ghuckerbyb@sciencedirect.com, weaknesses, unprepared, front-end
+11, Rozanne Uridge, ruridgea@istockphoto.com, strengths, early starter, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, strengths, early starter, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, strengths, early starter, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, strengths, early starter, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, unfriendly, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, unfriendly, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, unfriendly, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, unfriendly, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, strengths, good teacher, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, strengths, good teacher, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, strengths, good teacher, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, strengths, good teacher, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, unresponsive, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, unresponsive, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, unresponsive, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, unresponsive, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, dishonest, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, dishonest, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, dishonest, commenting
+11, Rozanne Uridge, ruridgea@istockphoto.com, weaknesses, dishonest, commenting
+10, Kendal Garretts, kgarretts9@salon.com, strengths, friendly, testing
+10, Kendal Garretts, kgarretts9@salon.com, strengths, friendly, testing
+10, Kendal Garretts, kgarretts9@salon.com, strengths, friendly, testing
+10, Kendal Garretts, kgarretts9@salon.com, strengths, friendly, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, controlling, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, controlling, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, controlling, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, controlling, testing
+10, Kendal Garretts, kgarretts9@salon.com, strengths, good teacher, testing
+10, Kendal Garretts, kgarretts9@salon.com, strengths, good teacher, testing
+10, Kendal Garretts, kgarretts9@salon.com, strengths, good teacher, testing
+10, Kendal Garretts, kgarretts9@salon.com, strengths, good teacher, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, procrastinator, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, procrastinator, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, procrastinator, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, procrastinator, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, unavailable, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, unavailable, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, unavailable, testing
+10, Kendal Garretts, kgarretts9@salon.com, weaknesses, unavailable, testing
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, controlling, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, controlling, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, controlling, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, controlling, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, strengths, quick learner, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, strengths, quick learner, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, strengths, quick learner, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, strengths, quick learner, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, strengths, good teacher, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, strengths, good teacher, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, strengths, good teacher, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, strengths, good teacher, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, late, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, late, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, late, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, late, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, unfriendly, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, unfriendly, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, unfriendly, commenting
+9, Cobby Cauley, ccauley8@woothemes.com, weaknesses, unfriendly, commenting
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, unprepared, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, unprepared, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, unprepared, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, unprepared, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, cutthroat, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, cutthroat, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, cutthroat, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, cutthroat, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, strengths, friendly, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, strengths, friendly, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, strengths, friendly, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, strengths, friendly, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, strengths, good leader, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, strengths, good leader, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, strengths, good leader, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, strengths, good leader, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, unresponsive, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, unresponsive, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, unresponsive, algorithms
+8, Ugo Bellanger, ubellanger7@cpanel.net, weaknesses, unresponsive, algorithms
+7, Antonetta Gadaud, agadaud6@abc.net.au, strengths, early starter, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, strengths, early starter, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, strengths, early starter, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, strengths, early starter, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, late, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, late, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, late, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, late, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, dishonest, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, dishonest, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, dishonest, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, dishonest, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, strengths, knowledgeable, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, strengths, knowledgeable, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, strengths, knowledgeable, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, strengths, knowledgeable, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, unavailable, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, unavailable, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, unavailable, OOP
+7, Antonetta Gadaud, agadaud6@abc.net.au, weaknesses, unavailable, OOP
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, unfriendly, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, unfriendly, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, unfriendly, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, unfriendly, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, dishonest, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, dishonest, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, dishonest, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, dishonest, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, unresponsive, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, unresponsive, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, unresponsive, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, weaknesses, unresponsive, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, strengths, good leader, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, strengths, good leader, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, strengths, good leader, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, strengths, good leader, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, strengths, team player, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, strengths, team player, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, strengths, team player, testing
+6, Bee Glisenan, bglisenan5@tinypic.com, strengths, team player, testing
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, procrastinator, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, procrastinator, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, procrastinator, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, procrastinator, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, unprepared, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, unprepared, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, unprepared, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, unprepared, commenting
+5, Victoria Autry, vautry4@yandex.ru, strengths, honest, commenting
+5, Victoria Autry, vautry4@yandex.ru, strengths, honest, commenting
+5, Victoria Autry, vautry4@yandex.ru, strengths, honest, commenting
+5, Victoria Autry, vautry4@yandex.ru, strengths, honest, commenting
+5, Victoria Autry, vautry4@yandex.ru, strengths, quick learner, commenting
+5, Victoria Autry, vautry4@yandex.ru, strengths, quick learner, commenting
+5, Victoria Autry, vautry4@yandex.ru, strengths, quick learner, commenting
+5, Victoria Autry, vautry4@yandex.ru, strengths, quick learner, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, dishonest, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, dishonest, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, dishonest, commenting
+5, Victoria Autry, vautry4@yandex.ru, weaknesses, dishonest, commenting
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, dishonest, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, dishonest, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, dishonest, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, dishonest, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, strengths, good teacher, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, strengths, good teacher, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, strengths, good teacher, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, strengths, good teacher, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, strengths, honest, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, strengths, honest, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, strengths, honest, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, strengths, honest, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, controlling, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, controlling, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, controlling, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, controlling, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, cutthroat, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, cutthroat, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, cutthroat, front-end
+4, Trumaine Dodson, tdodson3@purevolume.com, weaknesses, cutthroat, front-end
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, controlling, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, controlling, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, controlling, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, controlling, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, procrastinator, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, procrastinator, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, procrastinator, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, procrastinator, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, unfriendly, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, unfriendly, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, unfriendly, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, weaknesses, unfriendly, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, strengths, early starter, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, strengths, early starter, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, strengths, early starter, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, strengths, early starter, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, strengths, good leader, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, strengths, good leader, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, strengths, good leader, commenting
+3, Fitzgerald Mulbery, fmulbery2@unc.edu, strengths, good leader, commenting
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, late, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, late, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, late, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, late, testing
+2, Gerri Enterle, genterle1@umn.edu, strengths, early starter, testing
+2, Gerri Enterle, genterle1@umn.edu, strengths, early starter, testing
+2, Gerri Enterle, genterle1@umn.edu, strengths, early starter, testing
+2, Gerri Enterle, genterle1@umn.edu, strengths, early starter, testing
+2, Gerri Enterle, genterle1@umn.edu, strengths, team player, testing
+2, Gerri Enterle, genterle1@umn.edu, strengths, team player, testing
+2, Gerri Enterle, genterle1@umn.edu, strengths, team player, testing
+2, Gerri Enterle, genterle1@umn.edu, strengths, team player, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, cutthroat, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, cutthroat, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, cutthroat, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, cutthroat, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, unfriendly, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, unfriendly, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, unfriendly, testing
+2, Gerri Enterle, genterle1@umn.edu, weaknesses, unfriendly, testing
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, unfriendly, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, unfriendly, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, unfriendly, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, unfriendly, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, late, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, late, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, late, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, late, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, strengths, team player, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, strengths, team player, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, strengths, team player, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, strengths, team player, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, strengths, prepared, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, strengths, prepared, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, strengths, prepared, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, strengths, prepared, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, dishonest, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, dishonest, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, dishonest, front-end
+1, Petr Dillingstone, pdillingstone0@nationalgeographic.com, weaknesses, dishonest, front-end
+END

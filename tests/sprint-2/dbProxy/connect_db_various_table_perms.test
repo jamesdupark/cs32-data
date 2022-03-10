@@ -1,12 +1,24 @@
 INPUT
-connect_db data/recommendation/sql/data.sqlite3 R R R R
-connect_db data/recommendation/sql/data.sqlite3 W W W W
-connect_db data/recommendation/sql/data.sqlite3 RW RW RW RW
-connect_db data/recommendation/sql/data.sqlite3 WR RW RW RW
-connect_db data/recommendation/sql/data.sqlite3 R RW RW W
+connect_db_data data/recommendation/sql/data.sqlite3 R R R R
+connect_db_data data/recommendation/sql/data.sqlite3 k RW RW RW
+connect_db_data data/recommendation/sql/data.sqlite3 R R R R
+connect_db_data data/recommendation/sql/data.sqlite3 R W RW RW RW
+connect_db_data data/recommendation/sql/data.sqlite3 R R R R
+connect_db_data data/recommendation/sql/data.sqlite3 RW
+connect_db_data data/recommendation/sql/data.sqlite3 R R R R
+connect_db_data data/recommendation/sql/data.sqlite3 WR RW RW RW
+connect_db_data data/recommendation/sql/data.sqlite3 R R R R
+connect_db_data data/recommendation/sql/data.sqlite3 r r rw w
+connect_db_data data/recommendation/sql/data.sqlite3 R R R R
 OUTPUT
 Successful connection made to data/recommendation/sql/data.sqlite3
+ERROR:
 Successful connection made to data/recommendation/sql/data.sqlite3
+ERROR:
+Successful connection made to data/recommendation/sql/data.sqlite3
+ERROR:
+Successful connection made to data/recommendation/sql/data.sqlite3
+ERROR:
 Successful connection made to data/recommendation/sql/data.sqlite3
 ERROR:
 Successful connection made to data/recommendation/sql/data.sqlite3

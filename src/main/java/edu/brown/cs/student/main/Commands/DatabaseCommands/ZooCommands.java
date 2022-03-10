@@ -50,9 +50,13 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
           if (argc < 2) {
             throw new IllegalArgumentException("ERROR: Incorrect number of arguments");
           }
-          this.proxy = connectProxy(argv[1], setUpTablePerm(argv, argv[1]));
-          connectDBCmd(argv, argc, this.filepath);
-          conn = this.proxy.getConn();
+          try {
+            this.proxy = connectProxy(argv[1], setUpTablePerm(argv, argv[1]));
+            connectDBCmd(argv, argc, this.filepath);
+            conn = this.proxy.getConn();
+          } catch (InvalidTablePermissionException e) {
+            System.err.println(e.getMessage());
+          }
           break;
         case "insert_animal_zoo":
           this.insertAnimalCmd(argv, argc);
@@ -93,9 +97,9 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
           + "Expected 5 argument but got " + argc);
     }
-    // check if connection to database has been made
-    checkDatabaseConnected();
     try {
+      // check if connection to database has been made
+      checkDatabaseConnected();
       int id = Integer.parseInt(argv[1]);
       String name = argv[2];
       int age = Integer.parseInt(argv[3]);
@@ -111,14 +115,16 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
         }
       } else {
         // sql table does not have this level of permission
-        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+        throw new InvalidSQLAccessException("ERROR: SQL Table does not "
             + "have the level of permission");
       }
+    } catch (DatabaseNotConnectedException e) {
+      System.err.println(e.getMessage());
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
       System.err.println("ERROR :" + e.getMessage());
-    } catch (InvalidTablePermissionException e) {
+    } catch (InvalidSQLAccessException e) {
       System.err.println(e.getMessage());
     }
   }
@@ -145,9 +151,9 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
           + "Expected 1 argument but got " + argc);
     }
-    // check if connection to database has been made
-    checkDatabaseConnected();
     try {
+      // check if connection to database has been made
+      checkDatabaseConnected();
       String sqlQuery = "SELECT COUNT(*) FROM zoo;";
       setupCountAnimalCommandTable();
       if (proxy.validateQuery(commandToTable)) {
@@ -159,21 +165,23 @@ public class ZooCommands extends ConnectDB implements REPLCommands {
         System.out.println("Number of animals is " + count);
       } else {
         // sql table does not have this level of permission
-        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+        throw new InvalidSQLAccessException("ERROR: SQL Table does not "
             + "have the level of permission");
       }
+    } catch (DatabaseNotConnectedException e) {
+      System.err.println("ERROR: " + e.getMessage());
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
       System.err.println("ERROR :" + e.getMessage());
-    } catch (InvalidTablePermissionException e) {
+    } catch (InvalidSQLAccessException e) {
       System.err.println(e.getMessage());
     }
   }
   @Override
-  public void checkDatabaseConnected() {
+  public void checkDatabaseConnected() throws DatabaseNotConnectedException {
     if (conn == null || !this.filepath.equals("data/recommendation/sql/zoo.sqlite3")) {
-      throw new RuntimeException("ERROR: Zoo database has not been connected!");
+      throw new DatabaseNotConnectedException("ERROR: Zoo database has not been connected!");
     }
   }
   @Override

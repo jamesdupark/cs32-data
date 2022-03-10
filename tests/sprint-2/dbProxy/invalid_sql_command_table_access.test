@@ -1,0 +1,7 @@
+INPUT
+connect_db_horo data/recommendation/sql/horoscopes.sqlite3 R R R R
+update_ta_role_horo HTA Dylan
+OUTPUT
+Successful connection made to data/recommendation/sql/horoscopes.sqlite3
+ERROR:
+END

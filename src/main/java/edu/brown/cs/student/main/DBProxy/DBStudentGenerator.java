@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.DBProxy;
 
-import edu.brown.cs.student.main.Commands.DatabaseCommands.InvalidTablePermissionException;
+import edu.brown.cs.student.main.Commands.DatabaseCommands.InvalidSQLAccessException;
 import edu.brown.cs.student.main.Recommender.Stud.DatabaseStudent;
 
 import java.io.FileNotFoundException;
@@ -85,12 +85,12 @@ public class DBStudentGenerator {
         return makeDatabaseStudentList(rs);
       } else {
         // sql table does not have this level of permission
-        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+        throw new InvalidSQLAccessException("ERROR: SQL Table does not "
             + "have the level of permission");
       }
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
-    } catch (InvalidTablePermissionException e) {
+    } catch (InvalidSQLAccessException e) {
       System.err.println(e.getMessage());
     } catch (FileNotFoundException e) {
       System.err.println("ERROR: " + e.getMessage());

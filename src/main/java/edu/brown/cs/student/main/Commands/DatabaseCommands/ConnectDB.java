@@ -107,7 +107,8 @@ public abstract class ConnectDB {
    * @param database String filepath corresponding to the connected database
    * @return a HashMap mapping from the table in the database to its respective table permission.
    */
-  public Map<String, String> setUpTablePerm(String[] argv, String database) {
+  public Map<String, String> setUpTablePerm(String[] argv, String database)
+      throws InvalidTablePermissionException {
     if (!dbIndex.containsKey(database)) {
       throw new IllegalArgumentException("ERROR: Database path is not recognized");
     }
@@ -116,7 +117,7 @@ public abstract class ConnectDB {
     Map<String, String> tablePermissions = new HashMap<>();
     for (int i = 2; i < argv.length; i++) {
       if (!argv[i].equals("R") && !argv[i].equals("W") && !argv[i].equals("RW")) {
-        throw new RuntimeException("ERROR: permission is not <R> or <W> or <RW>");
+        throw new InvalidTablePermissionException("ERROR: permission is not <R> or <W> or <RW>");
       }
       tablePermissions.put(dbIndexTables.get(i - 2), argv[i]);
     }
@@ -126,7 +127,7 @@ public abstract class ConnectDB {
    * Defines the abstract method that subclasses will implement to check whether a connection
    * has been established to their respective database before executing any SQL query and command.
    */
-  abstract void checkDatabaseConnected();
+  abstract void checkDatabaseConnected() throws DatabaseNotConnectedException;
   /**
    * Accessor method for the dbIndex HashMap.
    * @return the dbIndex HashMap.

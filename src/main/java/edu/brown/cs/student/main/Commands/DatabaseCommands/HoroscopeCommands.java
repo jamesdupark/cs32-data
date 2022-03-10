@@ -49,9 +49,13 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
           if (argc < 2) {
             throw new IllegalArgumentException("ERROR: Incorrect number of arguments");
           }
-          this.proxy = connectProxy(argv[1], setUpTablePerm(argv, argv[1]));
-          connectDBCmd(argv, argc, this.filepath);
-          conn = this.proxy.getConn();
+          try {
+            this.proxy = connectProxy(argv[1], setUpTablePerm(argv, argv[1]));
+            connectDBCmd(argv, argc, this.filepath);
+            conn = this.proxy.getConn();
+          } catch (InvalidTablePermissionException e) {
+            System.err.println(e.getMessage());
+          }
           break;
         case "find_tas_w_horoscope_horo":
           this.findTARoleForAHoroscopeCmd(argc);
@@ -92,9 +96,9 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
           + "Expected 1 argument but got " + argc);
     }
-    // check if connection to database has been made
-    checkDatabaseConnected();
     try {
+      // check if connection to database has been made
+      checkDatabaseConnected();
       final String horoscopeMatch = "Cancer";
       String sqlQuery = "SELECT name, role, horoscope FROM tas JOIN ta_horoscope AS tah "
           + "ON tas.id = tah.ta_id JOIN horoscopes AS h ON h.horoscope_id = tah.horoscope_id "
@@ -106,14 +110,16 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
         printResultSet(rowSet, 3);
       } else {
         // sql table does not have this level of permission
-        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+        throw new InvalidSQLAccessException("ERROR: SQL Table does not "
             + "have the level of permission");
       }
+    } catch (DatabaseNotConnectedException e) {
+      System.err.println("ERROR: " + e.getMessage());
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
       System.err.println("ERROR: " + e.getMessage());
-    } catch (InvalidTablePermissionException e) {
+    } catch (InvalidSQLAccessException e) {
       System.err.println(e.getMessage());
     }
   }
@@ -142,9 +148,9 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments. "
           + "Expected 3 argument but got " + argc);
     }
-    // check if connection to database has been made
-    checkDatabaseConnected();
     try {
+      // check if connection to database has been made
+      checkDatabaseConnected();
       String newRole = argv[1];
       String name = argv[2];
       String sqlQuery = "UPDATE tas SET role = \'" + newRole + "\' WHERE name = \'" + name + "\';";
@@ -157,24 +163,30 @@ public class HoroscopeCommands extends ConnectDB implements REPLCommands {
         }
       } else {
         // sql table does not have this level of permission
-        throw new InvalidTablePermissionException("ERROR: SQL Table does not "
+        throw new InvalidSQLAccessException("ERROR: SQL Table does not "
             + "have the level of permission");
       }
+    } catch (DatabaseNotConnectedException e) {
+      System.err.println(e.getMessage());
     } catch (SQLException e) {
       System.err.println("ERROR: " + e.getMessage());
     } catch (ExecutionException e) {
       System.err.println("ERROR :" + e.getMessage());
-    } catch (InvalidTablePermissionException e) {
+    } catch (InvalidSQLAccessException e) {
       System.err.println(e.getMessage());
     }
   }
+  /**
+   * Accessor method to get the Proxy field that is used for testing.
+   * @return the Proxy
+   */
   public Proxy getProxy() {
     return this.proxy;
   }
   @Override
-  protected void checkDatabaseConnected() {
+  protected void checkDatabaseConnected() throws DatabaseNotConnectedException {
     if (conn == null || !this.filepath.equals("data/recommendation/sql/horoscopes.sqlite3")) {
-      throw new RuntimeException("ERROR: Horoscopes database has not been connected!");
+      throw new DatabaseNotConnectedException("ERROR: Horoscopes database has not been connected!");
     }
   }
   @Override

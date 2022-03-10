@@ -1,0 +1,29 @@
+INPUT
+connect_db_data data/recommendation/sql/horoscopes.sqlite3 R R R R
+connect_db_data data/recommendation/sql/data.sqlite3 RW RW RW RW
+connect_db_data data/recommendation/sql/zoo.sqlite3 R R R R
+connect_db_data data/recommendation/sql/data.sqlite3 RW RW RW RW
+connect_db_data invalid-file-path RW
+connect_db_horo data/recommendation/sql/horoscopes.sqlite3 W RW RW RW
+connect_db_horo data/recommendation/sql/data.sqlite3 R R R R
+connect_db_horo data/recommendation/sql/horoscopes.sqlite3 W RW RW RW
+connect_db_horo data/recommendation/sql/zoo.sqlite3 RW
+connect_db_zoo data/recommendation/sql/zoo.sqlite3 RW
+connect_db_zoo data/recommendation/sql/horoscopes.sqlite3 W RW RW RW
+connect_db_zoo data/recommendation/sql/zoo.sqlite3 W
+connect_db_zoo data/recommendation/sql/data.sqlite3 W RW RW RW
+OUTPUT
+ERROR:
+Successful connection made to data/recommendation/sql/data.sqlite3
+ERROR:
+Successful connection made to data/recommendation/sql/data.sqlite3
+ERROR:
+Successful connection made to data/recommendation/sql/horoscopes.sqlite3
+ERROR:
+Successful connection made to data/recommendation/sql/horoscopes.sqlite3
+ERROR:
+Successful connection made to data/recommendation/sql/zoo.sqlite3
+ERROR:
+Successful connection made to data/recommendation/sql/zoo.sqlite3
+ERROR:
+END
