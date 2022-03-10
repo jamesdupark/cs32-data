@@ -1,7 +1,7 @@
 package edu.brown.cs.student.main.Commands.DatabaseCommands;
 
 import edu.brown.cs.student.main.Commands.REPLCommands;
-import edu.brown.cs.student.main.DBProxy.DBItems.DatabaseStudent;
+import edu.brown.cs.student.main.Recommender.Stud.DatabaseStudent;
 import edu.brown.cs.student.main.DBProxy.Proxy;
 
 import javax.sql.rowset.CachedRowSet;
@@ -23,7 +23,7 @@ public class DataCommands extends ConnectDB implements REPLCommands {
   /**
    * List of strings representing the command keywords supported by this class.
    */
-  private final List<String> commands = List.of("connect_db_data", "select_names_data",
+  private final List<String> commands = List.of("connect_db_data", "select_all_data",
       "find_same_interests_data", "find_same_traits_and_skills_data");
   /**
    * Connection used to establish a connection to the database through a filepath.
@@ -54,8 +54,8 @@ public class DataCommands extends ConnectDB implements REPLCommands {
         case "connect_db_data":
           connectDBCmd(argv, argc);
           break;
-        case "select_names_data":
-          this.selectNamesCmd(argv, argc);
+        case "select_all_data":
+          this.selectAllCmd(argv, argc);
           break;
         case "find_same_interests_data":
           this.findSameInterestsCmd(argv, argc);
@@ -109,14 +109,14 @@ public class DataCommands extends ConnectDB implements REPLCommands {
   }
 
   /**
-   * Executes the "select_names_data" command which queries off the Students Database.
+   * Executes the "select_all_data" command which queries off the Students Database.
    * If successful, the names of all the students should be printed.
    * Prints informative error message upon failure.
    * @param argv array of strings representing tokenized user input
    * @param argc length of argv
    * @throws IllegalArgumentException if number of arguments is incorrect
    */
-  private void selectNamesCmd(String[] argv, int argc)
+  private void selectAllCmd(String[] argv, int argc)
       throws IllegalArgumentException {
     // check correct number of args
     if (argc != 1) {
@@ -126,10 +126,16 @@ public class DataCommands extends ConnectDB implements REPLCommands {
     // check if connection to database has been made
     checkDatabaseConnected();
     try {
-      String sqlQuery = "SELECT name FROM names";
+      String sqlQuery = "SELECT names.id, names.name, email, LOWER(type_of_attribute), "
+          + "trait, skill, interest FROM names JOIN traits ON names.id = traits.id JOIN "
+          + "skills ON names.id = skills.id JOIN interests ON names.id = interests.id "
+          + "ORDER BY names.id DESC;";
       // clear commandToTable and add to it
       commandToTable.clear();
       commandToTable.put("SELECT", "names");
+      commandToTable.put("SELECT", "traits");
+      commandToTable.put("SELECT", "skills");
+      commandToTable.put("SELECT", "interests");
       if (proxy.validateQuery(commandToTable)) {
         // valid query
         CachedRowSet rowSet = proxy.cacheExec(sqlQuery);
@@ -137,10 +143,28 @@ public class DataCommands extends ConnectDB implements REPLCommands {
         List<DatabaseStudent> dbStud = new ArrayList<>();
         while (rsForPrinting.next()) {
           DatabaseStudent student = new DatabaseStudent();
-          String name = rsForPrinting.getString(1);
+          String id = rsForPrinting.getString(1);
+          String name = rsForPrinting.getString(2);
+          String email = rsForPrinting.getString(3);
+          String attrType = rsForPrinting.getString(4);
+          String trait = rsForPrinting.getString(5);
+          String skill = rsForPrinting.getString(6);
+          final int interestRSCol = 7;
+          String interest = rsForPrinting.getString(interestRSCol);
+          student.setId(id);
           student.setName(name);
+          student.setEmail(email);
+          if (attrType.equals("weaknesses")) {
+            student.setWeaknesses(trait);
+          } else if (attrType.equals("strengths")) {
+            student.setStrengths(trait);
+          }
+          student.setSkill(skill);
+          student.setInterest(interest);
           dbStud.add(student);
-          System.out.println(name);
+        }
+        for (DatabaseStudent ds : dbStud) {
+          System.out.println(ds);
         }
         System.out.println("Cache size " + proxy.getCache().size());
       } else {
@@ -252,8 +276,11 @@ public class DataCommands extends ConnectDB implements REPLCommands {
           String trait = rsForPrinting.getString(3);
           String skill = rsForPrinting.getString(4);
           student.setName(name);
-          student.setAttrType(attrType);
-          student.setTrait(trait);
+          if (attrType.equals("strengths")) {
+            student.setWeaknesses(trait);
+          } else if (attrType.equals("weaknesses")) {
+            student.setStrengths(trait);
+          }
           student.setSkill(skill);
           dbStud.add(student);
           System.out.println(name + ", (" + attrType + ") " + trait + ", " + skill);

@@ -1,8 +1,6 @@
-package edu.brown.cs.student.main.Recommender;
+package edu.brown.cs.student.main.Recommender.Stud;
 
 import edu.brown.cs.student.main.API.json.JSONable;
-import edu.brown.cs.student.main.API.json.StudentInfo;
-import edu.brown.cs.student.main.API.json.StudentMatch;
 
 import java.util.HashMap;
 import java.util.Objects;

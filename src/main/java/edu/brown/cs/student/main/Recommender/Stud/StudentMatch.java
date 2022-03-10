@@ -1,6 +1,7 @@
-package edu.brown.cs.student.main.API.json;
+package edu.brown.cs.student.main.Recommender.Stud;
 
 import com.google.gson.Gson;
+import edu.brown.cs.student.main.API.json.JSONable;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -4,7 +4,7 @@ import edu.brown.cs.student.main.API.APIRequests.APIRequestBuilder;
 import edu.brown.cs.student.main.API.APIRequests.APIRequestHandler;
 import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.JSONParser;
-import edu.brown.cs.student.main.API.json.PartialStudent;
+import edu.brown.cs.student.main.Recommender.Stud.PartialStudent;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
