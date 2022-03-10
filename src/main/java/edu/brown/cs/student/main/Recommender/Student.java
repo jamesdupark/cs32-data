@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.Recommender;
 
 import edu.brown.cs.student.main.API.json.JSONable;
+import edu.brown.cs.student.main.API.json.PartialStudent;
 import edu.brown.cs.student.main.API.json.StudentInfo;
 import edu.brown.cs.student.main.API.json.StudentMatch;
 
@@ -20,23 +21,27 @@ public class Student implements JSONable {
   /**
    * Method for initializing a student from two complementary PartialStudent objects
    * (StudentInfo & StudentMatches). The two PartialStudent objects must be of the same ID.
-   * @param info StudentInfo object to merge
-   * @param match StudentMatch object to merge
+   * @param part PartialStudent object to add information from
    * @throws IllegalArgumentException if IDs of PartialStudent objects don't match up
    */
-  public void buildFromPartial(StudentInfo info, StudentMatch match)
+  public void buildFromPartial(PartialStudent part)
       throws IllegalArgumentException {
     try {
-      assert info.getId() == match.getId() : "IDs must correspond";
-      // add studentInfo
-      quanMap.putAll(info.getQuantMap());
-      qualMap.putAll(info.getQualMap());
-      // add studentMatch
-      quanMap.putAll(match.getQuantMap());
-      qualMap.putAll(match.getQualMap());
+      assert part.getId() == this.getId() : "IDs must correspond";
+      // add info from the partial student
+      quanMap.putAll(part.getQuantMap());
+      qualMap.putAll(part.getQualMap());
     } catch (AssertionError ase) {
       throw new IllegalArgumentException("ERROR: " + ase.getMessage());
     }
+  }
+
+  /**
+   * gets the id of the current student.
+   * @return student's id
+   */
+  private int getId() {
+    return Integer.parseInt(qualMap.get("id"));
   }
 
   /**

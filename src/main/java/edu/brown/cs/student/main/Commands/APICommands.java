@@ -262,7 +262,8 @@ public class APICommands implements REPLCommands {
       StudentInfo info = infoList.get(i);
       StudentMatch match = matchList.get(i);
       // throws IllegalArgumentException if args do not correspond
-      toAdd.buildFromPartial(info, match);
+      toAdd.buildFromPartial(info);
+      toAdd.buildFromPartial(match);
       dataset.add(toAdd);
     }
     System.out.println(dataset);

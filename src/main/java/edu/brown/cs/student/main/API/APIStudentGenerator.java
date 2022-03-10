@@ -3,7 +3,7 @@ package edu.brown.cs.student.main.API;
 import edu.brown.cs.student.main.API.APIRequests.BadStatusException;
 import edu.brown.cs.student.main.API.json.StudentInfo;
 import edu.brown.cs.student.main.API.json.StudentMatch;
-import edu.brown.cs.student.main.Student;
+import edu.brown.cs.student.main.Recommender.Student;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,7 +42,7 @@ public class APIStudentGenerator {
           : "Datasets incomplete or different sizes.";
     } catch (BadStatusException | AssertionError ex) {
       System.err.println("ERROR: " + ex.getMessage());
-      return;
+      return null;
     }
     // combine into students
     List<Student> dataset = new ArrayList<>();
@@ -51,8 +51,11 @@ public class APIStudentGenerator {
       StudentInfo info = infoList.get(i);
       StudentMatch match = matchList.get(i);
       // throws IllegalArgumentException if args do not correspond
-      toAdd.buildFromPartial(info, match);
+      toAdd.buildFromPartial(info);
+      toAdd.buildFromPartial(match);
       dataset.add(toAdd);
     }
+
+    return dataset;
   }
 }

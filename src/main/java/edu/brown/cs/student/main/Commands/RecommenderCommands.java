@@ -89,8 +89,8 @@ public class RecommenderCommands implements REPLCommands {
     reader.load(argv[2]);
     List<Student> studentList = reader.getDataList();
     // list of bloom list or student nodes.
-    List<KDNode> nodesList = new ArrayList<>();
     int maxInsert = 0;
+    List<KDNode> nodesList = new ArrayList<>();
     // maker for each Bloom List and Student Node
     DirectStudentNodeMaker nodeMaker = new DirectStudentNodeMaker();
     for (Student scholar : studentList) {
@@ -98,15 +98,15 @@ public class RecommenderCommands implements REPLCommands {
       int id = Integer.parseInt(scholar.getQualMap().get("id"));
       nodesList.add(nodeMaker.build(id, scholar.getQuanMap()));
     }
-
-    Map<Integer, BloomFilter> newFilters =
-        getBloomFilterMap(studentList, maxInsert);
-    if (newFilters == null) {
-      return;
-    }
     // for kdTree
     this.kdTree = new KDTree<>();
     this.kdTree.insertList(nodesList, 0);
+
+    Map<Integer, BloomFilter> newFilters = getBloomFilterMap(studentList, maxInsert);
+    if (newFilters == null) {
+      return;
+    }
+
 
     numStudents = studentList.size();
     System.out.println("Loaded Recommender with " + numStudents + " student(s)");
@@ -116,8 +116,8 @@ public class RecommenderCommands implements REPLCommands {
   /**
    * Does the loading of Bloom Filters for recsys_load call.
    * @param studentList - List of students to make Bloom Filters with.
-   * @param maxInsert
-   * @return
+   * @param maxInsert - the max Insert for the Bloom Filter construction.
+   * @return - A Hashmap from student id to Bloom Filter.
    */
   private Map<Integer, BloomFilter> getBloomFilterMap(List<Student> studentList,
                                                              int maxInsert) {
